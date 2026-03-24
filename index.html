@@ -171,12 +171,13 @@ tbody tr:hover td{background:var(--lilac-l)}
 @media(max-width:900px){.sidebar{display:none}.stat-row{grid-template-columns:1fr 1fr}.two-col,.three-col{grid-template-columns:1fr}}
 
 /* ── Fee cards ── */
-.fee-month-btn{padding:5px 13px;border-radius:99px;font-size:12px;font-weight:500;border:1px solid var(--g4);background:var(--white);color:var(--g2);cursor:pointer;transition:all .15s;font-family:var(--sans)}
-.fee-month-btn:hover{border-color:var(--lilac-m);color:var(--lilac-d)}
-.fee-month-btn.active{background:var(--lilac);color:var(--white);border-color:var(--lilac);font-weight:600}
-.fee-month-btn.past{opacity:.55}
-.fee-month-btn.future{opacity:.45}
-.fee-zone-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--g2);margin:20px 0 10px;display:flex;align-items:center;gap:10px}
+.fee-month-nav{display:flex;justify-content:space-between;gap:0;margin-bottom:20px;width:100%}
+.fee-month-btn{flex:1;padding:9px 4px;border-radius:8px;font-size:13px;font-weight:500;border:1px solid var(--g4);background:var(--white);color:var(--g2);cursor:pointer;transition:all .15s;font-family:var(--sans);text-align:center;margin:0 2px}
+.fee-month-btn:hover{border-color:var(--lilac-m);color:var(--lilac-d);background:var(--lilac-l)}
+.fee-month-btn.active{background:var(--lilac);color:var(--white);border-color:var(--lilac);font-weight:700;font-size:14px}
+.fee-month-btn.past{opacity:.5;font-size:12px}
+.fee-month-btn.future{opacity:.4;font-size:12px}
+.fee-zone-label{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g2);margin:22px 0 12px;display:flex;align-items:center;gap:10px}
 .fee-zone-label::after{content:'';flex:1;height:1px;background:var(--g4)}
 .fee-card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;margin-bottom:6px}
 .fee-card{background:var(--white);border:1px solid var(--g4);border-radius:10px;overflow:hidden;transition:box-shadow .15s}
@@ -184,29 +185,29 @@ tbody tr:hover td{background:var(--lilac-l)}
 .fee-card.is-confirmed{border-left:3px solid var(--green);opacity:.8}
 .fee-card.is-overdue{border-left:3px solid var(--red)}
 .fee-card.is-pending{border-left:3px solid var(--lilac)}
-.fee-card-head{padding:13px 16px 11px;border-bottom:1px solid var(--g4);display:flex;align-items:center;justify-content:space-between;gap:10px}
-.fee-card-name{font-size:15px;font-weight:700;color:var(--black)}
-.fee-card-country{font-size:12px;color:var(--g2);font-weight:400;margin-left:6px}
-.fee-confirm-all-btn{font-size:11px;font-weight:600;color:var(--lilac-d);background:var(--lilac-l);border:none;border-radius:5px;padding:4px 10px;cursor:pointer;font-family:var(--sans);white-space:nowrap}
-.fee-confirm-all-btn:hover{background:var(--lilac-m);color:var(--white)}
+.fee-card-head{padding:15px 18px 13px;border-bottom:1px solid var(--g4);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.fee-card-name{font-size:16px;font-weight:700;color:var(--black)}
+.fee-card-country{font-size:13px;color:var(--g2);font-weight:400;margin-left:8px}
 .fee-formats-grid{display:flex;flex-direction:column}
-.fee-fmt-block{padding:14px 16px}
+.fee-fmt-block{padding:16px 18px}
 .fee-fmt-block:first-child{border-bottom:1px solid var(--g4)}
-.fee-fmt-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.fee-fmt-status{font-size:11px;font-weight:600;display:flex;align-items:center;gap:4px}
+.fee-fmt-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.fee-fmt-status{font-size:13px;font-weight:600;display:flex;align-items:center;gap:4px}
+.fee-fmt-pill-lg{font-size:13px!important;padding:4px 12px!important;font-weight:700!important}
 .fee-titles-section{margin-bottom:10px}
-.fee-titles-label{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--g3);margin-bottom:4px}
-.fee-titles-list{margin-top:4px;margin-bottom:4px}
-.fee-titles-arrow{font-size:9px;color:var(--g3)}
+.fee-titles-label{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--g2);margin-bottom:4px}
+.fee-titles-list{margin-top:6px;margin-bottom:6px}
+.fee-titles-arrow{font-size:10px;color:var(--g2)}
+.fee-title-item{font-size:13px;color:var(--g1);line-height:1.8}
 .fee-title-item{font-size:12px;color:var(--g1);line-height:1.7}
-.fee-amounts-section{margin-bottom:10px}
-.fee-amt-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
-.fee-amt-label{font-size:11px;color:var(--g2);font-weight:500}
-.fee-amt-val{font-size:13px;font-weight:600;color:var(--black)}
-.fee-actual-input{font-size:13px;font-weight:600;color:var(--black);border:none;border-bottom:1.5px solid var(--g4);padding:1px 2px;width:100%;background:transparent;font-family:var(--sans);outline:none;text-align:right}
-.fee-actual-input:focus{border-bottom-color:var(--lilac)}
-.fee-actual-input::placeholder{color:var(--g3);font-weight:400}
-.fee-variance{font-size:11px;font-weight:600;text-align:right;margin-bottom:8px}
+.fee-amounts-section{margin-bottom:12px}
+.fee-amt-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:12px}
+.fee-amt-label{font-size:13px;color:var(--g2);font-weight:500;white-space:nowrap}
+.fee-amt-val{font-size:14px;font-weight:700;color:var(--black)}
+.fee-actual-input{font-size:13px;font-weight:600;color:var(--black);border:1px solid var(--g4);border-radius:6px;padding:6px 10px;width:100%;background:var(--white);font-family:var(--sans);outline:none;text-align:right;margin-top:2px}
+.fee-actual-input:focus{border-color:var(--lilac-m)}
+.fee-actual-input::placeholder{color:var(--g3);font-weight:400;font-size:12px}
+.fee-variance{font-size:12px;font-weight:600;text-align:right;margin-bottom:10px}
 .fee-variance.neg{color:var(--amber)}.fee-variance.pos{color:var(--green)}
 .fee-cap-wrap{margin-bottom:10px}
 .fee-cap-top{display:flex;justify-content:space-between;font-size:10px;color:var(--g2);font-weight:500;margin-bottom:3px}
@@ -215,11 +216,11 @@ tbody tr:hover td{background:var(--lilac-l)}
 .fee-cap-fill.cap-warn{background:var(--amber)}.fee-cap-fill.cap-full{background:var(--red)}
 .fee-fmt-footer{display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid var(--g4)}
 .fee-progress-wrap{display:flex;gap:20px;padding:12px 16px;background:var(--g5);border-radius:8px;margin-bottom:16px;flex-wrap:wrap}
-.fee-progress-fmt{display:flex;align-items:center;gap:8px;font-size:12px}
+.fee-progress-fmt{display:flex;align-items:center;gap:10px;font-size:13px}
 .fee-progress-track{width:90px;height:4px;border-radius:2px;background:var(--g4);overflow:hidden}
 .fee-progress-fill{height:100%;border-radius:2px;background:var(--lilac);transition:width .3s}
 .fee-progress-fill.prog-done{background:var(--green)}
-.fee-progress-pct{color:var(--g2);font-size:11px;font-weight:500}
+.fee-progress-pct{color:var(--g2);font-size:13px;font-weight:500}
 </style>
 </head>
 <body>
@@ -516,6 +517,29 @@ tbody tr:hover td{background:var(--lilac-l)}
 <script>
 const S={booking:[],bo:[],catalogue:[],contracts:[],sheetId:localStorage.getItem('sheetId')||'',feeStatus:JSON.parse(localStorage.getItem('feeStatus')||'{}'),feeNotes:JSON.parse(localStorage.getItem('feeNotes')||'{}'),feeActual:JSON.parse(localStorage.getItem('feeActual')||'{}')};
 
+
+const EXHIBITOR_BRANDS = {
+  'VOX Cinemas':    {color:'#e63946', initials:'VOX'},
+  'Event':          {color:'#2d6a4f', initials:'EV'},
+  'Muvi Cinemas':   {color:'#7b2d8b', initials:'MV'},
+  'Hoyts':          {color:'#e76f51', initials:'HY'},
+  'Hoyts Cinema':   {color:'#e76f51', initials:'HY'},
+  'Cinescape':      {color:'#1d3557', initials:'CS'},
+  'Reel Cinemas':   {color:'#f4a261', initials:'RC'},
+  'NOVO Cinemas':   {color:'#264653', initials:'NV'},
+  'Novo Cinemas':   {color:'#264653', initials:'NV'},
+  'KNCC':           {color:'#457b9d', initials:'KN'},
+  'Galaxy Cinemas': {color:'#6a0572', initials:'GX'},
+  'Empire Cinemas': {color:'#c1121f', initials:'EM'},
+  'Nu Metro':       {color:'#023e8a', initials:'NM'},
+  'NU Metro':       {color:'#023e8a', initials:'NM'},
+  'Scene Cinema':   {color:'#48cae4', initials:'SC'},
+  'Novo Cinemas':   {color:'#264653', initials:'NV'},
+};
+function exhibitorAvatar(name){
+  const b=EXHIBITOR_BRANDS[name]||{color:'#8878d0',initials:(name||'?').substring(0,2).toUpperCase()};
+  return `<div style="width:38px;height:38px;border-radius:8px;background:${b.color};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:800;color:#fff;letter-spacing:.03em;font-family:var(--sans)">${b.initials}</div>`;
+}
 const EXHIBITORS=[
   {name:'Cinescape',country:'Kuwait',formats:['4DX','ScreenX'],contact:'Renice Jacobs',region:'MENA'},
   {name:'VOX Cinemas',country:'UAE',formats:['4DX','ScreenX'],contact:'Kifah',region:'MENA'},
@@ -526,7 +550,7 @@ const EXHIBITORS=[
   {name:'Event',country:'Australia',formats:['4DX','ScreenX'],contact:'—',region:'AUS'},
 ];
 
-const SO_FMT={'SO201100':'4DX','SO201200':'ScreenX'};
+const SO_FMT={'SO201100':'4DX','SO201200':'ScreenX','SO201300':'Ultra'};
 const CT_CONFIRMED='CT022010';
 
 function nav(id,el){
@@ -577,25 +601,17 @@ function parseBooking(){
   const iEnteredBy=col('entered_by')>=0?col('entered_by'):col('enteredby')>=0?col('enteredby'):12;
   const iDateEntered=col('date_entered')>=0?col('date_entered'):col('dateentered')>=0?col('dateentered'):13;
   console.log('parseBooking col map: exhibitor='+iExhibitor+' confirmed='+iConfirmed+' start='+iStart);
-  S.booking=lines.slice(1).filter(l=>l.trim()).map(l=>{
+  const rawRows=lines.slice(1).filter(l=>l.trim()).map(l=>{
     const c=l.split('\t');
     const so=(c[iScreenFmt]||'').trim();
     const ct=(c[iConfirmed]||'').trim();
-    return{
-      formatCode:(c[iFormat]||'').trim(),
-      country:(c[iCountry]||'').trim(),
-      title:(c[iTitle]||'').trim(),
-      exhibitor:normEx((c[iExhibitor]||'').trim()),
-      site:(c[iSite]||'').trim(),
-      screenId:(c[iScreen]||'').trim(),
-      so,ct,
-      format:fmtFromSO(so),
-      confirmed:ct===CT_CONFIRMED,
-      previewDate:(c[iPreview]||'').trim(),
-      releaseDate:(c[iStart]||'').trim(),
-      enteredBy:(c[iEnteredBy]||'').trim(),
-      dateEntered:(c[iDateEntered]||'').trim()
-    };
+    const fmt=fmtFromSO(so);
+    return{formatCode:(c[iFormat]||'').trim(),country:(c[iCountry]||'').trim(),title:(c[iTitle]||'').trim(),exhibitor:normEx((c[iExhibitor]||'').trim()),site:(c[iSite]||'').trim(),screenId:(c[iScreen]||'').trim(),so,ct,format:fmt,confirmed:ct===CT_CONFIRMED,previewDate:(c[iPreview]||'').trim(),releaseDate:(c[iStart]||'').trim(),enteredBy:(c[iEnteredBy]||'').trim(),dateEntered:(c[iDateEntered]||'').trim()};
+  });
+  S.booking=[];
+  rawRows.forEach(r=>{
+    if(r.format==='Ultra'){S.booking.push({...r,format:'4DX',isUltra:true});S.booking.push({...r,format:'ScreenX',isUltra:true});}
+    else S.booking.push(r);
   });
   console.log('parseBooking: loaded',S.booking.length,'rows, sample exhibitor:',S.booking[0]?.exhibitor);
   renderOverview();updateDataSummary();
@@ -938,12 +954,8 @@ function initFeeMonthNav(){
   const today=new Date();
   const current=document.getElementById('fee-month').value;
   const months=[];
-  for(let y=2025;y<=2026;y++){
-    for(let m=1;m<=12;m++){
-      if(y===2025&&m<9)continue;
-      if(y===2026&&m>12)continue;
-      months.push({val:`${y}-${String(m).padStart(2,'0')}`,label:new Date(y,m-1,1).toLocaleString('en',{month:'short',year:'2-digit'})});
-    }
+  for(let m=1;m<=12;m++){
+    months.push({val:`2026-${String(m).padStart(2,'0')}`,label:new Date(2026,m-1,1).toLocaleString('en',{month:'short'})});
   }
   const todayStr=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}`;
   nav.innerHTML=months.map(m=>{
@@ -1088,7 +1100,7 @@ function renderFees(){
         ${capHtml}
         <div class="fee-fmt-footer">
           <select style="font-size:12px;padding:4px 8px;border:1px solid var(--g4);border-radius:5px;font-family:var(--sans)"
-            onchange="saveFeeStatus('${key}',this.value);renderFees()">
+            onchange="saveFeeStatus('${key}',this.value);renderFees()" style="font-size:13px;padding:6px 10px;border:1px solid var(--g4);border-radius:6px;font-family:var(--sans)">
             ${['Unconfirmed','In Progress','Confirmed','Waived'].map(s=>`<option${s===status?' selected':''}>${s}</option>`).join('')}
           </select>
           <button class="btn btn-sm btn-ghost" style="font-size:11px" onclick="openFeeDetail('${month}','${safeEx}','${safeFmt}')">Detail →</button>
@@ -1098,11 +1110,13 @@ function renderFees(){
 
     return`<div class="fee-card ${cardCls}">
       <div class="fee-card-head">
-        <div>
-          <span class="fee-card-name">${ex}</span>
-          <span class="fee-card-country">${info.country||''}</span>
+        <div style="display:flex;align-items:center;gap:12px">
+          ${exhibitorAvatar(ex)}
+          <div>
+            <div class="fee-card-name">${ex}</div>
+            <div class="fee-card-country">${info.country||''}</div>
+          </div>
         </div>
-        ${canConfirm?`<button class="fee-confirm-all-btn" onclick="confirmAll('${month}','${safeEx}')">Confirm all</button>`:''}
       </div>
       <div class="fee-formats-grid">${fmtBlocks}</div>
     </div>`;
@@ -1120,15 +1134,7 @@ function renderFees(){
   if(cardsEl)cardsEl.innerHTML=html;
 }
 
-function confirmAll(month,exhibitor){
-  const groups=getFeeGroups(month).filter(g=>g.exhibitor===exhibitor);
-  groups.forEach(g=>{
-    const key=feeExhibKey(month,g.exhibitor,g.format);
-    const st=S.feeStatus[key]||'Unconfirmed';
-    if(st!=='Confirmed'&&st!=='Waived')saveFeeStatus(key,'Confirmed');
-  });
-  renderFees();
-}
+
 
 function openFeeDetail(month,exhibitor,format){
   document.getElementById('fees-overview-view').style.display='none';
