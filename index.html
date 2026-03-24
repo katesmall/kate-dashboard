@@ -125,12 +125,12 @@ tbody tr:hover td{background:var(--lilac-l)}
 
 
 /* ── Fee cards ── */
-.fee-month-nav{width:100%;margin-bottom:24px;overflow:hidden}
-.fee-month-track{display:flex;width:100%;gap:0;border-radius:10px;overflow:hidden;border:1px solid var(--g4)}
-.fee-month-btn{flex:1;padding:15px 0;font-size:13px;font-weight:600;border:none;border-right:1px solid var(--g4);background:var(--white);color:var(--g2);cursor:pointer;font-family:var(--sans);text-align:center;transition:background .12s,color .12s;white-space:nowrap}
+.fee-month-nav{margin-bottom:24px}
+.fee-month-track{display:flex;border-radius:10px;overflow:hidden;border:1px solid var(--g4)}
+.fee-month-btn{flex:1;min-width:0;padding:15px 0;font-size:13px;font-weight:600;border:none;border-right:1px solid var(--g4);background:var(--white);color:var(--g2);cursor:pointer;font-family:var(--sans);text-align:center;transition:background .12s,color .12s;overflow:hidden}
 .fee-month-btn:last-child{border-right:none}
 .fee-month-btn:hover{background:var(--lilac-l);color:var(--lilac-d)}
-.fee-month-btn.active{font-weight:800;font-size:14px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.15)}
+.fee-month-btn.active{font-weight:800}
 .fee-month-btn.m-future{background:var(--g5);color:var(--g3)}
 .fee-month-btn.m-future:hover{background:var(--g4);color:var(--g2)}
 .fee-month-btn.m-future.active{background:var(--g4);color:var(--g1)}
@@ -140,33 +140,33 @@ tbody tr:hover td{background:var(--lilac-l)}
 .fee-month-btn.m-confirmed.active{background:var(--green);color:#fff}
 .fee-month-btn.m-current{background:var(--lilac-l);color:var(--lilac-d)}
 .fee-month-btn.m-current.active{background:var(--lilac);color:#fff}
-.fee-zone-label{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g2);margin:22px 0 12px;display:flex;align-items:center;gap:10px}
+.fee-zone-label{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--g3);margin:24px 0 14px;display:flex;align-items:center;gap:12px}
 .fee-zone-label::after{content:'';flex:1;height:1px;background:var(--g4)}
-.fee-card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:14px;margin-bottom:6px}
-.fee-card{background:var(--white);border:1px solid var(--g4);border-radius:10px;overflow:hidden;transition:box-shadow .15s}
-.fee-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.06)}
-.fee-card.is-confirmed{opacity:.82}
-.fee-card-head{padding:14px 16px;border-bottom:1px solid var(--g4);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.fee-card-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:6px;align-items:stretch}
+.fee-card{background:var(--white);border:1px solid var(--g4);border-radius:10px;overflow:hidden;transition:box-shadow .15s;display:flex;flex-direction:column;height:100%}
+.fee-card:hover{box-shadow:0 2px 10px rgba(0,0,0,.07)}
+.fee-card.is-confirmed{opacity:.88}
+.fee-card-head{padding:16px 18px;border-bottom:1px solid var(--g4);display:flex;align-items:center;justify-content:space-between;gap:12px}
 .fee-card-identity{display:flex;align-items:center;gap:12px}
-.fee-card-name{font-size:16px;font-weight:700;color:var(--black)}
-.fee-card-country{font-size:12px;color:var(--g2);font-weight:400;margin-top:2px;margin-left:0}
+.fee-card-name{font-size:15px;font-weight:700;color:var(--black)}
+.fee-card-country{font-size:12px;color:var(--g2);font-weight:400;margin-top:3px}
 .fee-card-status-badge{font-size:12px;font-weight:700;display:flex;align-items:center;gap:5px;white-space:nowrap;padding:4px 10px;border-radius:99px}
 .fee-card-status-badge.s-confirmed{background:var(--green-l);color:var(--green)}
 .fee-card-status-badge.s-partial{background:var(--amber-l);color:var(--amber)}
 .fee-card-status-badge.s-unconfirmed{background:var(--red-l);color:var(--red)}
 .fee-formats-grid{display:flex;flex-direction:column}
-.fee-fmt-block{padding:14px 16px}
+.fee-fmt-block{padding:12px 14px}
 .fee-fmt-block+.fee-fmt-block{}
 .fee-fmt-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.fee-titles-label{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--g2);cursor:pointer;user-select:none}
+.fee-titles-label{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g2);cursor:pointer;user-select:none;margin-bottom:8px;display:block}
 .fee-titles-arrow{font-size:10px;color:var(--g2)}
 .fee-titles-list{margin-top:6px;margin-bottom:8px}
 .fee-title-item{font-size:13px;color:var(--g1);line-height:1.8}
-.fee-amounts-row{display:flex;align-items:center;gap:6px;margin-bottom:12px;flex-wrap:wrap}
-.fee-amt-label{font-size:13px;color:var(--g2);font-weight:500;white-space:nowrap}
-.fee-amt-val{font-size:14px;font-weight:700;color:var(--black);white-space:nowrap}
-.fee-amt-sep{color:var(--g3);margin:0 6px;font-size:14px}
-.fee-actual-input{font-size:14px;font-weight:600;color:var(--black);border:1px solid var(--g4);border-radius:6px;padding:5px 10px;width:130px;background:var(--white);font-family:var(--sans);outline:none;text-align:right}
+.fee-amounts-row{display:flex;align-items:center;gap:0;margin-bottom:12px;flex-wrap:nowrap}
+.fee-amt-label{font-size:12px;color:var(--g2);font-weight:500;white-space:nowrap;margin-right:6px}
+.fee-amt-val{font-size:13px;font-weight:700;color:var(--black);white-space:nowrap;margin:0 4px}
+.fee-amt-sep{color:var(--g3);margin:0 8px;font-size:13px}
+.fee-actual-input{font-size:12px;font-weight:500;color:var(--black);border:1px solid var(--g4);border-radius:6px;padding:5px 8px;width:95px;background:var(--white);font-family:var(--sans);outline:none;text-align:right}
 .fee-actual-input:focus{border-color:var(--lilac-m)}
 .fee-actual-input::placeholder{color:var(--g3);font-weight:400;font-size:12px}
 .fee-variance{font-size:12px;font-weight:600;margin-bottom:10px}
@@ -176,15 +176,15 @@ tbody tr:hover td{background:var(--lilac-l)}
 .fee-cap-track{height:3px;border-radius:2px;background:var(--g4);overflow:hidden}
 .fee-cap-fill{height:100%;border-radius:2px;transition:width .3s;background:var(--lilac-m)}
 .fee-cap-fill.cap-warn{background:var(--amber)}.fee-cap-fill.cap-full{background:var(--red)}
-.fee-fmt-footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;margin-top:8px}
+.fee-fmt-footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;margin-top:8px;border-top:1px solid var(--g4)}
 .fee-confirm-btn{padding:7px 20px;background:var(--white);color:var(--lilac-d);border:1.5px solid var(--lilac);border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--sans);transition:all .15s}
 .fee-confirm-btn:hover{background:var(--lilac-l);border-color:var(--lilac-d)}
 .fee-edit-btn{font-size:12px;color:var(--g2);background:none;border:1px solid var(--g4);border-radius:5px;cursor:pointer;font-family:var(--sans);padding:5px 10px;transition:all .15s}
 .fee-edit-btn:hover{color:var(--black);border-color:var(--g2)}
 .fee-waived-btn{padding:7px 20px;background:var(--blue-l);color:var(--blue);border:none;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--sans)}
-.fee-progress-wrap{display:flex;gap:20px;padding:12px 16px;background:var(--g5);border-radius:8px;margin-bottom:16px;flex-wrap:wrap}
+.fee-progress-wrap{display:flex;gap:24px;padding:14px 18px;background:var(--g5);border-radius:8px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
 .fee-progress-fmt{display:flex;align-items:center;gap:10px;font-size:13px}
-.fee-progress-track{width:90px;height:4px;border-radius:2px;background:var(--g4);overflow:hidden}
+.fee-progress-track{width:100px;height:4px;border-radius:2px;background:var(--g4);overflow:hidden}
 .fee-progress-fill{height:100%;border-radius:2px;background:var(--lilac);transition:width .3s}
 .fee-progress-fill.prog-done{background:var(--green)}
 .fee-progress-pct{color:var(--g2);font-size:13px;font-weight:500}
@@ -332,7 +332,7 @@ tbody tr:hover td{background:var(--lilac-l)}
         <!-- Month strip -->
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
           <div id="fee-month-nav" style="display:flex;gap:4px;flex-wrap:wrap"></div>
-          <button class="btn btn-sm" onclick="exportFees()">Export TSV</button>
+          
         </div>
         <!-- hidden month value -->
         <input type="hidden" id="fee-month" value="2026-03">
@@ -721,7 +721,6 @@ function renderOverview(){
   const srcEx=S.booking.length?[...new Set(S.booking.map(d=>d.exhibitor))].filter(Boolean):EXHIBITORS.map(e=>e.name);
   const rows=srcEx.map(ex=>{
     const info=EXHIBITORS.find(e=>e.name===ex)||{};
-    const cardCountry=cardCtry||info.country||'—';
     if(region!=='all'&&info.region&&info.region!==region)return null;
     const exB=S.booking.filter(b=>b.exhibitor===ex);
     const exFmts=exB.length?[...new Set(exB.map(b=>b.format).filter(Boolean))]:(info.formats||[]);
@@ -1051,12 +1050,29 @@ function initFeeMonthNav(){
   for(let m=1;m<=12;m++){
     months.push({val:`2026-${String(m).padStart(2,'0')}`,label:new Date(2026,m-1,1).toLocaleString('en',{month:'short'})});
   }
-  const btns=months.map(m=>{
+  const cells=months.map(m=>{
     const st=getMonthStatus(m.val);
     const isActive=m.val===current;
-    return`<div class="fee-month-btn m-${st}${isActive?' active':''}" onclick="setFeeMonth('${m.val}')" role="button" tabindex="0">${m.label}</div>`;
+    const bg={
+      'm-future':'#f6f6f6','m-overdue':'#fef6e4','m-confirmed':'#eaf4ee','m-current':'#f2f0fc'
+    }[`m-${st}`]||'#fff';
+    const col={
+      'm-future':'#b0b0b0','m-overdue':'#9a6c0a','m-confirmed':'#287a50','m-current':'#5e52a8'
+    }[`m-${st}`]||'#767676';
+    const activeBg={
+      'm-future':'#e4e4e4','m-overdue':'#9a6c0a','m-confirmed':'#287a50','m-current':'#8878d0'
+    }[`m-${st}`]||'#8878d0';
+    const finalBg=isActive?activeBg:bg;
+    const finalCol=isActive?'#fff':col;
+    const fw=isActive?'800':'600';
+    const border=m.val!=='2026-12'?'border-right:1px solid #e4e4e4;':'';
+    return`<td onclick="setFeeMonth('${m.val}')"
+      style="padding:15px 0;font-size:13px;font-weight:${fw};text-align:center;cursor:pointer;background:${finalBg};color:${finalCol};${border}transition:background .12s;user-select:none"
+      onmouseover="if('${isActive}'!='true')this.style.background='#f2f0fc';this.style.color='#5e52a8'"
+      onmouseout="this.style.background='${finalBg}';this.style.color='${finalCol}'"
+      >${m.label}</td>`;
   }).join('');
-  nav.innerHTML=`<div class="fee-month-track">${btns}</div>`;
+  nav.innerHTML=`<table style="width:100%;border-collapse:collapse;border:1px solid #e4e4e4;border-radius:10px;overflow:hidden;table-layout:fixed"><tr>${cells}</tr></table>`;
 }
 
 function setFeeMonth(month){
@@ -1182,7 +1198,7 @@ function renderFees(){
       return`<div class="fee-fmt-block">
         <div class="fee-fmt-header">
           <span class="pill ${fmtCls}">${g.format}</span>
-          <span class="fee-fmt-status" style="color:${stColor}">● ${status}</span>
+
         </div>
         <div class="fee-titles-section">
           <div class="fee-titles-toggle" onclick="toggleFeeTitle('${titlesId}',this)">
@@ -1202,8 +1218,7 @@ function renderFees(){
         ${capHtml}
         <div class="fee-fmt-footer">
           ${status==='Confirmed'||status==='Waived'
-            ? `<button class="fee-edit-btn" onclick="saveFeeStatus('${key}','Unconfirmed');renderFees()">Edit</button>
-               <span style="font-size:13px;font-weight:700;color:var(--green)">✓ ${status}</span>`
+            ? `<button class="fee-edit-btn" onclick="saveFeeStatus('${key}','Unconfirmed');renderFees()">Edit</button>`
             : `<button class="fee-confirm-btn" onclick="saveFeeStatus('${key}','Confirmed');renderFees()">Confirm</button>
                <button class="fee-edit-btn" onclick="openFeeDetail('${month}','${safeEx}','${safeFmt}','${safeCtry}')">Detail →</button>`
           }
@@ -1641,9 +1656,114 @@ async function writeRange(range, values) {
 
 
 
+
+function loadDemoData(){
+  // ── Booking data (tab-separated, matches bookings_raw format) ──────
+  const bookingTSV=`format	country	title	exhibitor	site	screen	screen_format	confirmed	preview_date	start_date
+M244DX	Saudi Arabia	Hoppers (4DX)	Empire Cinemas	Abha Al Rashed Mall	1	SO201100	CT022010		2026-03-05
+M244DX	Saudi Arabia	Scream 7 (4DX)	Empire Cinemas	Abha Al Rashed Mall	1	SO201100	CT022010		2026-03-12
+M244DX	Saudi Arabia	Project Hail Mary (4DX)	Empire Cinemas	Jeddah Al Rashed Mall	1	SO201100	CT022010		2026-03-19
+M24SX	Saudi Arabia	Hoppers (ScreenX)	Empire Cinemas	Abha Al Rashed Mall	1	SO201200	CT022010		2026-03-05
+M24SX	Saudi Arabia	Scream 7 (ScreenX)	Empire Cinemas	Rabwa	1	SO201200	CT022010		2026-03-12
+M244DX	Australia	Hoppers (4DX)	Event Cinemas	Chermside	1	SO201100	CT022010		2026-03-05
+M244DX	Australia	Scream 7 (4DX)	Event Cinemas	George Street	1	SO201100	CT022010		2026-03-12
+M244DX	Australia	Project Hail Mary (4DX)	Event Cinemas	Pacific Fair	1	SO201100	CT022010		2026-03-19
+M244DX	Australia	The Bride (4DX)	Event Cinemas	Parramatta	1	SO201100	CT022010		2026-03-05
+M244DX	Australia	Hoppers (4DX)	Event Cinemas	Castle Hill	1	SO201100	CT022010		2026-03-05
+M244DX	Australia	Innaloo Title (4DX)	Event Cinemas	Innaloo	1	SO201100	CT022010		2026-03-12
+M24SX	Australia	Hoppers (ScreenX)	Event Cinemas	Macarthur	1	SO201200	CT022010		2026-03-05
+M24SX	Australia	Scream 7 (ScreenX)	Event Cinemas	Robina	1	SO201200	CT022010		2026-03-12
+M24SX	Australia	Project Hail Mary (ScreenX)	Event Cinemas	Macarthur	1	SO201200	CT022010		2026-03-19
+M24SX	Australia	The Bride (ScreenX)	Event Cinemas	Robina	1	SO201200	CT022010		2026-03-05
+M244DX	Kuwait	Hoppers (4DX)	KNCC	360 Mall	1	SO201100	CT022010		2026-03-05
+M244DX	Kuwait	Scream 7 (4DX)	KNCC	Al Kout	1	SO201100	CT022010		2026-03-12
+M244DX	Kuwait	Project Hail Mary (4DX)	KNCC	Avenue Mall	1	SO201100	CT022010		2026-03-19
+M244DX	Kuwait	The Bride (4DX)	KNCC	Al Kout	1	SO201100	CT022010		2026-03-05
+M244DX	Kuwait	Hoppers Encore (4DX)	KNCC	360 Mall	1	SO201100	CT022010		2026-03-26
+M24SX	Kuwait	Hoppers (ScreenX)	KNCC	Avenue Mall	1	SO201200	CT022010		2026-03-05
+M24SX	Kuwait	Scream 7 (ScreenX)	KNCC	Avenue Mall	1	SO201200	CT022010		2026-03-12
+M24SX	Kuwait	Project Hail Mary (ScreenX)	KNCC	Avenue Mall	1	SO201200	CT022010		2026-03-19
+M244DX	Saudi Arabia	Hoppers (4DX)	Muvi Cinemas	Riyadh Boulevard	1	SO201100	CT022010		2026-03-05
+M24SX	Saudi Arabia	Hoppers (ScreenX)	Muvi Cinemas	Aziz Mall	1	SO201200	CT022010		2026-03-05
+M24SX	Saudi Arabia	Scream 7 (ScreenX)	Muvi Cinemas	Mall of Arabia	1	SO201200	CT022010		2026-03-12
+M244DX	Qatar	Hoppers (4DX)	Novo Cinemas	Doha Oasis Mall	1	SO201100	CT022010		2026-03-05
+M244DX	Qatar	Scream 7 (4DX)	Novo Cinemas	Doha Oasis Mall	1	SO201100	CT022010		2026-03-12
+M244DX	Qatar	Project Hail Mary (4DX)	Novo Cinemas	Doha Oasis Mall	1	SO201100	CT022010		2026-03-19
+M24SX	UAE	Hoppers (ScreenX)	Reel Cinemas	Dubai Mall	1	SO201200	CT022010		2026-03-05
+M24SX	Egypt	Hoppers (ScreenX)	Scene Cinemas	Cairo Festival City	1	SO201200	CT022010		2026-03-05
+M24SX	Egypt	Scream 7 (ScreenX)	Scene Cinemas	Cairo Festival City	1	SO201200	CT022010		2026-03-12
+M244DX	UAE	Hoppers (4DX)	Vox Cinemas	Mall of the Emirates	1	SO201100	CT022010		2026-03-05
+M244DX	UAE	Scream 7 (4DX)	Vox Cinemas	Mall of the Emirates	1	SO201100	CT022010		2026-03-12
+M244DX	Lebanon	Hoppers (4DX)	Vox Cinemas	Beirut City Centre	1	SO201100	CT022010		2026-03-05
+M244DX	Qatar	Hoppers (4DX)	Vox Cinemas	Doha Festival City	1	SO201100	CT022010		2026-03-05
+M244DX	Egypt	Hoppers (4DX)	Vox Cinemas	Mall of Egypt	1	SO201100	CT022010		2026-03-05
+M24SX	Australia	Hoppers (ScreenX)	Hoyts Cinemas	Melbourne	1	SO201200	CT022010		2026-03-05
+M24SX	Australia	Scream 7 (ScreenX)	Hoyts Cinemas	Blacktown	1	SO201200	CT022010		2026-03-12
+M24SX	Australia	Project Hail Mary (ScreenX)	Hoyts Cinemas	Melbourne	1	SO201200	CT022010		2026-03-19
+M244DX	Australia	Hoppers (4DX)	Village Cinemas	Century City	1	SO201100	CT022010		2026-03-05
+M244DX	Morocco	Hoppers (4DX)	Pathé	Californie Casablanca	1	SO201100	CT022010		2026-03-05
+M244DX	Angola	Hoppers (4DX)	Cinemax	Talatona	1	SO201100	CT022010		2026-03-05
+M244DX	South Africa	Hoppers (4DX)	Nu Metro	Canal Walk	1	SO201100	CT022010		2026-03-05
+M244DX	South Africa	Scream 7 (4DX)	Nu Metro	Hyde Park	1	SO201100	CT022010		2026-03-12
+M24SX	South Africa	Hoppers (ScreenX)	Nu Metro	Gateway	1	SO201200	CT022010		2026-03-05`;
+
+  // ── Contract / site_data ────────────────────────────────────────────
+  const contractRows=[
+    ['exhibitor','region','country','site','format','fee_type','currency','standard_fee_amount','standard_terms','requested_fee_amount','flat_monthly_amount','cap_per_site','cap_per_exhibitor','monthly_cap_amount','yearly_cap_amount','contract_start_date','contract_end_date','notes'],
+    ['Empire Cinemas','MEA','Saudi Arabia','Abha Al Rashed Mall','4DX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2022-01-01','2027-01-01',''],
+    ['Empire Cinemas','MEA','Saudi Arabia','Abha Al Rashed Mall','ScreenX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2022-01-01','2027-01-01',''],
+    ['Empire Cinemas','MEA','Saudi Arabia','Jeddah Al Rashed Mall','4DX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2022-01-01','2027-01-01',''],
+    ['Empire Cinemas','MEA','Saudi Arabia','Khobar Al Rashed Mall','4DX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2022-01-01','2027-01-01',''],
+    ['Empire Cinemas','MEA','Saudi Arabia','Rabwa','ScreenX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2022-01-01','2027-01-01',''],
+    ['Event Cinemas','Oceania','Australia','Chermside','4DX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2021-01-01','2026-12-31',''],
+    ['Event Cinemas','Oceania','Australia','George Street','4DX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2021-01-01','2026-12-31',''],
+    ['Event Cinemas','Oceania','Australia','Pacific Fair','4DX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2021-01-01','2026-12-31',''],
+    ['Event Cinemas','Oceania','Australia','Parramatta','4DX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2021-01-01','2026-12-31',''],
+    ['Event Cinemas','Oceania','Australia','Castle Hill','4DX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2021-01-01','2026-12-31',''],
+    ['Event Cinemas','Oceania','Australia','Innaloo','4DX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2021-01-01','2026-12-31',''],
+    ['Event Cinemas','Oceania','Australia','Macarthur','ScreenX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2021-01-01','2026-12-31',''],
+    ['Event Cinemas','Oceania','Australia','Robina','ScreenX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2021-01-01','2026-12-31',''],
+    ['KNCC','MEA','Kuwait','360 Mall','4DX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2021-01-01','2026-12-31',''],
+    ['KNCC','MEA','Kuwait','Al Kout','4DX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2021-01-01','2026-12-31',''],
+    ['KNCC','MEA','Kuwait','Assima Mall','4DX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2021-01-01','2026-12-31',''],
+    ['KNCC','MEA','Kuwait','Avenue Mall','4DX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2021-01-01','2026-12-31',''],
+    ['KNCC','MEA','Kuwait','Avenue Mall','ScreenX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2021-01-01','2026-12-31',''],
+    ['Muvi Cinemas','MEA','Saudi Arabia','Aziz Mall','ScreenX','per_title_by_site','USD','2000','Standard','','','TRUE','FALSE','','48000','2021-10-10','10yr from COA',''],
+    ['Muvi Cinemas','MEA','Saudi Arabia','Mall of Arabia','ScreenX','per_title_by_site','USD','2000','Standard','','','TRUE','FALSE','','48000','2021-10-10','10yr from COA',''],
+    ['Muvi Cinemas','MEA','Saudi Arabia','Riyadh Boulevard','4DX','per_title_by_site','USD','1500','Standard','','','FALSE','FALSE','','','2021-10-10','2031-10-10',''],
+    ['Novo Cinemas','MEA','Qatar','Doha Oasis Mall','4DX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2022-01-01','2027-01-01',''],
+    ['Reel Cinemas','MEA','UAE','Dubai Mall','ScreenX','per_title_by_site','USD','1500','Standard','','','FALSE','FALSE','','','2022-01-01','2027-01-01',''],
+    ['Scene Cinemas','MEA','Egypt','Cairo Festival City','ScreenX','per_title_by_site','USD','800','Standard','','','FALSE','FALSE','','','2022-01-01','2027-01-01',''],
+    ['Vox Cinemas','MEA','UAE','Mall of the Emirates','4DX','per_title_by_site','USD','1200','Standard','','','FALSE','FALSE','','','2020-01-01','2025-12-31',''],
+    ['Vox Cinemas','MEA','Lebanon','Beirut City Centre','4DX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2020-01-01','2025-12-31',''],
+    ['Vox Cinemas','MEA','Qatar','Doha Festival City','4DX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2020-01-01','2025-12-31',''],
+    ['Vox Cinemas','MEA','Egypt','Mall of Egypt','4DX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2020-01-01','2025-12-31',''],
+    ['Hoyts Cinemas','Oceania','Australia','Melbourne','ScreenX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2022-01-01','2027-01-01',''],
+    ['Hoyts Cinemas','Oceania','Australia','Blacktown','ScreenX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2022-01-01','2027-01-01',''],
+    ['Village Cinemas','Oceania','Australia','Century City','4DX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2022-01-01','2027-01-01',''],
+    ['Pathé','MEA','Morocco','Californie Casablanca','4DX','per_title_by_site','USD','1200','Standard','','','FALSE','FALSE','','','2023-01-01','2028-01-01',''],
+    ['Cinemax','MEA','Angola','Talatona','4DX','per_title_by_site','USD','800','Standard','','','FALSE','FALSE','','','2021-01-01','2026-12-31',''],
+    ['Nu Metro','MEA','South Africa','Canal Walk','4DX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2021-01-01','2026-12-31',''],
+    ['Nu Metro','MEA','South Africa','Hyde Park','4DX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2021-01-01','2026-12-31',''],
+    ['Nu Metro','MEA','South Africa','Menlyn Park','4DX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2021-01-01','2026-12-31',''],
+    ['Nu Metro','MEA','South Africa','Gateway','ScreenX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2021-01-01','2026-12-31',''],
+    ['Nu Metro','MEA','South Africa','Gateway','4DX','per_title_by_site','USD','1000','Standard','','','FALSE','FALSE','','','2021-01-01','2026-12-31',''],
+  ];
+
+  // Load contracts first so EXHIBITORS array gets built
+  parseContracts(contractRows);
+
+  // Load booking data
+  document.getElementById('t-booking').value = bookingTSV;
+  parseBooking();
+
+  console.log('Demo data loaded');
+}
+
 (function init(){
   renderOverview();renderDirectory();
   if(S.sheetId){document.getElementById('gs-url').value=`https://docs.google.com/spreadsheets/d/${S.sheetId}`;setConnected();syncSheets();}
+  else{loadDemoData();}
   // Restore oauth client id input value
   const cidInput = document.getElementById('oauth-client-id');
   if (cidInput) cidInput.value = localStorage.getItem('oauthClientId') || '';
