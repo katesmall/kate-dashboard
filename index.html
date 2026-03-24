@@ -171,38 +171,34 @@ tbody tr:hover td{background:var(--lilac-l)}
 @media(max-width:900px){.sidebar{display:none}.stat-row{grid-template-columns:1fr 1fr}.two-col,.three-col{grid-template-columns:1fr}}
 
 /* ── Fee cards ── */
-.fee-month-nav{display:flex;gap:0;margin-bottom:24px;border:1.5px solid var(--g4);border-radius:10px;overflow:hidden;width:100%}
-.fee-month-btn{flex:1;padding:13px 4px;font-size:13px;font-weight:600;border:none;border-right:1px solid var(--g4);background:var(--white);color:var(--g2);cursor:pointer;transition:all .15s;font-family:var(--sans);text-align:center;line-height:1}
-.fee-month-btn:last-child{border-right:none}
-.fee-month-btn:hover{background:var(--lilac-l);color:var(--lilac-d)}
-.fee-month-btn.active{font-weight:800;font-size:14px;position:relative;z-index:1}
-.fee-month-btn.m-future{background:var(--g5);color:var(--g3)}
-.fee-month-btn.m-future:hover{background:var(--g4);color:var(--g2)}
-.fee-month-btn.m-future.active{background:var(--g4);color:var(--g2)}
-.fee-month-btn.m-overdue{background:var(--amber-l);color:var(--amber)}
-.fee-month-btn.m-overdue.active{background:var(--amber);color:var(--white)}
-.fee-month-btn.m-confirmed{background:var(--green-l);color:var(--green)}
-.fee-month-btn.m-confirmed.active{background:var(--green);color:var(--white)}
-.fee-month-btn.m-current{background:var(--lilac-l);color:var(--lilac-d)}
-.fee-month-btn.m-current.active{background:var(--lilac);color:var(--white)}
+.fee-month-nav{display:table;table-layout:fixed;width:100%;border-collapse:separate;border-spacing:5px;margin-bottom:20px}
+.fee-month-btn{display:table-cell;padding:16px 0;font-size:14px;font-weight:600;border:1.5px solid var(--g4);border-radius:8px;background:var(--white);color:var(--g2);cursor:pointer;transition:all .15s;font-family:var(--sans);text-align:center;vertical-align:middle}
+.fee-month-btn:hover{background:var(--lilac-l);color:var(--lilac-d);border-color:var(--lilac-m)}
+.fee-month-btn.active{font-weight:800;font-size:15px}
+.fee-month-btn.m-future{background:var(--g5);color:var(--g3);border-color:var(--g4)}
+.fee-month-btn.m-future.active{background:var(--g4);color:var(--g2);border-color:var(--g3)}
+.fee-month-btn.m-overdue{background:var(--amber-l);color:var(--amber);border-color:var(--amber)}
+.fee-month-btn.m-overdue.active{background:var(--amber);color:var(--white);border-color:var(--amber)}
+.fee-month-btn.m-confirmed{background:var(--green-l);color:var(--green);border-color:var(--green)}
+.fee-month-btn.m-confirmed.active{background:var(--green);color:var(--white);border-color:var(--green)}
+.fee-month-btn.m-current{background:var(--lilac-l);color:var(--lilac-d);border-color:var(--lilac)}
+.fee-month-btn.m-current.active{background:var(--lilac);color:var(--white);border-color:var(--lilac-d)}
 .fee-zone-label{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g2);margin:22px 0 12px;display:flex;align-items:center;gap:10px}
 .fee-zone-label::after{content:'';flex:1;height:1px;background:var(--g4)}
 .fee-card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:14px;margin-bottom:6px}
 .fee-card{background:var(--white);border:1px solid var(--g4);border-radius:10px;overflow:hidden;transition:box-shadow .15s}
-.fee-card:hover{box-shadow:0 2px 14px rgba(0,0,0,.07)}
-.fee-card.is-confirmed{border-left:3px solid var(--green);opacity:.82}
-.fee-card.is-overdue{border-left:3px solid var(--lilac)}
-.fee-card.is-pending{border-left:3px solid var(--lilac)}
+.fee-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.fee-card.is-confirmed{opacity:.82}
 .fee-card-head{padding:14px 16px;border-bottom:1px solid var(--g4);display:flex;align-items:center;justify-content:space-between;gap:10px}
 .fee-card-identity{display:flex;align-items:center;gap:12px}
 .fee-card-name{font-size:16px;font-weight:700;color:var(--black)}
-.fee-card-country{font-size:12px;color:var(--g2);font-weight:400;margin-top:2px}
+.fee-card-country{font-size:12px;color:var(--g2);font-weight:400;margin-top:2px;margin-left:0}
 .fee-card-status-badge{font-size:12px;font-weight:700;display:flex;align-items:center;gap:5px;white-space:nowrap;padding:4px 10px;border-radius:99px}
 .fee-card-status-badge.s-confirmed{background:var(--green-l);color:var(--green)}
 .fee-card-status-badge.s-partial{background:var(--amber-l);color:var(--amber)}
 .fee-card-status-badge.s-unconfirmed{background:var(--red-l);color:var(--red)}
 .fee-formats-grid{display:flex;flex-direction:column}
-.fee-fmt-block{padding:14px 16px}.fee-fmt-block:nth-child(2){background:var(--g5)}
+.fee-fmt-block{padding:14px 16px}
 .fee-fmt-block+.fee-fmt-block{border-top:none;padding-top:8px}
 .fee-fmt-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .fee-titles-label{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--g2);cursor:pointer;user-select:none}
@@ -576,7 +572,7 @@ const EXHIBITORS=[
   {name:'Vox Cinemas',    country:'UAE',           formats:['4DX','ScreenX'],contact:'Kifah',          region:'MENA'},
 ];
 
-const SO_FMT={'SO201100':'4DX','SO201200':'ScreenX','SO201300':'Ultra'};
+const SO_FMT={'SO201100':'4DX','SO201200':'ScreenX','SO201300':'Ultra','SO201150':'4DX','SO201250':'ScreenX'};
 const CT_CONFIRMED='CT022010';
 
 function nav(id,el){
@@ -612,6 +608,9 @@ function normEx(e){
   if(lower==='empire'||lower==='empire cinema'||lower==='empire cinemas')return'Empire Cinemas';
   if(lower==='cinemax')return'Cinemax';
   if(lower==='kncc')return'KNCC';
+  // Format normalisation (called on format strings too)
+  if(s==='SX')return'ScreenX';
+  if(s==='sx')return'ScreenX';
   return s;
 }
 function fmtFromSO(so){return SO_FMT[so]||''}
@@ -692,6 +691,10 @@ function parseContracts(rows){
     const o={};
     hdr.forEach((h,i)=>o[h]=(r[i]||'').trim());
     if(o.exhibitor)o.exhibitor=normEx(o.exhibitor);
+    if(o.format){
+      if(o.format==='SX'||o.format==='sx')o.format='ScreenX';
+      if(o.format.toUpperCase()==='ULTRA4DX')o.format='Ultra';
+    }
     // handle ULTRA — expand to both formats in contracts too
     if((o.format||'').toUpperCase()==='ULTRA'||(o.format||'').toUpperCase()==='ULTRA4DX'){
       o.format='4DX'; // primary; ScreenX variant added below
@@ -761,6 +764,7 @@ function renderOverview(){
   const srcEx=S.booking.length?[...new Set(S.booking.map(d=>d.exhibitor))].filter(Boolean):EXHIBITORS.map(e=>e.name);
   const rows=srcEx.map(ex=>{
     const info=EXHIBITORS.find(e=>e.name===ex)||{};
+    const cardCountry=country||info.country||'—';
     if(region!=='all'&&info.region&&info.region!==region)return null;
     const exB=S.booking.filter(b=>b.exhibitor===ex);
     const exFmts=exB.length?[...new Set(exB.map(b=>b.format).filter(Boolean))]:(info.formats||[]);
@@ -918,7 +922,9 @@ function renderAnomalies(){
 
 // ── Fee key helpers ──────────────────────────────────────────
 // Exhibitor-level key (for status + actual fee)
-function feeExhibKey(month,exhibitor,format){return`${month}|${exhibitor}|${format}`}
+function feeExhibKey(month,exhibitor,format,country){
+  return`${month}|${exhibitor}|${country||''}|${format}`;
+}
 // Site-level key (for notes only)
 function feeSiteKey(month,exhibitor,site,format,title){return`SITE|${month}|${exhibitor}|${site}|${format}|${title}`}
 
@@ -934,26 +940,58 @@ function getNewTitlesForMonth(month){
 }
 
 // Get unique exhibitor+format combos for a month with their titles and sites
+function getExhibitorCountries(){
+  // Build map of exhibitor -> [countries] from site_data
+  const map={};
+  S.contracts.forEach(c=>{
+    if(!c.exhibitor||!c.country)return;
+    if(!map[c.exhibitor])map[c.exhibitor]=new Set();
+    map[c.exhibitor].add(c.country);
+  });
+  // Fallback to EXHIBITORS array
+  EXHIBITORS.forEach(e=>{
+    if(!map[e.name])map[e.name]=new Set([e.country||'—']);
+  });
+  return map;
+}
+
 function getFeeGroups(month){
   const rows=getNewTitlesForMonth(month);
   const groups={};
-  // First populate from actual booking data
+  const exCountries=getExhibitorCountries();
+
+  // Populate from booking data — key is exhibitor|country|format
   rows.forEach(b=>{
     if(!b.format)return;
-    const k=b.exhibitor+'|'+b.format;
-    if(!groups[k])groups[k]={exhibitor:b.exhibitor,format:b.format,titles:[],sites:[]};
+    // Look up country for this site from site_data
+    const siteRow=S.contracts.find(c=>c.exhibitor===b.exhibitor&&c.site===b.site);
+    const country=siteRow?.country||EXHIBITORS.find(e=>e.name===b.exhibitor)?.country||'—';
+    const k=b.exhibitor+'|'+country+'|'+b.format;
+    if(!groups[k])groups[k]={exhibitor:b.exhibitor,country,format:b.format,titles:[],sites:[]};
     if(!groups[k].titles.find(t=>t.title===b.title))
       groups[k].titles.push({title:b.title,releaseDate:b.releaseDate});
     groups[k].sites.push({site:b.site,title:b.title,releaseDate:b.releaseDate});
   });
-  // Then ensure ALL known exhibitors appear for ALL their formats — even with 0 titles
-  EXHIBITORS.forEach(e=>{
-    e.formats.forEach(fmt=>{
-      const k=e.name+'|'+fmt;
-      if(!groups[k])groups[k]={exhibitor:e.name,format:fmt,titles:[],sites:[],empty:true};
+
+  // Ensure ALL exhibitor+country+format combos appear even with 0 titles
+  Object.entries(exCountries).forEach(([exName,countries])=>{
+    const exInfo=EXHIBITORS.find(e=>e.name===exName);
+    const formats=exInfo?.formats||['4DX','ScreenX'];
+    countries.forEach(country=>{
+      formats.forEach(fmt=>{
+        const k=exName+'|'+country+'|'+fmt;
+        if(!groups[k])groups[k]={exhibitor:exName,country,format:fmt,titles:[],sites:[],empty:true};
+      });
     });
   });
-  return Object.values(groups).sort((a,b)=>a.exhibitor.localeCompare(b.exhibitor));
+
+  return Object.values(groups).sort((a,b)=>{
+    const exCmp=a.exhibitor.localeCompare(b.exhibitor);
+    if(exCmp!==0)return exCmp;
+    const cCmp=a.country.localeCompare(b.country);
+    if(cCmp!==0)return cCmp;
+    return a.format.localeCompare(b.format);
+  });
 }
 
 function getYearlyUsage(exhibitor,format,month){
@@ -1059,7 +1097,7 @@ function initFeeMonthNav(){
   nav.innerHTML=months.map(m=>{
     const st=getMonthStatus(m.val);
     const isActive=m.val===current;
-    return`<button class="fee-month-btn m-${st}${isActive?' active':''}" onclick="setFeeMonth('${m.val}')">${m.label}</button>`;
+    return`<div class="fee-month-btn m-${st}${isActive?' active':''}" onclick="setFeeMonth('${m.val}')" role="button" tabindex="0">${m.label}</div>`;
   }).join('');
 }
 
@@ -1108,7 +1146,7 @@ function renderFees(){
     const fmts=['4DX','ScreenX'];
     progressEl.innerHTML=`<div class="fee-progress-wrap">${fmts.map(fmt=>{
       const fg=groups.filter(g=>g.format===fmt);
-      const conf=fg.filter(g=>{const st=S.feeStatus[feeExhibKey(month,g.exhibitor,fmt)];return st==='Confirmed'||st==='Waived';}).length;
+      const conf=fg.filter(g=>{const st=S.feeStatus[feeExhibKey(month,g.exhibitor,fmt,g.country)];return st==='Confirmed'||st==='Waived';}).length;
       const tot=fg.length;
       const pct=tot?Math.round((conf/tot)*100):0;
       const done=conf===tot&&tot>0;
@@ -1121,34 +1159,40 @@ function renderFees(){
   }
 
   // Alert
-  const unconf=groups.filter(g=>{const st=S.feeStatus[feeExhibKey(month,g.exhibitor,g.format)]||'Unconfirmed';return st==='Unconfirmed';}).length;
+  const unconf=groups.filter(g=>{const st=S.feeStatus[feeExhibKey(month,g.exhibitor,g.format,g.country)]||'Unconfirmed';return st==='Unconfirmed';}).length;
   if(!groups.length){fa.innerHTML='';if(cardsEl)cardsEl.innerHTML='<div class="empty">No confirmed new releases for this month</div>';return;}
   if(unconf===0)fa.innerHTML=`<div class="alert-bar ok">✓ All fees confirmed for ${new Date(month+'-01').toLocaleString('en',{month:'long',year:'numeric'})}</div>`;
   else if(isOverdue)fa.innerHTML=`<div class="alert-bar danger">⚠ ${unconf} unconfirmed — overdue</div>`;
   else if(isCurrentMonth)fa.innerHTML=`<div class="alert-bar warn">⚠ ${unconf} unconfirmed — confirm before end of first week</div>`;
   else fa.innerHTML='';
 
-  // Group by exhibitor
+  // Group by exhibitor+country (one card per exhibitor+country combo)
   const byExhib={};
-  groups.forEach(g=>{if(!byExhib[g.exhibitor])byExhib[g.exhibitor]=[];byExhib[g.exhibitor].push(g);});
-
-  const needsAttn=[],confList=[];
-  Object.entries(byExhib).forEach(([ex,fg])=>{
-    const allDone=fg.every(g=>{const st=S.feeStatus[feeExhibKey(month,ex,g.format)];return st==='Confirmed'||st==='Waived';});
-    if(allDone)confList.push([ex,fg]);
-    else needsAttn.push([ex,fg]);
+  groups.forEach(g=>{
+    const k=g.exhibitor+'|'+(g.country||'—');
+    if(!byExhib[k])byExhib[k]=[];
+    byExhib[k].push(g);
   });
 
-  function buildCard(ex,fmtGroups){
+  const needsAttn=[],confList=[];
+  Object.entries(byExhib).forEach(([exKey,fg])=>{
+    const [ex,country]=exKey.split('|');
+    const allDone=fg.every(g=>{const st=S.feeStatus[feeExhibKey(month,ex,g.format,country)];return st==='Confirmed'||st==='Waived';});
+    if(allDone)confList.push([exKey,fg,ex,country]);
+    else needsAttn.push([exKey,fg,ex,country]);
+  });
+
+  function buildCard(ex,country,fmtGroups){
     const info=EXHIBITORS.find(e=>e.name===ex)||{};
-    const allDone=fmtGroups.every(g=>{const st=S.feeStatus[feeExhibKey(month,ex,g.format)];return st==='Confirmed'||st==='Waived';});
+    const cardCountry=country||info.country||'—';
+    const allDone=fmtGroups.every(g=>{const st=S.feeStatus[feeExhibKey(month,ex,g.format,g.country)];return st==='Confirmed'||st==='Waived';});
     const anyOverdue=isOverdue&&!allDone;
-    const canConfirm=fmtGroups.some(g=>{const st=S.feeStatus[feeExhibKey(month,ex,g.format)]||'Unconfirmed';return st!=='Confirmed'&&st!=='Waived';});
+    const canConfirm=fmtGroups.some(g=>{const st=S.feeStatus[feeExhibKey(month,ex,g.format,g.country)]||'Unconfirmed';return st!=='Confirmed'&&st!=='Waived';});
     const cardCls=allDone?'is-confirmed':anyOverdue?'is-overdue':'is-pending';
     const safeEx=ex.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
 
     const fmtBlocks=fmtGroups.map(g=>{
-      const key=feeExhibKey(month,ex,g.format);
+      const key=feeExhibKey(month,ex,g.format,g.country);
       const status=S.feeStatus[key]||'Unconfirmed';
       const actual=S.feeActual?.[key]||'';
       const c=getContract(ex,'',g.format);
@@ -1209,8 +1253,8 @@ function renderFees(){
     }).join('');
 
     // Card-level status badge
-    const allConf=fmtGroups.every(g=>{const st=S.feeStatus[feeExhibKey(month,ex,g.format)];return st==='Confirmed'||st==='Waived';});
-    const anyConf=fmtGroups.some(g=>{const st=S.feeStatus[feeExhibKey(month,ex,g.format)];return st==='Confirmed'||st==='Waived';});
+    const allConf=fmtGroups.every(g=>{const st=S.feeStatus[feeExhibKey(month,ex,g.format,country)];return st==='Confirmed'||st==='Waived';});
+    const anyConf=fmtGroups.some(g=>{const st=S.feeStatus[feeExhibKey(month,ex,g.format,country)];return st==='Confirmed'||st==='Waived';});
     const badgeCls=allConf?'s-confirmed':anyConf?'s-partial':'s-unconfirmed';
     const badgeTxt=allConf?'✓ Confirmed':anyConf?'Partial':'Unconfirmed';
     return`<div class="fee-card ${cardCls}">
@@ -1219,7 +1263,7 @@ function renderFees(){
           ${exhibitorAvatar(ex)}
           <div>
             <div class="fee-card-name">${ex}</div>
-            <div class="fee-card-country">${info.country||''}</div>
+            <div class="fee-card-country">${cardCountry}</div>
           </div>
         </div>
         <span class="fee-card-status-badge ${badgeCls}">${badgeTxt}</span>
@@ -1231,11 +1275,11 @@ function renderFees(){
   let html='';
   if(needsAttn.length){
     html+=`<div class="fee-zone-label">⚠ Needs attention — ${needsAttn.length}</div>`;
-    html+=`<div class="fee-card-grid">${needsAttn.map(([ex,g])=>buildCard(ex,g)).join('')}</div>`;
+    html+=`<div class="fee-card-grid">${needsAttn.map(([exKey,g,ex,country])=>buildCard(ex,country,g)).join('')}</div>`;
   }
   if(confList.length){
     html+=`<div class="fee-zone-label">✓ Confirmed — ${confList.length}</div>`;
-    html+=`<div class="fee-card-grid">${confList.map(([ex,g])=>buildCard(ex,g)).join('')}</div>`;
+    html+=`<div class="fee-card-grid">${confList.map(([exKey,g,ex,country])=>buildCard(ex,country,g)).join('')}</div>`;
   }
   if(cardsEl)cardsEl.innerHTML=html;
 }
@@ -1296,7 +1340,7 @@ function exportFees(){
   if(!groups.length){alert('No data to export');return;}
   const hdr='Exhibitor\tFormat\tTitles\tExpected Fee\tActual Fee\tStatus';
   const body=groups.map(g=>{
-    const key=feeExhibKey(month,g.exhibitor,g.format);
+    const key=feeExhibKey(month,g.exhibitor,g.format,g.country);
     const c=S.contracts.find(ct=>ct.format===g.format&&ct.exhibitor===g.exhibitor)||null;
     const perTitle=c?Number(c.standard_fee_amount)||0:0;
     const exp=perTitle?`${c.currency||'USD'} ${(perTitle*g.titles.length).toLocaleString()}`:'—';
