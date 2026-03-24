@@ -171,51 +171,62 @@ tbody tr:hover td{background:var(--lilac-l)}
 @media(max-width:900px){.sidebar{display:none}.stat-row{grid-template-columns:1fr 1fr}.two-col,.three-col{grid-template-columns:1fr}}
 
 /* ── Fee cards ── */
-.fee-month-nav{display:flex;justify-content:space-between;gap:0;margin-bottom:20px;width:100%}
-.fee-month-btn{flex:1;padding:9px 4px;border-radius:8px;font-size:13px;font-weight:500;border:1px solid var(--g4);background:var(--white);color:var(--g2);cursor:pointer;transition:all .15s;font-family:var(--sans);text-align:center;margin:0 2px}
+.fee-month-nav{display:flex;gap:5px;margin-bottom:22px;width:100%}
+.fee-month-btn{flex:1;padding:12px 2px;border-radius:8px;font-size:13px;font-weight:600;border:1.5px solid var(--g4);background:var(--white);color:var(--g2);cursor:pointer;transition:all .15s;font-family:var(--sans);text-align:center;line-height:1.2}
 .fee-month-btn:hover{border-color:var(--lilac-m);color:var(--lilac-d);background:var(--lilac-l)}
-.fee-month-btn.active{background:var(--lilac);color:var(--white);border-color:var(--lilac);font-weight:700;font-size:14px}
-.fee-month-btn.past{opacity:.5;font-size:12px}
-.fee-month-btn.future{opacity:.4;font-size:12px}
+.fee-month-btn.active{font-weight:800;font-size:15px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.fee-month-btn.m-future{background:var(--g5);color:var(--g3);border-color:var(--g4)}
+.fee-month-btn.m-future.active{background:var(--g4);color:var(--g2)}
+.fee-month-btn.m-overdue{background:var(--amber-l);color:var(--amber);border-color:var(--amber)}
+.fee-month-btn.m-overdue.active{background:var(--amber);color:var(--white);border-color:var(--amber)}
+.fee-month-btn.m-confirmed{background:var(--green-l);color:var(--green);border-color:var(--green)}
+.fee-month-btn.m-confirmed.active{background:var(--green);color:var(--white);border-color:var(--green)}
+.fee-month-btn.m-current{background:var(--lilac-l);color:var(--lilac-d);border-color:var(--lilac)}
+.fee-month-btn.m-current.active{background:var(--lilac);color:var(--white);border-color:var(--lilac)}
 .fee-zone-label{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g2);margin:22px 0 12px;display:flex;align-items:center;gap:10px}
 .fee-zone-label::after{content:'';flex:1;height:1px;background:var(--g4)}
-.fee-card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;margin-bottom:6px}
+.fee-card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:14px;margin-bottom:6px}
 .fee-card{background:var(--white);border:1px solid var(--g4);border-radius:10px;overflow:hidden;transition:box-shadow .15s}
 .fee-card:hover{box-shadow:0 2px 14px rgba(0,0,0,.07)}
 .fee-card.is-confirmed{border-left:3px solid var(--green);opacity:.82}
 .fee-card.is-overdue{border-left:3px solid var(--red)}
 .fee-card.is-pending{border-left:3px solid var(--lilac)}
-.fee-card .fee-fmt-block:last-child{border-bottom:none}
-.fee-card-head{padding:15px 18px 13px;border-bottom:1px solid var(--g4);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.fee-card-head{padding:14px 16px;border-bottom:1px solid var(--g4);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.fee-card-identity{display:flex;align-items:center;gap:12px}
 .fee-card-name{font-size:16px;font-weight:700;color:var(--black)}
-.fee-card-country{font-size:13px;color:var(--g2);font-weight:400;margin-left:8px}
+.fee-card-country{font-size:12px;color:var(--g2);font-weight:400;margin-top:2px}
+.fee-card-status-badge{font-size:12px;font-weight:700;display:flex;align-items:center;gap:5px;white-space:nowrap;padding:4px 10px;border-radius:99px}
+.fee-card-status-badge.s-confirmed{background:var(--green-l);color:var(--green)}
+.fee-card-status-badge.s-partial{background:var(--amber-l);color:var(--amber)}
+.fee-card-status-badge.s-unconfirmed{background:var(--g5);color:var(--g2)}
 .fee-formats-grid{display:flex;flex-direction:column}
-.fee-fmt-block{padding:16px 18px}
+.fee-fmt-block{padding:14px 16px}
 .fee-fmt-block+.fee-fmt-block{border-top:1px solid var(--g4)}
-.fee-fmt-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.fee-fmt-status{font-size:13px;font-weight:600;display:flex;align-items:center;gap:4px}
-.fee-fmt-pill-lg{font-size:13px!important;padding:4px 12px!important;font-weight:700!important}
-.fee-titles-section{margin-bottom:10px}
-.fee-titles-label{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--g2);margin-bottom:4px}
-.fee-titles-list{margin-top:6px;margin-bottom:6px}
+.fee-fmt-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.fee-titles-label{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--g2);cursor:pointer;user-select:none}
 .fee-titles-arrow{font-size:10px;color:var(--g2)}
+.fee-titles-list{margin-top:6px;margin-bottom:8px}
 .fee-title-item{font-size:13px;color:var(--g1);line-height:1.8}
-.fee-title-item{font-size:12px;color:var(--g1);line-height:1.7}
-.fee-amounts-section{margin-bottom:12px}
-.fee-amt-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:12px}
+.fee-amounts-row{display:flex;align-items:center;gap:6px;margin-bottom:12px;flex-wrap:wrap}
 .fee-amt-label{font-size:13px;color:var(--g2);font-weight:500;white-space:nowrap}
-.fee-amt-val{font-size:14px;font-weight:700;color:var(--black)}
-.fee-actual-input{font-size:13px;font-weight:600;color:var(--black);border:1px solid var(--g4);border-radius:6px;padding:6px 10px;width:100%;background:var(--white);font-family:var(--sans);outline:none;text-align:right;margin-top:2px}
+.fee-amt-val{font-size:14px;font-weight:700;color:var(--black);white-space:nowrap}
+.fee-amt-sep{color:var(--g3);margin:0 6px;font-size:14px}
+.fee-actual-input{font-size:14px;font-weight:600;color:var(--black);border:1px solid var(--g4);border-radius:6px;padding:5px 10px;width:130px;background:var(--white);font-family:var(--sans);outline:none;text-align:right}
 .fee-actual-input:focus{border-color:var(--lilac-m)}
 .fee-actual-input::placeholder{color:var(--g3);font-weight:400;font-size:12px}
-.fee-variance{font-size:12px;font-weight:600;text-align:right;margin-bottom:10px}
+.fee-variance{font-size:12px;font-weight:600;margin-bottom:10px}
 .fee-variance.neg{color:var(--amber)}.fee-variance.pos{color:var(--green)}
 .fee-cap-wrap{margin-bottom:10px}
-.fee-cap-top{display:flex;justify-content:space-between;font-size:10px;color:var(--g2);font-weight:500;margin-bottom:3px}
+.fee-cap-top{display:flex;justify-content:space-between;font-size:11px;color:var(--g2);font-weight:500;margin-bottom:3px}
 .fee-cap-track{height:3px;border-radius:2px;background:var(--g4);overflow:hidden}
 .fee-cap-fill{height:100%;border-radius:2px;transition:width .3s;background:var(--lilac-m)}
 .fee-cap-fill.cap-warn{background:var(--amber)}.fee-cap-fill.cap-full{background:var(--red)}
-.fee-fmt-footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;margin-top:4px;border-top:1px solid var(--g5)}
+.fee-fmt-footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;margin-top:6px;border-top:1px solid var(--g4)}
+.fee-confirm-btn{padding:7px 20px;background:var(--lilac);color:var(--white);border:none;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--sans);transition:background .15s}
+.fee-confirm-btn:hover{background:var(--lilac-d)}
+.fee-edit-btn{font-size:12px;color:var(--g2);background:none;border:1px solid var(--g4);border-radius:5px;cursor:pointer;font-family:var(--sans);padding:5px 10px;transition:all .15s}
+.fee-edit-btn:hover{color:var(--black);border-color:var(--g2)}
+.fee-waived-btn{padding:7px 20px;background:var(--blue-l);color:var(--blue);border:none;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--sans)}
 .fee-progress-wrap{display:flex;gap:20px;padding:12px 16px;background:var(--g5);border-radius:8px;margin-bottom:16px;flex-wrap:wrap}
 .fee-progress-fmt{display:flex;align-items:center;gap:10px;font-size:13px}
 .fee-progress-track{width:90px;height:4px;border-radius:2px;background:var(--g4);overflow:hidden}
@@ -953,20 +964,30 @@ function getCapInfo(c, exhibitor, format, month){
   return{bars};
 }
 
+function getMonthStatus(monthStr){
+  // Returns 'confirmed','overdue','current','future' based on fee data
+  const todayStr=`${new Date().getFullYear()}-${String(new Date().getMonth()+1).padStart(2,'0')}`;
+  if(monthStr>todayStr)return'future';
+  const groups=getFeeGroups(monthStr);
+  if(!groups.length)return monthStr===todayStr?'current':'future';
+  const allDone=groups.every(g=>{const st=S.feeStatus[feeExhibKey(monthStr,g.exhibitor,g.format)];return st==='Confirmed'||st==='Waived';});
+  if(allDone)return'confirmed';
+  if(monthStr<todayStr)return'overdue';
+  return'current';
+}
+
 function initFeeMonthNav(){
   const nav=document.getElementById('fee-month-nav');
   if(!nav)return;
-  const today=new Date();
   const current=document.getElementById('fee-month').value;
   const months=[];
   for(let m=1;m<=12;m++){
     months.push({val:`2026-${String(m).padStart(2,'0')}`,label:new Date(2026,m-1,1).toLocaleString('en',{month:'short'})});
   }
-  const todayStr=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}`;
   nav.innerHTML=months.map(m=>{
-    const isPast=m.val<todayStr,isFuture=m.val>todayStr,isActive=m.val===current;
-    return`<button class="fee-month-btn${isActive?' active':''}${isPast&&!isActive?' past':''}${isFuture&&!isActive?' future':''}"
-      onclick="setFeeMonth('${m.val}')">${m.label}</button>`;
+    const st=getMonthStatus(m.val);
+    const isActive=m.val===current;
+    return`<button class="fee-month-btn m-${st}${isActive?' active':''}" onclick="setFeeMonth('${m.val}')">${m.label}</button>`;
   }).join('');
 }
 
@@ -1094,34 +1115,42 @@ function renderFees(){
           </div>
           <div id="${titlesId}" class="fee-titles-list" style="display:none">${titleItems}</div>
         </div>
-        <div class="fee-amounts-section">
-          <div class="fee-amt-row"><span class="fee-amt-label">Expected</span><span class="fee-amt-val">${expVal}</span></div>
-          <div class="fee-amt-row"><span class="fee-amt-label">Actual</span>
-            <input class="fee-actual-input" type="text" value="${actual.replace(/"/g,'&quot;')}" placeholder="enter amount"
-              onchange="saveFeeActual('${key}',this.value);renderFees()">
-          </div>
+        <div class="fee-amounts-row">
+          <span class="fee-amt-label">Expected</span>
+          <span class="fee-amt-val">${expVal}</span>
+          <span class="fee-amt-sep">·</span>
+          <span class="fee-amt-label">Actual</span>
+          <input class="fee-actual-input" type="text" value="${actual.replace(/"/g,'&quot;')}" placeholder="enter amount"
+            onchange="saveFeeActual('${key}',this.value)">
         </div>
         ${varHtml}
         ${capHtml}
         <div class="fee-fmt-footer">
-          <select style="font-size:12px;padding:4px 8px;border:1px solid var(--g4);border-radius:5px;font-family:var(--sans)"
-            onchange="saveFeeStatus('${key}',this.value);renderFees()" style="font-size:13px;padding:6px 10px;border:1px solid var(--g4);border-radius:6px;font-family:var(--sans)">
-            ${['Unconfirmed','In Progress','Confirmed','Waived'].map(s=>`<option${s===status?' selected':''}>${s}</option>`).join('')}
-          </select>
-          <button class="btn btn-sm btn-ghost" style="font-size:11px" onclick="openFeeDetail('${month}','${safeEx}','${safeFmt}')">Detail →</button>
+          ${status==='Confirmed'||status==='Waived'
+            ? `<button class="fee-edit-btn" onclick="saveFeeStatus('${key}','Unconfirmed');renderFees()">Edit</button>
+               <span style="font-size:13px;font-weight:700;color:var(--green)">✓ ${status}</span>`
+            : `<button class="fee-confirm-btn" onclick="saveFeeStatus('${key}','Confirmed');renderFees()">Confirm</button>
+               <button class="fee-edit-btn" onclick="openFeeDetail('${month}','${safeEx}','${safeFmt}')">Detail →</button>`
+          }
         </div>
       </div>`;
     }).join('');
 
+    // Card-level status badge
+    const allConf=fmtGroups.every(g=>{const st=S.feeStatus[feeExhibKey(month,ex,g.format)];return st==='Confirmed'||st==='Waived';});
+    const anyConf=fmtGroups.some(g=>{const st=S.feeStatus[feeExhibKey(month,ex,g.format)];return st==='Confirmed'||st==='Waived';});
+    const badgeCls=allConf?'s-confirmed':anyConf?'s-partial':'s-unconfirmed';
+    const badgeTxt=allConf?'✓ Confirmed':anyConf?'Partial':'Unconfirmed';
     return`<div class="fee-card ${cardCls}">
       <div class="fee-card-head">
-        <div style="display:flex;align-items:center;gap:12px">
+        <div class="fee-card-identity">
           ${exhibitorAvatar(ex)}
           <div>
             <div class="fee-card-name">${ex}</div>
             <div class="fee-card-country">${info.country||''}</div>
           </div>
         </div>
+        <span class="fee-card-status-badge ${badgeCls}">${badgeTxt}</span>
       </div>
       <div class="fee-formats-grid">${fmtBlocks}</div>
     </div>`;
