@@ -4,19 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>4DPLEX — Exhibitor Intelligence</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
 :root{
   --lilac:#8878d0;--lilac-l:#f2f0fc;--lilac-m:#c4bce8;--lilac-d:#5e52a8;
   --black:#0f0f0f;--g1:#383838;--g2:#767676;--g3:#b0b0b0;--g4:#e4e4e4;--g5:#f6f6f6;--white:#ffffff;
   --green:#287a50;--green-l:#eaf4ee;--amber:#9a6c0a;--amber-l:#fef6e4;
   --red:#b83030;--red-l:#fdecea;--blue:#2060a8;--blue-l:#e8f0fb;
-  --sans:'DM Sans',sans-serif;--display:'Syne',sans-serif;--mono:'DM Mono',monospace;
+  --sans:'Helvetica Neue',Helvetica,Arial,sans-serif;--display:'Syne',sans-serif;--mono:'DM Mono',monospace;
   --sidebar:210px;--topbar:52px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
-body{font-family:var(--sans);background:var(--white);color:var(--black);font-size:13px;line-height:1.5}
+body{font-family:var(--sans);background:var(--white);color:var(--black);font-size:14px;line-height:1.6}
 .shell{display:flex;height:100vh;overflow:hidden}
 .sidebar{width:var(--sidebar);min-width:var(--sidebar);border-right:1px solid var(--g4);display:flex;flex-direction:column;background:var(--white);height:100vh;overflow-y:auto}
 .logo{padding:18px 16px 16px;border-bottom:1px solid var(--g4)}
@@ -26,7 +27,7 @@ body{font-family:var(--sans);background:var(--white);color:var(--black);font-siz
 .nav{padding:10px 8px;flex:1}
 .nav-group{margin-bottom:20px}
 .nav-group-label{font-size:9px;font-weight:500;color:var(--g3);letter-spacing:.1em;text-transform:uppercase;padding:0 8px;margin-bottom:3px}
-.nav-item{display:flex;align-items:center;gap:9px;width:100%;padding:7px 8px;border-radius:6px;border:none;background:none;cursor:pointer;font-family:var(--sans);font-size:12px;color:var(--g1);text-align:left;transition:background .12s,color .12s}
+.nav-item{display:flex;align-items:center;gap:9px;width:100%;padding:7px 8px;border-radius:6px;border:none;background:none;cursor:pointer;font-family:var(--sans);font-size:13px;color:var(--g1);text-align:left;transition:background .12s,color .12s}
 .nav-item:hover{background:var(--g5);color:var(--black)}
 .nav-item.active{background:var(--lilac-l);color:var(--lilac-d);font-weight:500}
 .nav-icon{width:15px;height:15px;flex-shrink:0;opacity:.7}
@@ -42,10 +43,10 @@ body{font-family:var(--sans);background:var(--white);color:var(--black);font-siz
 .topbar-right{display:flex;align-items:center;gap:8px}
 .content{flex:1;overflow-y:auto;padding:24px}
 .pane{display:none}.pane.active{display:block}
-select,input[type=text],input[type=url],textarea{border:1px solid var(--g4);border-radius:6px;padding:6px 10px;font-size:12px;font-family:var(--sans);background:var(--white);color:var(--black);outline:none;transition:border-color .15s}
+select,input[type=text],input[type=url],textarea{border:1px solid var(--g4);border-radius:6px;padding:6px 10px;font-size:13px;font-family:var(--sans);background:var(--white);color:var(--black);outline:none;transition:border-color .15s}
 select:focus,input:focus,textarea:focus{border-color:var(--lilac-m)}
 textarea{resize:vertical}
-.btn{border:1px solid var(--g4);border-radius:6px;padding:6px 13px;font-size:12px;font-family:var(--sans);background:var(--white);color:var(--black);cursor:pointer;transition:background .1s,border-color .15s;white-space:nowrap}
+.btn{border:1px solid var(--g4);border-radius:6px;padding:6px 13px;font-size:13px;font-family:var(--sans);background:var(--white);color:var(--black);cursor:pointer;transition:background .1s,border-color .15s;white-space:nowrap}
 .btn:hover{background:var(--g5)}
 .btn-primary{background:var(--lilac);color:var(--white);border-color:var(--lilac)}
 .btn-primary:hover{background:var(--lilac-d);border-color:var(--lilac-d)}
@@ -54,26 +55,26 @@ textarea{resize:vertical}
 .btn-ghost:hover{background:var(--g5);color:var(--black);border-color:var(--g4)}
 .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
 .stat{background:var(--g5);border-radius:8px;padding:16px 18px}
-.stat-label{font-size:10px;font-weight:500;color:var(--g2);letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px}
-.stat-value{font-family:var(--display);font-size:28px;font-weight:600;color:var(--lilac-d);letter-spacing:-.02em;line-height:1}
-.stat-sub{font-size:11px;color:var(--g3);margin-top:5px}
+.stat-label{font-size:11px;font-weight:500;color:var(--g2);letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}
+.stat-value{font-family:var(--display);font-size:30px;font-weight:600;color:var(--lilac-d);letter-spacing:-.02em;line-height:1}
+.stat-sub{font-size:12px;color:var(--g3);margin-top:5px}
 .stat-urgent .stat-value{color:var(--amber)}
 .sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.sec-title{font-size:10px;font-weight:500;color:var(--g2);letter-spacing:.08em;text-transform:uppercase}
+.sec-title{font-size:11px;font-weight:500;color:var(--g2);letter-spacing:.06em;text-transform:uppercase}
 .sec-controls{display:flex;gap:6px;align-items:center}
 .panel{border:1px solid var(--g4);border-radius:8px;overflow:hidden;margin-bottom:18px}
 .panel-head{padding:9px 14px;border-bottom:1px solid var(--g4);display:flex;align-items:center;justify-content:space-between;background:var(--white)}
 .panel-head-title{font-size:12px;font-weight:500}
 .panel-body{padding:16px}
 .tbl-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:12px}
-th{padding:7px 14px;text-align:left;font-size:10px;font-weight:500;color:var(--g2);letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--g4);white-space:nowrap;background:var(--white)}
-td{padding:9px 14px;border-bottom:1px solid var(--g4);vertical-align:middle}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{padding:8px 14px;text-align:left;font-size:11px;font-weight:500;color:var(--g2);letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid var(--g4);white-space:nowrap;background:var(--white)}
+td{padding:10px 14px;border-bottom:1px solid var(--g4);vertical-align:middle}
 tr:last-child td{border-bottom:none}
 tbody tr{transition:background .08s}
 tbody tr:hover td{background:var(--lilac-l)}
 .fw{font-weight:500}.dim{color:var(--g2)}.mono{font-family:var(--mono);font-size:11px}
-.pill{display:inline-flex;align-items:center;padding:2px 7px;border-radius:99px;font-size:10px;font-weight:500;white-space:nowrap}
+.pill{display:inline-flex;align-items:center;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:500;white-space:nowrap}
 .p-4dx{background:var(--lilac-l);color:var(--lilac-d)}
 .p-sx{background:#e5f3ee;color:#1a6b50}
 .p-green{background:var(--green-l);color:var(--green)}
@@ -348,6 +349,30 @@ tbody tr:hover td{background:var(--lilac-l)}
           <button class="btn" onclick="syncSheets()">Sync now</button>
         </div>
         <div id="gs-feedback" style="font-size:11px;color:var(--g2)">Not connected</div>
+      </div>
+
+      <div class="sec-head" style="margin-bottom:10px"><span class="sec-title">Google sign-in for write-back</span></div>
+      <div class="panel panel-body" style="margin-bottom:20px;padding:16px">
+        <p style="font-size:12px;color:var(--g2);margin-bottom:14px;line-height:1.8">
+          Sign in with the Google account that owns the sheet to enable saving code fee confirmations back to a <code style="font-family:var(--mono);background:var(--g5);padding:1px 5px;border-radius:3px;font-size:11px">fee_confirmations</code> tab automatically.
+        </p>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+          <div id="google-signin-btn"></div>
+          <button class="btn" id="signout-btn" onclick="signOut()" style="display:none">Sign out</button>
+        </div>
+        <div id="auth-status" style="font-size:12px;color:var(--g2)">Not signed in — fee status saved locally only</div>
+        <div style="margin-top:12px;font-size:11px;color:var(--g3);line-height:1.7">
+          You need to set up a Google Cloud OAuth client ID for write-back to work.<br>
+          1. Go to <a href="https://console.cloud.google.com" target="_blank" style="color:var(--lilac)">console.cloud.google.com</a> → APIs &amp; Services → Credentials<br>
+          2. Create OAuth 2.0 Client ID → Web application<br>
+          3. Add <code style="font-family:var(--mono);background:var(--g5);padding:1px 4px;border-radius:3px">https://katesmall.github.io</code> as an authorised JavaScript origin<br>
+          4. Paste your Client ID below and save
+        </div>
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <input type="text" id="oauth-client-id" placeholder="your-client-id.apps.googleusercontent.com" style="flex:1;font-family:var(--mono);font-size:11px" value="${localStorage.getItem('oauthClientId')||''}">
+          <button class="btn btn-primary" onclick="saveClientId()">Save</button>
+        </div>
+        <div id="oauth-feedback" style="font-size:11px;color:var(--g2);margin-top:8px"></div>
       </div>
 
       <div class="sec-head" style="margin-bottom:10px"><span class="sec-title">Exhibitor directory</span></div>
@@ -874,9 +899,184 @@ function updateDataSummary(){
   document.getElementById('data-summary').innerHTML=`<strong>${S.booking.length}</strong> booking rows · <strong>${S.bo.length}</strong> BO rows · <strong>${ex}</strong> exhibitors · <strong>${titles}</strong> titles · <strong>${S.catalogue.length}</strong> catalogue titles · <strong>${S.contracts.length}</strong> contract rules`;
 }
 
+// ══════════════════════════════════════════════════════════════
+// GOOGLE OAUTH + WRITE-BACK
+// ══════════════════════════════════════════════════════════════
+let gAuthToken = localStorage.getItem('gAuthToken') || null;
+let gTokenExpiry = parseInt(localStorage.getItem('gTokenExpiry') || '0');
+
+function saveClientId() {
+  const id = document.getElementById('oauth-client-id').value.trim();
+  if (!id) { alert('Paste your OAuth Client ID first'); return; }
+  localStorage.setItem('oauthClientId', id);
+  document.getElementById('oauth-feedback').textContent = 'Client ID saved — now click Sign in with Google';
+  initGoogleAuth();
+}
+
+function initGoogleAuth() {
+  const clientId = localStorage.getItem('oauthClientId');
+  if (!clientId) return;
+  if (typeof google === 'undefined') { setTimeout(initGoogleAuth, 500); return; }
+  try {
+    google.accounts.oauth2.initTokenClient({
+      client_id: clientId,
+      scope: 'https://www.googleapis.com/auth/spreadsheets',
+      callback: (resp) => {
+        if (resp.error) { document.getElementById('auth-status').textContent = 'Auth error: ' + resp.error; return; }
+        gAuthToken = resp.access_token;
+        gTokenExpiry = Date.now() + (resp.expires_in - 60) * 1000;
+        localStorage.setItem('gAuthToken', gAuthToken);
+        localStorage.setItem('gTokenExpiry', gTokenExpiry);
+        document.getElementById('auth-status').textContent = '✓ Signed in — fee confirmations will save to sheet';
+        document.getElementById('auth-status').style.color = 'var(--green)';
+        document.getElementById('signout-btn').style.display = 'inline-block';
+      }
+    });
+    // Render sign-in button
+    const btnDiv = document.getElementById('google-signin-btn');
+    if (btnDiv && !btnDiv.hasChildNodes()) {
+      const btn = document.createElement('button');
+      btn.className = 'btn btn-primary';
+      btn.textContent = 'Sign in with Google';
+      btn.onclick = requestToken;
+      btnDiv.appendChild(btn);
+    }
+    // Check if we have a valid stored token
+    if (gAuthToken && Date.now() < gTokenExpiry) {
+      document.getElementById('auth-status').textContent = '✓ Signed in — fee confirmations will save to sheet';
+      document.getElementById('auth-status').style.color = 'var(--green)';
+      document.getElementById('signout-btn').style.display = 'inline-block';
+    }
+  } catch(e) { console.warn('Google auth init failed:', e); }
+}
+
+let tokenClient = null;
+function requestToken() {
+  const clientId = localStorage.getItem('oauthClientId');
+  if (!clientId) { alert('Save your OAuth Client ID first'); return; }
+  tokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: clientId,
+    scope: 'https://www.googleapis.com/auth/spreadsheets',
+    callback: (resp) => {
+      if (resp.error) { document.getElementById('auth-status').textContent = 'Auth error: ' + resp.error; return; }
+      gAuthToken = resp.access_token;
+      gTokenExpiry = Date.now() + (resp.expires_in - 60) * 1000;
+      localStorage.setItem('gAuthToken', gAuthToken);
+      localStorage.setItem('gTokenExpiry', String(gTokenExpiry));
+      document.getElementById('auth-status').textContent = '✓ Signed in — fee confirmations will save to sheet';
+      document.getElementById('auth-status').style.color = 'var(--green)';
+      document.getElementById('signout-btn').style.display = 'inline-block';
+    }
+  });
+  tokenClient.requestAccessToken();
+}
+
+function signOut() {
+  gAuthToken = null; gTokenExpiry = 0;
+  localStorage.removeItem('gAuthToken'); localStorage.removeItem('gTokenExpiry');
+  document.getElementById('auth-status').textContent = 'Signed out — fee status saved locally only';
+  document.getElementById('auth-status').style.color = 'var(--g2)';
+  document.getElementById('signout-btn').style.display = 'none';
+}
+
+async function writeFeesToSheet(month) {
+  if (!gAuthToken || Date.now() > gTokenExpiry) {
+    console.warn('No valid auth token — fees saved locally only');
+    return false;
+  }
+  if (!S.sheetId) return false;
+
+  const rows = getFeeRows(month);
+  if (!rows.length) return false;
+
+  // Build rows to write: header + data
+  const header = ['Month','Exhibitor','Site','Format','Title','Release Date','Fee Amount','Currency','Status','Notes','Last Updated'];
+  const data = rows.map(r => {
+    const key = feeKey(month, r);
+    const c = getContract(r.exhibitor, r.site, r.format);
+    return [
+      month, r.exhibitor, r.site, r.format, r.title, r.releaseDate,
+      c ? (c.standard_fee_amount || c.flat_monthly_amount || '') : '',
+      c ? (c.currency || 'USD') : 'USD',
+      S.feeStatus[key] || 'Pending',
+      S.feeNotes[key] || '',
+      new Date().toISOString().split('T')[0]
+    ];
+  });
+
+  // Check if fee_confirmations tab exists, create if not
+  try {
+    // First try to clear existing rows for this month in the tab
+    const rangeCheckUrl = `https://sheets.googleapis.com/v4/spreadsheets/${S.sheetId}/values/fee_confirmations!A1:A1`;
+    const checkRes = await fetch(rangeCheckUrl, { headers: { Authorization: `Bearer ${gAuthToken}` } });
+
+    if (!checkRes.ok) {
+      // Tab doesn't exist — create it
+      await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${S.sheetId}:batchUpdate`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${gAuthToken}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ requests: [{ addSheet: { properties: { title: 'fee_confirmations' } } }] })
+      });
+      // Write header row
+      await writeRange('fee_confirmations!A1', [header]);
+    }
+
+    // Find last row and append
+    const appendUrl = `https://sheets.googleapis.com/v4/spreadsheets/${S.sheetId}/values/fee_confirmations!A:A:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;
+    const appendRes = await fetch(appendUrl, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${gAuthToken}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ values: data })
+    });
+    if (appendRes.ok) {
+      console.log('Fees written to sheet successfully');
+      return true;
+    }
+  } catch(e) {
+    console.error('Write to sheet failed:', e);
+  }
+  return false;
+}
+
+async function writeRange(range, values) {
+  return fetch(`https://sheets.googleapis.com/v4/spreadsheets/${S.sheetId}/values/${encodeURIComponent(range)}?valueInputOption=USER_ENTERED`, {
+    method: 'PUT',
+    headers: { Authorization: `Bearer ${gAuthToken}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ values })
+  });
+}
+
+// Override saveFeeStatus to also write to sheet when auth available
+const _origSaveFeeStatus = saveFeeStatus;
+function saveFeeStatus(key, val) {
+  _origSaveFeeStatus(key, val);
+  // Extract month from key (format: "2026-03|Exhibitor|Site|Format|Title")
+  const month = key.split('|')[0];
+  if (gAuthToken && Date.now() < gTokenExpiry) {
+    writeFeesToSheet(month).then(ok => {
+      if (ok) {
+        const topStatus = document.getElementById('topbar-sync-status');
+        if (topStatus) { topStatus.textContent = '✓ fee saved to sheet'; setTimeout(() => { if(topStatus.textContent.includes('fee saved')) topStatus.textContent = ''; }, 3000); }
+      }
+    });
+  }
+}
+
 (function init(){
   renderOverview();renderDirectory();
   if(S.sheetId){document.getElementById('gs-url').value=`https://docs.google.com/spreadsheets/d/${S.sheetId}`;setConnected();syncSheets();}
+  // Restore oauth client id input value
+  const cidInput = document.getElementById('oauth-client-id');
+  if (cidInput) cidInput.value = localStorage.getItem('oauthClientId') || '';
+  // Init google auth if client id already saved
+  if (localStorage.getItem('oauthClientId')) setTimeout(initGoogleAuth, 1000);
+  // Restore auth status if token still valid
+  if (gAuthToken && Date.now() < gTokenExpiry) {
+    const as = document.getElementById('auth-status');
+    if (as) { as.textContent = '✓ Signed in — fee confirmations will save to sheet'; as.style.color = 'var(--green)'; }
+    const sb = document.getElementById('signout-btn');
+    if (sb) sb.style.display = 'inline-block';
+  }
 })();
 </script>
 </body>
