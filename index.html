@@ -171,8 +171,8 @@ tbody tr:hover td{background:var(--lilac-l)}
 @media(max-width:900px){.sidebar{display:none}.stat-row{grid-template-columns:1fr 1fr}.two-col,.three-col{grid-template-columns:1fr}}
 
 /* ── Fee cards ── */
-.fee-month-nav{display:flex;gap:5px;margin-bottom:22px;width:100%}
-.fee-month-btn{flex:1;padding:12px 2px;border-radius:8px;font-size:13px;font-weight:600;border:1.5px solid var(--g4);background:var(--white);color:var(--g2);cursor:pointer;transition:all .15s;font-family:var(--sans);text-align:center;line-height:1.2}
+.fee-month-nav{display:flex;gap:6px;margin-bottom:22px;width:100%}
+.fee-month-btn{flex:1;min-width:0;padding:14px 2px;border-radius:8px;font-size:14px;font-weight:600;border:1.5px solid var(--g4);background:var(--white);color:var(--g2);cursor:pointer;transition:all .15s;font-family:var(--sans);text-align:center;line-height:1.2}
 .fee-month-btn:hover{border-color:var(--lilac-m);color:var(--lilac-d);background:var(--lilac-l)}
 .fee-month-btn.active{font-weight:800;font-size:15px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
 .fee-month-btn.m-future{background:var(--g5);color:var(--g3);border-color:var(--g4)}
@@ -200,8 +200,8 @@ tbody tr:hover td{background:var(--lilac-l)}
 .fee-card-status-badge.s-partial{background:var(--amber-l);color:var(--amber)}
 .fee-card-status-badge.s-unconfirmed{background:var(--g5);color:var(--g2)}
 .fee-formats-grid{display:flex;flex-direction:column}
-.fee-fmt-block{padding:14px 16px}
-.fee-fmt-block+.fee-fmt-block{border-top:1px solid var(--g4)}
+.fee-fmt-block{padding:14px 16px}.fee-fmt-block:nth-child(2){background:var(--g5)}
+.fee-fmt-block+.fee-fmt-block{border-top:none;padding-top:8px}
 .fee-fmt-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .fee-titles-label{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--g2);cursor:pointer;user-select:none}
 .fee-titles-arrow{font-size:10px;color:var(--g2)}
@@ -222,8 +222,8 @@ tbody tr:hover td{background:var(--lilac-l)}
 .fee-cap-fill{height:100%;border-radius:2px;transition:width .3s;background:var(--lilac-m)}
 .fee-cap-fill.cap-warn{background:var(--amber)}.fee-cap-fill.cap-full{background:var(--red)}
 .fee-fmt-footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;margin-top:6px;border-top:1px solid var(--g4)}
-.fee-confirm-btn{padding:7px 20px;background:var(--lilac);color:var(--white);border:none;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--sans);transition:background .15s}
-.fee-confirm-btn:hover{background:var(--lilac-d)}
+.fee-confirm-btn{padding:7px 20px;background:var(--white);color:var(--lilac-d);border:1.5px solid var(--lilac);border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--sans);transition:all .15s}
+.fee-confirm-btn:hover{background:var(--lilac-l);border-color:var(--lilac-d)}
 .fee-edit-btn{font-size:12px;color:var(--g2);background:none;border:1px solid var(--g4);border-radius:5px;cursor:pointer;font-family:var(--sans);padding:5px 10px;transition:all .15s}
 .fee-edit-btn:hover{color:var(--black);border-color:var(--g2)}
 .fee-waived-btn{padding:7px 20px;background:var(--blue-l);color:var(--blue);border:none;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--sans)}
@@ -531,35 +531,49 @@ const S={booking:[],bo:[],catalogue:[],contracts:[],sheetId:localStorage.getItem
 
 
 const EXHIBITOR_BRANDS = {
-  'VOX Cinemas':    {color:'#e63946', initials:'VOX'},
-  'Event':          {color:'#2d6a4f', initials:'EV'},
-  'Muvi Cinemas':   {color:'#7b2d8b', initials:'MV'},
-  'Hoyts':          {color:'#e76f51', initials:'HY'},
-  'Hoyts Cinema':   {color:'#e76f51', initials:'HY'},
-  'Cinescape':      {color:'#1d3557', initials:'CS'},
-  'Reel Cinemas':   {color:'#f4a261', initials:'RC'},
-  'NOVO Cinemas':   {color:'#264653', initials:'NV'},
-  'Novo Cinemas':   {color:'#264653', initials:'NV'},
-  'KNCC':           {color:'#457b9d', initials:'KN'},
-  'Galaxy Cinemas': {color:'#6a0572', initials:'GX'},
-  'Empire Cinemas': {color:'#c1121f', initials:'EM'},
-  'Nu Metro':       {color:'#023e8a', initials:'NM'},
-  'NU Metro':       {color:'#023e8a', initials:'NM'},
-  'Scene Cinema':   {color:'#48cae4', initials:'SC'},
-  'Novo Cinemas':   {color:'#264653', initials:'NV'},
+  'Cinemax':        {color:'#1a3a5c', initials:'CX', dark:false},
+  'Empire Cinemas': {color:'#c1121f', initials:'EM', dark:false},
+  'Event Cinemas':  {color:'#2d6a4f', initials:'EV', dark:false},
+  'Hoyts Cinemas':  {color:'#e76f51', initials:'HY', dark:false},
+  'KNCC':           {color:'#457b9d', initials:'KN', dark:false},
+  'Muvi Cinemas':   {color:'#7b2d8b', initials:'MV', dark:false},
+  'Novo Cinemas':   {color:'#264653', initials:'NV', dark:false},
+  'Nu Metro':       {color:'#023e8a', initials:'NM', dark:false},
+  'Pathé':          {color:'#e9c46a', initials:'PT', dark:true},
+  'Reel Cinemas':   {color:'#f4a261', initials:'RC', dark:true},
+  'Scene Cinemas':  {color:'#48cae4', initials:'SC', dark:true},
+  'Galaxy Cinemas': {color:'#6a0572', initials:'GX', dark:false},
+  'Village Cinemas':{color:'#e63965', initials:'VG', dark:false},
+  'Vox Cinemas':    {color:'#d62828', initials:'VX', dark:false},
+  // Legacy/alternate names
+  'Event':          {color:'#2d6a4f', initials:'EV', dark:false},
+  'Hoyts Cinema':   {color:'#e76f51', initials:'HY', dark:false},
+  'Novo Cinemas':   {color:'#264653', initials:'NV', dark:false},
+  'Nu Metro':       {color:'#023e8a', initials:'NM', dark:false},
+  'NU Metro':       {color:'#023e8a', initials:'NM', dark:false},
+  'VOX Cinemas':    {color:'#d62828', initials:'VX', dark:false},
+  'Scene Cinema':   {color:'#48cae4', initials:'SC', dark:true},
 };
 function exhibitorAvatar(name){
-  const b=EXHIBITOR_BRANDS[name]||{color:'#8878d0',initials:(name||'?').substring(0,2).toUpperCase()};
-  return `<div style="width:38px;height:38px;border-radius:8px;background:${b.color};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:800;color:#fff;letter-spacing:.03em;font-family:var(--sans)">${b.initials}</div>`;
+  const b=EXHIBITOR_BRANDS[name]||{color:'#8878d0',initials:(name||'?').replace(/[^A-Z]/g,'').substring(0,2)||name.substring(0,2).toUpperCase(),dark:false};
+  return `<div style="width:38px;height:38px;border-radius:8px;background:${b.color};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:800;color:${b.dark?'#1a1a1a':'#fff'};letter-spacing:.03em;font-family:var(--sans)">${b.initials}</div>`;
 }
+
 const EXHIBITORS=[
-  {name:'Cinescape',country:'Kuwait',formats:['4DX','ScreenX'],contact:'Renice Jacobs',region:'MENA'},
-  {name:'VOX Cinemas',country:'UAE',formats:['4DX','ScreenX'],contact:'Kifah',region:'MENA'},
-  {name:'Muvi Cinemas',country:'Saudi Arabia',formats:['4DX','ScreenX'],contact:'Homer',region:'MENA'},
-  {name:'Reel Cinemas',country:'UAE',formats:['4DX','ScreenX'],contact:'Suhas',region:'MENA'},
-  {name:'Novo Cinemas',country:'Qatar',formats:['4DX','ScreenX'],contact:'Mahesh Simpson',region:'MENA'},
-  {name:'Scene Cinema',country:'Egypt',formats:['4DX','ScreenX'],contact:'Rowan',region:'MENA'},
-  {name:'Event',country:'Australia',formats:['4DX','ScreenX'],contact:'—',region:'AUS'},
+  {name:'Cinemax',        country:'Angola',       formats:['4DX','ScreenX'],contact:'—',              region:'MENA'},
+  {name:'Empire Cinemas', country:'Saudi Arabia',  formats:['4DX','ScreenX'],contact:'—',              region:'MENA'},
+  {name:'Event Cinemas',  country:'Australia',     formats:['4DX','ScreenX'],contact:'—',              region:'AUS'},
+  {name:'Hoyts Cinemas',  country:'Australia',     formats:['4DX','ScreenX'],contact:'—',              region:'AUS'},
+  {name:'KNCC',           country:'Kuwait',        formats:['4DX','ScreenX'],contact:'—',              region:'MENA'},
+  {name:'Muvi Cinemas',   country:'Saudi Arabia',  formats:['4DX','ScreenX'],contact:'Homer',          region:'MENA'},
+  {name:'Novo Cinemas',   country:'Qatar',         formats:['4DX','ScreenX'],contact:'Mahesh Simpson', region:'MENA'},
+  {name:'Nu Metro',       country:'South Africa',  formats:['4DX','ScreenX'],contact:'—',              region:'MENA'},
+  {name:'Pathé',          country:'France',        formats:['4DX','ScreenX'],contact:'—',              region:'MENA'},
+  {name:'Reel Cinemas',   country:'UAE',           formats:['4DX','ScreenX'],contact:'Suhas',          region:'MENA'},
+  {name:'Scene Cinemas',  country:'Egypt',         formats:['4DX','ScreenX'],contact:'Rowan',          region:'MENA'},
+  {name:'Galaxy Cinemas', country:'—',             formats:['4DX','ScreenX'],contact:'—',              region:'MENA'},
+  {name:'Village Cinemas',country:'Australia',     formats:['4DX','ScreenX'],contact:'—',              region:'AUS'},
+  {name:'Vox Cinemas',    country:'UAE',           formats:['4DX','ScreenX'],contact:'Kifah',          region:'MENA'},
 ];
 
 const SO_FMT={'SO201100':'4DX','SO201200':'ScreenX','SO201300':'Ultra'};
@@ -661,11 +675,12 @@ function parseContracts(rows){
   S.contracts=rows.slice(1).map(r=>{const o={};hdr.forEach((h,i)=>o[h]=(r[i]||'').trim());return o});
 }
 function getContract(exhibitor,site,format){
-  // code_fee tab: no exhibitor column, keyed by site+format
-  // Try exact site+format match first, then exhibitor name in any field, then format only
-  return S.contracts.find(c=>c.site===site&&c.format===format)
-      || S.contracts.find(c=>Object.values(c).some(v=>v===exhibitor)&&c.format===format)
-      || S.contracts.find(c=>c.format===format)
+  // Try exhibitor+format exact match first (most reliable)
+  return S.contracts.find(c=>c.exhibitor===exhibitor&&c.format===format)
+      // Then exhibitor+site+format
+      || S.contracts.find(c=>c.exhibitor===exhibitor&&c.site===site&&c.format===format)
+      // Then just exhibitor (any format row for this exhibitor — for flat monthly etc)
+      || S.contracts.find(c=>c.exhibitor===exhibitor)
       || null;
 }
 
@@ -871,17 +886,23 @@ function getNewTitlesForMonth(month){
 function getFeeGroups(month){
   const rows=getNewTitlesForMonth(month);
   const groups={};
+  // First populate from actual booking data
   rows.forEach(b=>{
-    if(!b.format)return; // skip blank format entries
+    if(!b.format)return;
     const k=b.exhibitor+'|'+b.format;
     if(!groups[k])groups[k]={exhibitor:b.exhibitor,format:b.format,titles:[],sites:[]};
-    // dedupe titles
     if(!groups[k].titles.find(t=>t.title===b.title))
       groups[k].titles.push({title:b.title,releaseDate:b.releaseDate});
-    // keep all site combos for drill-in
     groups[k].sites.push({site:b.site,title:b.title,releaseDate:b.releaseDate});
   });
-  return Object.values(groups);
+  // Then ensure ALL known exhibitors appear for ALL their formats — even with 0 titles
+  EXHIBITORS.forEach(e=>{
+    e.formats.forEach(fmt=>{
+      const k=e.name+'|'+fmt;
+      if(!groups[k])groups[k]={exhibitor:e.name,format:fmt,titles:[],sites:[],empty:true};
+    });
+  });
+  return Object.values(groups).sort((a,b)=>a.exhibitor.localeCompare(b.exhibitor));
 }
 
 function getYearlyUsage(exhibitor,format,month){
