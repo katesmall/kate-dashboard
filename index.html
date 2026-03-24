@@ -126,64 +126,41 @@ tbody tr:hover td{background:var(--lilac-l)}
 
 /* ── Fee cards ── */
 .fee-month-nav{margin-bottom:24px}
-.fee-month-track{display:flex;border-radius:10px;overflow:hidden;border:1px solid var(--g4)}
-.fee-month-btn{flex:1;min-width:0;padding:15px 0;font-size:13px;font-weight:600;border:none;border-right:1px solid var(--g4);background:var(--white);color:var(--g2);cursor:pointer;font-family:var(--sans);text-align:center;transition:background .12s,color .12s;overflow:hidden}
-.fee-month-btn:last-child{border-right:none}
-.fee-month-btn:hover{background:var(--lilac-l);color:var(--lilac-d)}
-.fee-month-btn.active{font-weight:800}
-.fee-month-btn.m-future{background:var(--g5);color:var(--g3)}
-.fee-month-btn.m-future:hover{background:var(--g4);color:var(--g2)}
-.fee-month-btn.m-future.active{background:var(--g4);color:var(--g1)}
-.fee-month-btn.m-overdue{background:var(--amber-l);color:var(--amber)}
-.fee-month-btn.m-overdue.active{background:var(--amber);color:#fff}
-.fee-month-btn.m-confirmed{background:var(--green-l);color:var(--green)}
-.fee-month-btn.m-confirmed.active{background:var(--green);color:#fff}
-.fee-month-btn.m-current{background:var(--lilac-l);color:var(--lilac-d)}
-.fee-month-btn.m-current.active{background:var(--lilac);color:#fff}
-.fee-zone-label{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--g3);margin:24px 0 14px;display:flex;align-items:center;gap:12px}
+.fee-zone-label{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--g3);margin:24px 0 12px;display:flex;align-items:center;gap:12px}
 .fee-zone-label::after{content:'';flex:1;height:1px;background:var(--g4)}
-.fee-card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:6px;align-items:stretch}
-.fee-card{background:var(--white);border:1px solid var(--g4);border-radius:10px;overflow:hidden;transition:box-shadow .15s;display:flex;flex-direction:column;height:100%}
-.fee-card:hover{box-shadow:0 2px 10px rgba(0,0,0,.07)}
-.fee-card.is-confirmed{opacity:.88}
-.fee-card-head{padding:13px 15px;border-bottom:1px solid var(--g4);display:flex;align-items:center;justify-content:space-between;gap:10px}
-.fee-card-identity{display:flex;align-items:center;gap:12px}
-.fee-card-name{font-size:14px;font-weight:700;color:var(--black)}
-.fee-card-country{font-size:12px;color:var(--g2);font-weight:400;margin-top:3px}
-.fee-card-status-badge{font-size:11px;font-weight:700;display:flex;align-items:center;gap:4px;white-space:nowrap;padding:3px 9px;border-radius:99px}
-.fee-card-status-badge.s-confirmed{background:var(--green-l);color:var(--green)}
-.fee-card-status-badge.s-partial{background:var(--amber-l);color:var(--amber)}
-.fee-card-status-badge.s-unconfirmed{background:var(--red-l);color:var(--red)}
-.fee-formats-grid{display:flex;flex-direction:column}
-.fee-fmt-block{padding:11px 13px}
-.fee-fmt-block+.fee-fmt-block{}
-.fee-fmt-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.fee-titles-label{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g2);cursor:pointer;user-select:none;margin-bottom:8px;display:block}
-.fee-titles-arrow{font-size:10px;color:var(--g2)}
-.fee-titles-list{margin-top:6px;margin-bottom:8px}
-.fee-title-item{font-size:13px;color:var(--g1);line-height:1.8}
-.fee-amounts-row{display:flex;align-items:center;gap:0;margin-bottom:10px;flex-wrap:nowrap}
-.fee-amt-label{font-size:12px;color:var(--g2);font-weight:500;white-space:nowrap;margin-right:6px}
-.fee-amt-val{font-size:13px;font-weight:700;color:var(--black);white-space:nowrap;margin:0 4px}
-.fee-amt-sep{color:var(--g3);margin:0 8px;font-size:13px}
-.fee-actual-input{font-size:12px;font-weight:500;color:var(--black);border:1px solid var(--g4);border-radius:6px 0 0 6px;padding:5px 8px;width:80px;background:var(--white);font-family:var(--sans);outline:none;text-align:right;border-right:none}
-.fee-amt-tick{padding:5px 8px;background:var(--g5);border:1px solid var(--g4);border-radius:0 6px 6px 0;font-size:11px;font-weight:700;color:var(--g2);cursor:pointer;font-family:var(--sans);transition:all .12s;flex-shrink:0}
-.fee-amt-tick:hover{background:var(--green-l);color:var(--green);border-color:var(--green)}
-.fee-actual-input:focus{border-color:var(--lilac-m)}
-.fee-actual-input::placeholder{color:var(--g3);font-weight:400;font-size:12px}
-.fee-variance{font-size:12px;font-weight:600;margin-bottom:10px}
-.fee-variance.neg{color:var(--amber)}.fee-variance.pos{color:var(--green)}
-.fee-cap-wrap{margin-bottom:10px}
-.fee-cap-top{display:flex;justify-content:space-between;font-size:11px;color:var(--g2);font-weight:500;margin-bottom:3px}
-.fee-cap-track{height:3px;border-radius:2px;background:var(--g4);overflow:hidden}
-.fee-cap-fill{height:100%;border-radius:2px;transition:width .3s;background:var(--lilac-m)}
-.fee-cap-fill.cap-warn{background:var(--amber)}.fee-cap-fill.cap-full{background:var(--red)}
-.fee-fmt-footer{display:flex;align-items:center;justify-content:space-between;padding-top:9px;margin-top:7px;border-top:1px solid var(--g4)}
-.fee-confirm-btn{padding:6px 16px;background:var(--white);color:var(--lilac-d);border:1.5px solid var(--lilac);border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--sans);transition:all .15s}
-.fee-confirm-btn:hover{background:var(--lilac-l);border-color:var(--lilac-d)}
-.fee-edit-btn{font-size:11px;color:var(--g2);background:none;border:1px solid var(--g4);border-radius:5px;cursor:pointer;font-family:var(--sans);padding:4px 9px;transition:all .15s}
-.fee-edit-btn:hover{color:var(--black);border-color:var(--g2)}
-.fee-waived-btn{padding:7px 20px;background:var(--blue-l);color:var(--blue);border:none;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--sans)}
+.fee-card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:6px}
+.fee-card{border-radius:12px;overflow:hidden;transition:box-shadow .15s;display:flex;flex-direction:column;border:2px solid var(--g4);background:var(--white)}
+.fee-card:hover{box-shadow:0 3px 16px rgba(0,0,0,.08)}
+.fee-card.state-unconfirmed{border-color:var(--red)}
+.fee-card.state-partial{border-color:var(--amber)}
+.fee-card.state-confirmed{border-color:var(--green)}
+.fee-card-body{padding:18px 18px 14px;flex:1}
+.fee-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
+.fee-card-identity{display:flex;align-items:center;gap:11px}
+.fee-card-avatar{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;letter-spacing:.03em}
+.fee-card-name{font-size:15px;font-weight:700;color:var(--black);line-height:1.2}
+.fee-card-meta{font-size:11px;color:var(--g2);margin-top:3px;font-weight:400}
+.fee-card-state-icon{font-size:17px;font-weight:800;line-height:1;margin-top:2px;flex-shrink:0}
+.fee-card-state-icon.unconf{color:var(--red)}
+.fee-card-state-icon.conf{color:var(--green)}
+.fee-fmt-rows{margin:12px 0 14px;display:flex;flex-direction:column;gap:0}
+.fee-fmt-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0}
+.fee-fmt-row+.fee-fmt-row{border-top:1px solid var(--g4)}
+.fee-fmt-name{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--g1)}
+.fee-fmt-pill{display:inline-flex;align-items:center;padding:2px 8px;border-radius:99px;font-size:10px;font-weight:700}
+.pill-4dx{background:var(--lilac-l);color:var(--lilac-d)}
+.pill-sx{background:#e5f3ee;color:#1a6b50}
+.fee-fmt-total{font-size:13px;font-weight:700;color:var(--black)}
+.fee-fmt-total.pending{color:var(--g3);font-weight:400}
+.fee-fmt-total.confirmed{color:var(--green)}
+.fee-card-actions{display:flex;flex-direction:column;gap:7px;padding:0 18px 16px}
+.fee-btn-details{width:100%;padding:9px 0;font-size:12px;font-weight:600;border:1.5px solid var(--g4);border-radius:7px;background:var(--white);color:var(--g2);cursor:pointer;font-family:var(--sans);transition:all .12s;text-align:center;display:flex;align-items:center;justify-content:center;gap:5px}
+.fee-btn-details:hover{border-color:var(--g2);color:var(--black)}
+.fee-btn-confirm{width:100%;padding:10px 0;font-size:13px;font-weight:700;border:2px solid var(--lilac);border-radius:7px;background:var(--white);color:var(--lilac-d);cursor:pointer;font-family:var(--sans);transition:all .12s;text-align:center}
+.fee-btn-confirm:hover:not(:disabled){background:var(--lilac);color:#fff}
+.fee-btn-confirm:disabled{border-color:var(--g4);color:var(--g3);cursor:not-allowed}
+.fee-btn-confirm.done{border-color:var(--green);color:var(--green);cursor:default}
+.fee-btn-confirm.done:hover{background:var(--white);color:var(--green)}
 .fee-progress-wrap{display:flex;gap:24px;padding:14px 18px;background:var(--g5);border-radius:8px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
 .fee-progress-fmt{display:flex;align-items:center;gap:10px;font-size:13px}
 .fee-progress-track{width:100px;height:4px;border-radius:2px;background:var(--g4);overflow:hidden}
@@ -354,8 +331,9 @@ tbody tr:hover td{background:var(--lilac-l)}
           <span class="sec-title" id="fees-detail-title"></span>
         </div>
         <div class="panel"><div class="tbl-wrap"><table>
-          <thead><tr><th>Site</th><th>Title</th><th>Release date</th><th>Notes</th></tr></thead>
+          <thead><tr><th>Site</th><th>Title</th><th>Release</th><th>Amount</th><th></th></tr></thead>
           <tbody id="fees-detail-tbody"></tbody>
+          <tfoot id="fees-detail-tfoot"></tfoot>
         </table></div></div>
       </div>
     </div>
@@ -880,11 +858,59 @@ function renderAnomalies(){
 
 // ── Fee key helpers ──────────────────────────────────────────
 // Exhibitor-level key (for status + actual fee)
+function getSiteAmounts(month,exhibitor,country,format){
+  // Returns array of {site,title,amount,confirmed} for this exhibitor+country+format+month
+  const[yr,mo]=month.split('-').map(Number);
+  const rows=S.booking.filter(b=>{
+    if(!b.confirmed)return false;
+    const rd=new Date(b.releaseDate);
+    return rd.getFullYear()===yr&&rd.getMonth()+1===mo&&b.exhibitor===exhibitor&&b.format===format;
+  });
+  // dedupe to unique site+title combos
+  const seen=new Set();
+  return rows.filter(r=>{
+    const siteRow=S.contracts.find(c=>c.exhibitor===r.exhibitor&&c.site===r.site);
+    const rowCountry=siteRow?.country||'—';
+    if(country&&rowCountry!==country)return false;
+    const k=r.site+'|'+r.title;
+    if(seen.has(k))return false;
+    seen.add(k);return true;
+  }).map(r=>{
+    const siteKey=feeSiteKey(month,exhibitor,r.site,format,r.title);
+    return{
+      site:r.site,title:r.title,releaseDate:r.releaseDate,
+      amount:S.feeNotes[siteKey+'_amount']||'',
+      confirmed:S.feeStatus[siteKey]===('Confirmed')
+    };
+  });
+}
+
+function getSiteTotal(month,exhibitor,country,format){
+  const items=getSiteAmounts(month,exhibitor,country,format);
+  const confirmedAmts=items.filter(i=>i.confirmed&&i.amount).map(i=>parseFloat(i.amount.replace(/[^0-9.-]/g,''))||0);
+  return confirmedAmts.length?confirmedAmts.reduce((a,b)=>a+b,0):null;
+}
+
+function getSiteTotalDisplay(month,exhibitor,country,format){
+  const total=getSiteTotal(month,exhibitor,country,format);
+  const c=getContract(exhibitor,'',format);
+  const cur=c?.currency||'USD';
+  if(total===null)return'<span style="color:var(--g3)">—</span>';
+  return`<span style="color:var(--green);font-weight:700">${cur} ${total.toLocaleString()}</span>`;
+}
+
+function refreshCardActual(month,exhibitor,country,format){
+  const key=feeExhibKey(month,exhibitor,format,country);
+  const el=document.getElementById('actual-'+key.replace(/[|]/g,'-'));
+  if(el)el.innerHTML=getSiteTotalDisplay(month,exhibitor,country,format);
+}
+
+function feeSiteKey(month,exhibitor,site,format,title){return`SITE|${month}|${exhibitor}|${site}|${format}|${title}`}
 function feeExhibKey(month,exhibitor,format,country){
   return`${month}|${exhibitor}|${country||''}|${format}`;
 }
 // Site-level key (for notes only)
-function feeSiteKey(month,exhibitor,site,format,title){return`SITE|${month}|${exhibitor}|${site}|${format}|${title}`}
+
 
 // Get new titles for a month — deduplicated at exhibitor+format level
 // "new" = first release date falls in that month, confirmed booking
@@ -1161,91 +1187,78 @@ function renderFees(){
   function buildCard(ex,cardCtry,fmtGroups){
     const info=EXHIBITORS.find(e=>e.name===ex)||{};
     const cardCountry=cardCtry||info.country||'—';
-    const allDone=fmtGroups.every(g=>{const st=S.feeStatus[feeExhibKey(month,ex,g.format,g.country)];return st==='Confirmed'||st==='Waived';});
-    const anyOverdue=isOverdue&&!allDone;
-    const canConfirm=fmtGroups.some(g=>{const st=S.feeStatus[feeExhibKey(month,ex,g.format,g.country)]||'Unconfirmed';return st!=='Confirmed'&&st!=='Waived';});
-    const cardCls=allDone?'is-confirmed':anyOverdue?'is-overdue':'is-pending';
-    const safeEx=ex.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-    const safeCtry=(cardCtry||'').replace(/'/g,"\\'");
+    const b=EXHIBITOR_BRANDS[ex]||{color:'#8878d0',initials:(ex||'').replace(/[^A-Z]/g,'').substring(0,2)||(ex||'').substring(0,2).toUpperCase(),dark:false};
+    const safeEx=ex.replace(/\\/g,'\\\\').replace(/'/g,"\'");
+    const safeCtry=(cardCtry||'').replace(/'/g,"\'");
+    const monthLabel=document.getElementById('fee-month')?.value||month;
 
-    const fmtBlocks=fmtGroups.map(g=>{
-      const key=feeExhibKey(month,ex,g.format,g.country);
-      const status=S.feeStatus[key]||'Unconfirmed';
-      const actual=S.feeActual?.[key]||'';
+    // Per-format confirmation state
+    const fmtStates={};
+    fmtGroups.forEach(g=>{
+      const key=feeExhibKey(month,ex,g.format,cardCtry);
+      fmtStates[g.format]=S.feeStatus[key]||'Unconfirmed';
+    });
+    const allFmtConfirmed=fmtGroups.length>0&&fmtGroups.every(g=>fmtStates[g.format]==='Confirmed'||fmtStates[g.format]==='Waived');
+    const anyFmtConfirmed=fmtGroups.some(g=>fmtStates[g.format]==='Confirmed'||fmtStates[g.format]==='Waived');
+    // Card-level confirmed = user pressed the main Confirm button
+    const cardKey=`CARD|${month}|${ex}|${cardCtry}`;
+    const cardConfirmed=S.feeStatus[cardKey]==='Confirmed';
+
+    // State class
+    const stateCls=cardConfirmed?'state-confirmed':allFmtConfirmed?'state-partial':anyFmtConfirmed?'state-partial':'state-unconfirmed';
+    const stateIcon=cardConfirmed
+      ?'<span class="fee-card-state-icon conf">✓</span>'
+      :'<span class="fee-card-state-icon unconf">!</span>';
+
+    // Format rows — only formats this exhibitor has
+    const fmtRowsHtml=fmtGroups.map(g=>{
+      const isConf=fmtStates[g.format]==='Confirmed'||fmtStates[g.format]==='Waived';
+      const total=getSiteTotal(month,ex,cardCtry,g.format);
       const c=getContract(ex,'',g.format);
-      let expVal='—',cur='USD';
-      if(c){
-        cur=c.currency||'USD';
-        if(c.fee_type==='flat_monthly'&&c.flat_monthly_amount)expVal=`${cur} ${Number(c.flat_monthly_amount).toLocaleString()}`;
-        else if(c.standard_fee_amount)expVal=`${cur} ${(Number(c.standard_fee_amount)*g.titles.length).toLocaleString()}`;
+      const cur=c?.currency||'USD';
+      const pillCls=g.format==='4DX'?'pill-4dx':'pill-sx';
+      let totalHtml;
+      if(isConf&&total!==null){
+        totalHtml=`<span class="fee-fmt-total confirmed">${cur} ${total.toLocaleString()}</span>`;
+      } else if(total!==null){
+        totalHtml=`<span class="fee-fmt-total">${cur} ${total.toLocaleString()}</span>`;
+      } else {
+        totalHtml=`<span class="fee-fmt-total pending">—</span>`;
       }
-      // Variance
-      let varHtml='';
-      if(actual&&expVal!=='—'){
-        const an=parseFloat(actual.replace(/[^0-9.-]/g,'')),en=parseFloat(expVal.replace(/[^0-9.-]/g,''));
-        if(!isNaN(an)&&!isNaN(en)&&an!==en){const d=an-en;varHtml=`<div class="fee-variance ${d>0?'pos':'neg'}">${d>0?'+':''}${cur} ${Math.abs(Math.round(d)).toLocaleString()} vs expected</div>`;}
-      }
-      // Cap
-      const capInfo=getCapInfo(c,ex,g.format,month);
-      const capHtml=capInfo.bars.map(b=>`<div class="fee-cap-wrap">
-        <div class="fee-cap-top"><span>${b.label}</span><span>${b.detail}</span></div>
-        <div class="fee-cap-track"><div class="fee-cap-fill${b.type==='danger'?' cap-full':b.type==='warning'?' cap-warn':''}" style="width:${b.pct}%"></div></div>
-      </div>`).join('');
-      // Status colours
-      const stColor={Unconfirmed:'var(--g3)','In Progress':'var(--amber)',Confirmed:'var(--green)',Waived:'var(--blue)'}[status]||'var(--g3)';
-      const fmtCls=g.format==='ScreenX'?'p-sx':'p-4dx';
-      const safeFmt=g.format.replace(/'/g,"\\'");
-      const titleItems=g.titles.map(t=>`<div class="fee-title-item">${t.title}</div>`).join('');
-      const titlesId=`titles-${key.replace(/[^a-z0-9]/gi,'_')}`;
-      return`<div class="fee-fmt-block">
-        <div class="fee-fmt-header">
-          <span class="pill ${fmtCls}">${g.format}</span>
-
-        </div>
-        <div class="fee-titles-section">
-          <div class="fee-titles-toggle" onclick="toggleFeeTitle('${titlesId}',this)">
-            <span class="fee-titles-label" style="cursor:pointer;user-select:none">${g.titles.length} title${g.titles.length>1?'s':''} <span class="fee-titles-arrow">▸</span></span>
-          </div>
-          <div id="${titlesId}" class="fee-titles-list" style="display:none">${titleItems}</div>
-        </div>
-        <div class="fee-amounts-row">
-          <span class="fee-amt-label">Expected</span>
-          <span class="fee-amt-val">${expVal}</span>
-          <span class="fee-amt-sep">·</span>
-          <span class="fee-amt-label">Actual</span>
-          <input class="fee-actual-input" id="inp-${key.replace(/[|]/g,'-')}" type="text" value="${actual.replace(/"/g,'&quot;')}" placeholder=""
-            onkeydown="if(event.key==='Enter'){saveFeeActual('${key}',this.value);this.blur()}">
-          <button class="fee-amt-tick" onclick="saveFeeActual('${key}',document.getElementById('inp-${key.replace(/[|]/g,'-')}').value)" title="Save amount">✓</button>
-        </div>
-        ${varHtml}
-        ${capHtml}
-        <div class="fee-fmt-footer">
-          ${status==='Confirmed'||status==='Waived'
-            ? `<button class="fee-edit-btn" onclick="saveFeeStatus('${key}','Unconfirmed');renderFees()">Edit</button>`
-            : `<button class="fee-confirm-btn" onclick="saveFeeStatus('${key}','Confirmed');renderFees()">Confirm</button>
-               <button class="fee-edit-btn" onclick="openFeeDetail('${month}','${safeEx}','${safeFmt}','${safeCtry}')">Detail →</button>`
-          }
-        </div>
+      return`<div class="fee-fmt-row">
+        <span class="fee-fmt-name"><span class="fee-fmt-pill ${pillCls}">${g.format}</span></span>
+        ${totalHtml}
       </div>`;
     }).join('');
 
-    // Card-level status badge
-    const allConf=fmtGroups.every(g=>{const st=S.feeStatus[feeExhibKey(month,ex,g.format,cardCtry)];return st==='Confirmed'||st==='Waived';});
-    const anyConf=fmtGroups.some(g=>{const st=S.feeStatus[feeExhibKey(month,ex,g.format,cardCtry)];return st==='Confirmed'||st==='Waived';});
-    const badgeCls=allConf?'s-confirmed':anyConf?'s-partial':'s-unconfirmed';
-    const badgeTxt=allConf?'✓ Confirmed':anyConf?'Partial':'Unconfirmed';
-    return`<div class="fee-card ${cardCls}">
-      <div class="fee-card-head">
-        <div class="fee-card-identity">
-          ${exhibitorAvatar(ex)}
-          <div>
-            <div class="fee-card-name">${ex}</div>
-            <div class="fee-card-country">${cardCountry}</div>
+    // Confirm button
+    const canConfirm=allFmtConfirmed&&!cardConfirmed;
+    const confirmBtn=cardConfirmed
+      ?`<button class="fee-btn-confirm done" disabled>✓ Confirmed</button>`
+      :canConfirm
+        ?`<button class="fee-btn-confirm" onclick="confirmCard('${month}','${safeEx}','${safeCtry}',this)">Confirm</button>`
+        :`<button class="fee-btn-confirm" disabled title="Enter and confirm amounts in details first">Confirm</button>`;
+
+    return`<div class="fee-card ${stateCls}" style="background:${b.color}0a">
+      <div class="fee-card-body">
+        <div class="fee-card-top">
+          <div class="fee-card-identity">
+            <div class="fee-card-avatar" style="background:${b.color};color:${b.dark?'#1a1a1a':'#fff'}">${b.initials}</div>
+            <div>
+              <div class="fee-card-name">${ex}</div>
+              <div class="fee-card-meta">${cardCountry} · Code fee</div>
+            </div>
           </div>
+          ${stateIcon}
         </div>
-        <span class="fee-card-status-badge ${badgeCls}">${badgeTxt}</span>
+        <div class="fee-fmt-rows">${fmtRowsHtml}</div>
       </div>
-      <div class="fee-formats-grid">${fmtBlocks}</div>
+      <div class="fee-card-actions">
+        <button class="fee-btn-details" onclick="openFeeDetail('${month}','${safeEx}','${safeCtry}')">
+          Enter details ▶
+        </button>
+        ${confirmBtn}
+      </div>
     </div>`;
   }
 
@@ -1263,35 +1276,154 @@ function renderFees(){
 
 
 
-function openFeeDetail(month,exhibitor,format,country){
+function openFeeDetail(month,exhibitor,country){
   document.getElementById('fees-overview-view').style.display='none';
   document.getElementById('fees-detail-view').style.display='block';
-  const sel=document.getElementById('fee-month');
-  const monthLabel=sel?Array.from(sel.options||[]).find(o=>o.value===month)?.text||month:month;
-  document.getElementById('fees-detail-title').textContent=`${exhibitor}${country?' · '+country:''} · ${format} · ${monthLabel}`;
+  document.getElementById('fees-detail-title').textContent=`${exhibitor} · ${country||'—'}`;
+  // Store context for refresh
+  document.getElementById('fees-detail-view').dataset.month=month;
+  document.getElementById('fees-detail-view').dataset.exhibitor=exhibitor;
+  document.getElementById('fees-detail-view').dataset.country=country||'';
+  renderDetailPage(month,exhibitor,country);
+}
+
+function renderDetailPage(month,exhibitor,country){
   const tbody=document.getElementById('fees-detail-tbody');
-  const[yr,mo]=month.split('-').map(Number);
-  const rows=S.booking.filter(b=>{
-    if(!b.confirmed)return false;
-    const rd=new Date(b.releaseDate);
-    return rd.getFullYear()===yr&&rd.getMonth()+1===mo&&b.exhibitor===exhibitor&&b.format===format;
-  });
-  if(!rows.length){tbody.innerHTML='<tr><td colspan="4" class="empty">No site-level data</td></tr>';return;}
-  tbody.innerHTML=rows.map(r=>{
-    const key=feeSiteKey(month,r.exhibitor,r.site,r.format,r.title);
-    const notes=S.feeNotes[key]||'';
-    return`<tr>
-      <td class="fw">${r.site}</td><td>${r.title}</td>
-      <td class="mono dim">${r.releaseDate}</td>
-      <td><input type="text" value="${notes.replace(/"/g,'&quot;')}" placeholder="Notes…"
-        style="font-size:12px;width:220px;padding:4px 8px" onchange="saveFeeNote('${key}',this.value)"></td>
+  const tfoot=document.getElementById('fees-detail-tfoot');
+  // Get all formats for this exhibitor
+  const exInfo=EXHIBITORS.find(e=>e.name===exhibitor)||{};
+  const formats=exInfo.formats||['4DX','ScreenX'];
+  let allHtml='';
+  let footHtml='';
+
+  formats.forEach(fmt=>{
+    const items=getSiteAmounts(month,exhibitor,country,fmt);
+    if(!items.length)return;
+    const c=getContract(exhibitor,'',fmt);
+    const cur=c?.currency||'USD';
+    const stdFee=c?Number(c.standard_fee_amount)||0:0;
+    const pillCls=fmt==='4DX'?'pill-4dx':'pill-sx';
+    const key=feeExhibKey(month,exhibitor,fmt,country);
+    const fmtConfirmed=S.feeStatus[key]==='Confirmed'||S.feeStatus[key]==='Waived';
+
+    // Format section header
+    allHtml+=`<tr style="background:var(--g5)">
+      <td colspan="5" style="padding:8px 14px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g2)">
+        <span class="fee-fmt-pill ${pillCls}" style="font-size:10px">${fmt}</span>
+      </td>
     </tr>`;
-  }).join('');
+
+    // Site-title rows
+    items.forEach(r=>{
+      const siteKey=feeSiteKey(month,exhibitor,r.site,fmt,r.title);
+      const amtKey=siteKey+'_amount';
+      const isConf=S.feeStatus[siteKey]==='Confirmed';
+      const amt=S.feeNotes[amtKey]||'';
+      const suggestion=stdFee?stdFee.toLocaleString():'';
+      if(isConf){
+        allHtml+=`<tr style="background:var(--green-l)">
+          <td class="fw" style="padding:9px 14px">${r.site}</td>
+          <td style="padding:9px 14px">${r.title}</td>
+          <td class="mono dim" style="padding:9px 14px">${r.releaseDate}</td>
+          <td style="padding:9px 14px;font-weight:700;color:var(--green)">${amt?cur+' '+Number(amt).toLocaleString():'—'}</td>
+          <td style="padding:9px 14px"><button class="btn btn-sm btn-ghost" onclick="unconfirmSite('${siteKey}','${month}','${exhibitor}','${country||''}','${fmt}')">Edit</button></td>
+        </tr>`;
+      } else {
+        allHtml+=`<tr>
+          <td class="fw" style="padding:9px 14px">${r.site}</td>
+          <td style="padding:9px 14px">${r.title}</td>
+          <td class="mono dim" style="padding:9px 14px">${r.releaseDate}</td>
+          <td style="padding:9px 14px">
+            <div style="display:flex;align-items:center">
+              <input id="amt-${siteKey.replace(/[|]/g,'-')}" type="text" value="${amt}" placeholder="${suggestion}"
+                style="font-size:13px;border:1px solid var(--g4);border-radius:6px 0 0 6px;padding:5px 9px;width:100px;font-family:var(--sans);outline:none;text-align:right;border-right:none"
+                onfocus="this.style.borderColor='var(--lilac-m)'"
+                onblur="this.style.borderColor='var(--g4)'"
+                onkeydown="if(event.key==='Enter')confirmSite('${siteKey}','${month}','${exhibitor}','${country||''}','${fmt}')">
+              <button style="padding:5px 9px;background:var(--g5);border:1px solid var(--g4);border-left:none;border-radius:0 6px 6px 0;font-size:12px;font-weight:700;color:var(--g2);cursor:pointer;font-family:var(--sans)"
+                onmouseover="this.style.background='var(--green-l)';this.style.color='var(--green)'"
+                onmouseout="this.style.background='var(--g5)';this.style.color='var(--g2)'"
+                onclick="confirmSite('${siteKey}','${month}','${exhibitor}','${country||''}','${fmt}')">✓</button>
+            </div>
+          </td>
+          <td style="padding:9px 14px;font-size:11px;color:var(--g3)">${suggestion?'ref: '+cur+' '+suggestion:''}</td>
+        </tr>`;
+      }
+    });
+
+    // Format total row
+    const total=getSiteTotal(month,exhibitor,country,fmt);
+    const confirmedCount=items.filter(i=>i.confirmed).length;
+    const safeEx2=exhibitor.replace(/'/g,"\'");
+    const safeCtry2=(country||'').replace(/'/g,"\'");
+    const allSitesConfirmed=confirmedCount===items.length&&items.length>0;
+    allHtml+=`<tr style="background:var(--g5);border-top:1.5px solid var(--g4)">
+      <td colspan="3" style="padding:9px 14px;font-size:12px;color:var(--g2)">${confirmedCount}/${items.length} sites · ${fmt} total</td>
+      <td style="padding:9px 14px;font-size:14px;font-weight:700;color:${total!==null?'var(--green)':'var(--g3)'}">${total!==null?cur+' '+total.toLocaleString():'—'}</td>
+      <td style="padding:9px 14px">
+        ${fmtConfirmed
+          ?`<span style="color:var(--green);font-size:12px;font-weight:700">✓ Locked</span>`
+          :allSitesConfirmed
+            ?`<button class="fee-btn-confirm" style="padding:5px 14px;font-size:12px;width:auto" onclick="confirmFormat('${month}','${safeEx2}','${safeCtry2}','${fmt}')">Confirm ${fmt}</button>`
+            :`<span style="color:var(--g3);font-size:11px">Confirm all sites first</span>`
+        }
+      </td>
+    </tr>`;
+  });
+
+  tbody.innerHTML=allHtml;
+  if(tfoot)tfoot.innerHTML='';
+}
+
+function confirmFormat(month,exhibitor,country,format){
+  const key=feeExhibKey(month,exhibitor,format,country);
+  S.feeStatus[key]='Confirmed';
+  localStorage.setItem('feeStatus',JSON.stringify(S.feeStatus));
+  renderDetailPage(month,exhibitor,country);
+  refreshCardActual(month,exhibitor,country,format);
+}
+
+
+function confirmSite(siteKey,month,exhibitor,country,format){
+  const inpId='amt-'+siteKey.replace(/[|]/g,'-');
+  const inp=document.getElementById(inpId);
+  const val=inp?inp.value.trim():'';
+  S.feeNotes[siteKey+'_amount']=val;
+  localStorage.setItem('feeNotes',JSON.stringify(S.feeNotes));
+  S.feeStatus[siteKey]='Confirmed';
+  localStorage.setItem('feeStatus',JSON.stringify(S.feeStatus));
+  renderDetailPage(month,exhibitor,country);
+  refreshCardActual(month,exhibitor,country,format);
+}
+
+function unconfirmSite(siteKey,month,exhibitor,country,format){
+  S.feeStatus[siteKey]='Unconfirmed';
+  localStorage.setItem('feeStatus',JSON.stringify(S.feeStatus));
+  renderDetailPage(month,exhibitor,country);
+  refreshCardActual(month,exhibitor,country,format);
+}
+
+async function confirmCard(month,exhibitor,country,btn){
+  // Mark card as confirmed
+  const cardKey=`CARD|${month}|${exhibitor}|${country}`;
+  S.feeStatus[cardKey]='Confirmed';
+  localStorage.setItem('feeStatus',JSON.stringify(S.feeStatus));
+  // Write to Google Sheet
+  if(gAuthToken&&Date.now()<gTokenExpiry){
+    if(btn){btn.textContent='Saving...';btn.disabled=true;}
+    const ok=await writeFeesToSheet(month,exhibitor,country);
+    if(ok){
+      const t=document.getElementById('topbar-sync-status');
+      if(t){t.textContent='✓ saved to sheet';setTimeout(()=>{if(t.textContent.includes('saved'))t.textContent=''},3000);}
+    }
+  }
+  renderFees();
 }
 
 function closeFeeDetail(){
   document.getElementById('fees-detail-view').style.display='none';
   document.getElementById('fees-overview-view').style.display='block';
+  renderFees();
 }
 
 function saveFeeStatus(key,val){
@@ -1305,11 +1437,7 @@ function saveFeeStatus(key,val){
   }
 }
 function saveFeeNote(key,val){S.feeNotes[key]=val;localStorage.setItem('feeNotes',JSON.stringify(S.feeNotes));}
-function saveFeeActual(key,val){
-  if(!S.feeActual)S.feeActual={};
-  S.feeActual[key]=val;
-  localStorage.setItem('feeActual',JSON.stringify(S.feeActual));
-}
+function saveFeeActual(key,val){if(!S.feeActual)S.feeActual={};S.feeActual[key]=val;localStorage.setItem('feeActual',JSON.stringify(S.feeActual));}
 
 function exportFees(){
   const month=document.getElementById('fee-month').value;
@@ -1452,7 +1580,7 @@ function updateDataSummary(){
 // GOOGLE OAUTH + WRITE-BACK
 // ══════════════════════════════════════════════════════════════
 let gAuthToken = localStorage.getItem('gAuthToken') || null;
-let gTokenExpiry = parseInt(localStorage.getItem('gTokenExpiry') || '0');
+let gTokenExpiry = Number(localStorage.getItem('gTokenExpiry') || '0');
 
 function saveClientId() {
   const id = document.getElementById('oauth-client-id').value.trim();
@@ -1528,123 +1656,102 @@ function signOut() {
   document.getElementById('signout-btn').style.display = 'none';
 }
 
-async function writeFeesToSheet(month) {
+async function writeFeesToSheet(month,filterExhibitor,filterCountry) {
   if (!gAuthToken || Date.now() > gTokenExpiry) {
     console.warn('No valid auth token — fees saved locally only');
     return false;
   }
   if (!S.sheetId) return false;
 
-  const groups = getFeeGroups(month);
-  if (!groups.length) return false;
-
   const TAB = 'fee_confirmations';
-  const HEADER = ['month','exhibitor','format','titles','expected_fee','actual_fee','status','last_updated'];
+  const HEADER = ['month','exhibitor','country','site','format','title','release_date','amount','status','last_updated'];
+  const COLS = 'A:J';
 
-  // Build a map of new data keyed by month|exhibitor|format
+  // Build site-title level rows
+  let groups = getFeeGroups(month);
+  if(filterExhibitor) groups=groups.filter(g=>g.exhibitor===filterExhibitor&&(g.country||'—')===(filterCountry||'—'));
+  if(!groups.length) return false;
+
   const newData = {};
   groups.forEach(g => {
-    const key = `${month}|${g.exhibitor}|${g.format}`;
-    const fKey = feeExhibKey(month, g.exhibitor, g.format);
-    const c = getContract(g.exhibitor, '', g.format);
-    const perTitle = c ? Number(c.standard_fee_amount)||0 : 0;
-    const expected = perTitle ? `${c.currency||'USD'} ${(perTitle*g.titles.length).toLocaleString()}` : '';
-    newData[key] = [
-      month,
-      g.exhibitor,
-      g.format,
-      g.titles.map(t=>t.title).join('; '),
-      expected,
-      S.feeActual?.[fKey] || '',
-      S.feeStatus[fKey] || 'Unconfirmed',
-      new Date().toISOString().split('T')[0]
-    ];
+    const items = getSiteAmounts(month, g.exhibitor, g.country, g.format);
+    items.forEach(r => {
+      const key = `${month}|${g.exhibitor}|${g.country||'—'}|${r.site}|${g.format}|${r.title}`;
+      const siteKey = feeSiteKey(month, g.exhibitor, r.site, g.format, r.title);
+      newData[key] = [
+        month, g.exhibitor, g.country||'—', r.site, g.format, r.title, r.releaseDate,
+        S.feeNotes[siteKey+'_amount']||'',
+        S.feeStatus[siteKey]==='Confirmed'?'Confirmed':'Pending',
+        new Date().toISOString().split('T')[0]
+      ];
+    });
   });
+
+  if(!Object.keys(newData).length) return false;
 
   try {
     const authHdr = { Authorization: `Bearer ${gAuthToken}`, 'Content-Type': 'application/json' };
 
-    // 1. Read all existing data from the tab
-    const readUrl = `https://sheets.googleapis.com/v4/spreadsheets/${S.sheetId}/values/${encodeURIComponent(TAB)}!A:H`;
-    const readRes = await fetch(readUrl, { headers: authHdr });
+    const readRes = await fetch(
+      `https://sheets.googleapis.com/v4/spreadsheets/${S.sheetId}/values/${encodeURIComponent(TAB)}!${COLS}`,
+      { headers: authHdr }
+    );
 
     let existingRows = [];
-    let tabExists = true;
-
     if (!readRes.ok) {
-      // Tab doesn't exist yet — create it
-      tabExists = false;
       await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${S.sheetId}:batchUpdate`, {
         method: 'POST', headers: authHdr,
         body: JSON.stringify({ requests: [{ addSheet: { properties: { title: TAB } } }] })
       });
     } else {
-      const readData = await readRes.json();
-      existingRows = readData.values || [];
+      existingRows = (await readRes.json()).values || [];
     }
 
-    // 2. If no header row, write it first
     if (existingRows.length === 0) {
-      await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${S.sheetId}/values/${encodeURIComponent(TAB+'!A1')}?valueInputOption=USER_ENTERED`, {
-        method: 'PUT', headers: authHdr,
-        body: JSON.stringify({ values: [HEADER] })
-      });
+      await fetch(
+        `https://sheets.googleapis.com/v4/spreadsheets/${S.sheetId}/values/${encodeURIComponent(TAB+'!A1')}?valueInputOption=USER_ENTERED`,
+        { method: 'PUT', headers: authHdr, body: JSON.stringify({ values: [HEADER] }) }
+      );
       existingRows = [HEADER];
     }
 
-    // 3. Build upsert — match on month+exhibitor+format (cols 0,1,2)
-    // existingRows[0] = header, existingRows[1+] = data
-    const headerRow = existingRows[0];
-    const iMonth = headerRow.indexOf('month');
-    const iExhib = headerRow.indexOf('exhibitor');
-    const iFmt   = headerRow.indexOf('format');
+    const hdr = existingRows[0];
+    const iM=hdr.indexOf('month'), iE=hdr.indexOf('exhibitor'), iC=hdr.indexOf('country'),
+          iSi=hdr.indexOf('site'), iF=hdr.indexOf('format'), iT=hdr.indexOf('title');
 
-    // Map existing row indices by key
-    const rowIndexMap = {}; // key -> row index in existingRows (1-based for sheet)
-    existingRows.slice(1).forEach((row, i) => {
-      const k = `${row[iMonth]||''}|${row[iExhib]||''}|${row[iFmt]||''}`;
-      rowIndexMap[k] = i + 2; // +1 for header, +1 for 1-based
+    const rowMap = {};
+    existingRows.slice(1).forEach((row,i) => {
+      const k=`${row[iM]||''}|${row[iE]||''}|${row[iC]||'—'}|${row[iSi]||''}|${row[iF]||''}|${row[iT]||''}`;
+      rowMap[k] = i+2;
     });
 
-    // 4. Build batchUpdate requests
-    const requests = [];
-    const toAppend = [];
-
-    Object.entries(newData).forEach(([key, rowData]) => {
-      if (rowIndexMap[key] !== undefined) {
-        // Update existing row in place
-        const rowNum = rowIndexMap[key];
-        requests.push({
-          range: `${TAB}!A${rowNum}:H${rowNum}`,
-          values: [rowData]
-        });
+    const updates=[], appends=[];
+    Object.entries(newData).forEach(([key,rowData]) => {
+      if(rowMap[key]!==undefined){
+        updates.push({ range:`${TAB}!A${rowMap[key]}:J${rowMap[key]}`, values:[rowData] });
       } else {
-        // New row — append
-        toAppend.push(rowData);
+        appends.push(rowData);
       }
     });
 
-    // 5. Execute updates (existing rows)
-    if (requests.length > 0) {
+    if(updates.length){
       await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${S.sheetId}/values:batchUpdate`, {
-        method: 'POST', headers: authHdr,
-        body: JSON.stringify({ valueInputOption: 'USER_ENTERED', data: requests })
+        method:'POST', headers:authHdr,
+        body:JSON.stringify({ valueInputOption:'USER_ENTERED', data:updates })
       });
     }
-
-    // 6. Append new rows
-    if (toAppend.length > 0) {
-      await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${S.sheetId}/values/${encodeURIComponent(TAB+'!A:H')}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`, {
-        method: 'POST', headers: authHdr,
-        body: JSON.stringify({ values: toAppend })
-      });
+    if(appends.length){
+      await fetch(
+        `https://sheets.googleapis.com/v4/spreadsheets/${S.sheetId}/values/${encodeURIComponent(TAB+'!A:J')}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
+        { method:'POST', headers:authHdr, body:JSON.stringify({ values:appends }) }
+      );
     }
 
-    console.log(`Sheet upsert: ${requests.length} updated, ${toAppend.length} appended`);
+    console.log(`Sheet sync: ${updates.length} updated, ${appends.length} appended`);
     return true;
 
   } catch(e) {
-    console.error('Write to sheet failed:', e);
+    console.error('writeFeesToSheet failed:', e);
     return false;
   }
 }
