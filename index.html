@@ -142,31 +142,33 @@ tbody tr:hover td{background:var(--lilac-l)}
 .fee-month-btn.m-current.active{background:var(--lilac);color:#fff}
 .fee-zone-label{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--g3);margin:24px 0 14px;display:flex;align-items:center;gap:12px}
 .fee-zone-label::after{content:'';flex:1;height:1px;background:var(--g4)}
-.fee-card-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:6px;align-items:stretch}
+.fee-card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:6px;align-items:stretch}
 .fee-card{background:var(--white);border:1px solid var(--g4);border-radius:10px;overflow:hidden;transition:box-shadow .15s;display:flex;flex-direction:column;height:100%}
 .fee-card:hover{box-shadow:0 2px 10px rgba(0,0,0,.07)}
 .fee-card.is-confirmed{opacity:.88}
-.fee-card-head{padding:16px 18px;border-bottom:1px solid var(--g4);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.fee-card-head{padding:13px 15px;border-bottom:1px solid var(--g4);display:flex;align-items:center;justify-content:space-between;gap:10px}
 .fee-card-identity{display:flex;align-items:center;gap:12px}
-.fee-card-name{font-size:15px;font-weight:700;color:var(--black)}
+.fee-card-name{font-size:14px;font-weight:700;color:var(--black)}
 .fee-card-country{font-size:12px;color:var(--g2);font-weight:400;margin-top:3px}
-.fee-card-status-badge{font-size:12px;font-weight:700;display:flex;align-items:center;gap:5px;white-space:nowrap;padding:4px 10px;border-radius:99px}
+.fee-card-status-badge{font-size:11px;font-weight:700;display:flex;align-items:center;gap:4px;white-space:nowrap;padding:3px 9px;border-radius:99px}
 .fee-card-status-badge.s-confirmed{background:var(--green-l);color:var(--green)}
 .fee-card-status-badge.s-partial{background:var(--amber-l);color:var(--amber)}
 .fee-card-status-badge.s-unconfirmed{background:var(--red-l);color:var(--red)}
 .fee-formats-grid{display:flex;flex-direction:column}
-.fee-fmt-block{padding:12px 14px}
+.fee-fmt-block{padding:11px 13px}
 .fee-fmt-block+.fee-fmt-block{}
 .fee-fmt-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .fee-titles-label{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g2);cursor:pointer;user-select:none;margin-bottom:8px;display:block}
 .fee-titles-arrow{font-size:10px;color:var(--g2)}
 .fee-titles-list{margin-top:6px;margin-bottom:8px}
 .fee-title-item{font-size:13px;color:var(--g1);line-height:1.8}
-.fee-amounts-row{display:flex;align-items:center;gap:0;margin-bottom:12px;flex-wrap:nowrap}
+.fee-amounts-row{display:flex;align-items:center;gap:0;margin-bottom:10px;flex-wrap:nowrap}
 .fee-amt-label{font-size:12px;color:var(--g2);font-weight:500;white-space:nowrap;margin-right:6px}
 .fee-amt-val{font-size:13px;font-weight:700;color:var(--black);white-space:nowrap;margin:0 4px}
 .fee-amt-sep{color:var(--g3);margin:0 8px;font-size:13px}
-.fee-actual-input{font-size:12px;font-weight:500;color:var(--black);border:1px solid var(--g4);border-radius:6px;padding:5px 8px;width:95px;background:var(--white);font-family:var(--sans);outline:none;text-align:right}
+.fee-actual-input{font-size:12px;font-weight:500;color:var(--black);border:1px solid var(--g4);border-radius:6px 0 0 6px;padding:5px 8px;width:80px;background:var(--white);font-family:var(--sans);outline:none;text-align:right;border-right:none}
+.fee-amt-tick{padding:5px 8px;background:var(--g5);border:1px solid var(--g4);border-radius:0 6px 6px 0;font-size:11px;font-weight:700;color:var(--g2);cursor:pointer;font-family:var(--sans);transition:all .12s;flex-shrink:0}
+.fee-amt-tick:hover{background:var(--green-l);color:var(--green);border-color:var(--green)}
 .fee-actual-input:focus{border-color:var(--lilac-m)}
 .fee-actual-input::placeholder{color:var(--g3);font-weight:400;font-size:12px}
 .fee-variance{font-size:12px;font-weight:600;margin-bottom:10px}
@@ -176,10 +178,10 @@ tbody tr:hover td{background:var(--lilac-l)}
 .fee-cap-track{height:3px;border-radius:2px;background:var(--g4);overflow:hidden}
 .fee-cap-fill{height:100%;border-radius:2px;transition:width .3s;background:var(--lilac-m)}
 .fee-cap-fill.cap-warn{background:var(--amber)}.fee-cap-fill.cap-full{background:var(--red)}
-.fee-fmt-footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;margin-top:8px;border-top:1px solid var(--g4)}
-.fee-confirm-btn{padding:7px 20px;background:var(--white);color:var(--lilac-d);border:1.5px solid var(--lilac);border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--sans);transition:all .15s}
+.fee-fmt-footer{display:flex;align-items:center;justify-content:space-between;padding-top:9px;margin-top:7px;border-top:1px solid var(--g4)}
+.fee-confirm-btn{padding:6px 16px;background:var(--white);color:var(--lilac-d);border:1.5px solid var(--lilac);border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--sans);transition:all .15s}
 .fee-confirm-btn:hover{background:var(--lilac-l);border-color:var(--lilac-d)}
-.fee-edit-btn{font-size:12px;color:var(--g2);background:none;border:1px solid var(--g4);border-radius:5px;cursor:pointer;font-family:var(--sans);padding:5px 10px;transition:all .15s}
+.fee-edit-btn{font-size:11px;color:var(--g2);background:none;border:1px solid var(--g4);border-radius:5px;cursor:pointer;font-family:var(--sans);padding:4px 9px;transition:all .15s}
 .fee-edit-btn:hover{color:var(--black);border-color:var(--g2)}
 .fee-waived-btn{padding:7px 20px;background:var(--blue-l);color:var(--blue);border:none;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--sans)}
 .fee-progress-wrap{display:flex;gap:24px;padding:14px 18px;background:var(--g5);border-radius:8px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
@@ -510,7 +512,7 @@ const EXHIBITOR_BRANDS = {
 };
 function exhibitorAvatar(name){
   const b=EXHIBITOR_BRANDS[name]||{color:'#8878d0',initials:(name||'?').replace(/[^A-Z]/g,'').substring(0,2)||name.substring(0,2).toUpperCase(),dark:false};
-  return `<div style="width:38px;height:38px;border-radius:8px;background:${b.color};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:800;color:${b.dark?'#1a1a1a':'#fff'};letter-spacing:.03em;font-family:var(--sans)">${b.initials}</div>`;
+  return `<div style="width:34px;height:34px;border-radius:7px;background:${b.color};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px;font-weight:800;color:${b.dark?'#1a1a1a':'#fff'};letter-spacing:.03em;font-family:var(--sans)">${b.initials}</div>`;
 }
 
 const EXHIBITORS=[
@@ -1211,8 +1213,9 @@ function renderFees(){
           <span class="fee-amt-val">${expVal}</span>
           <span class="fee-amt-sep">·</span>
           <span class="fee-amt-label">Actual</span>
-          <input class="fee-actual-input" type="text" value="${actual.replace(/"/g,'&quot;')}" placeholder="enter amount"
-            onchange="saveFeeActual('${key}',this.value)">
+          <input class="fee-actual-input" id="inp-${key.replace(/[|]/g,'-')}" type="text" value="${actual.replace(/"/g,'&quot;')}" placeholder=""
+            onkeydown="if(event.key==='Enter'){saveFeeActual('${key}',this.value);this.blur()}">
+          <button class="fee-amt-tick" onclick="saveFeeActual('${key}',document.getElementById('inp-${key.replace(/[|]/g,'-')}').value)" title="Save amount">✓</button>
         </div>
         ${varHtml}
         ${capHtml}
