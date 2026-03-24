@@ -160,6 +160,8 @@ tbody tr:hover td{background:var(--lilac-l)}
 .fee-btn-confirm:hover:not(:disabled){background:var(--lilac);color:#fff}
 .fee-btn-confirm:disabled{border-color:var(--g4);color:var(--g3);cursor:not-allowed}
 .fee-btn-confirm.done{border-color:var(--green);color:var(--green);cursor:default}
+.fee-btn-edit-confirm{width:100%;padding:7px 0;font-size:11px;font-weight:600;border:1px solid var(--g4);border-radius:7px;background:var(--white);color:var(--g2);cursor:pointer;font-family:var(--sans);text-align:center;margin-top:4px}
+.fee-btn-edit-confirm:hover{border-color:var(--amber);color:var(--amber)}
 .fee-btn-confirm.done:hover{background:var(--white);color:var(--green)}
 .fee-progress-wrap{display:flex;gap:24px;padding:14px 18px;background:var(--g5);border-radius:8px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
 .fee-progress-fmt{display:flex;align-items:center;gap:10px;font-size:13px}
@@ -1232,12 +1234,19 @@ function renderFees(){
     }).join('');
 
     // Confirm button
+    const isAuthed=gAuthToken&&Date.now()<gTokenExpiry;
     const canConfirm=allFmtConfirmed&&!cardConfirmed;
-    const confirmBtn=cardConfirmed
-      ?`<button class="fee-btn-confirm done" disabled>✓ Confirmed</button>`
-      :canConfirm
-        ?`<button class="fee-btn-confirm" onclick="confirmCard('${month}','${safeEx}','${safeCtry}',this)">Confirm</button>`
-        :`<button class="fee-btn-confirm" disabled title="Enter and confirm amounts in details first">Confirm</button>`;
+    let confirmBtn;
+    if(cardConfirmed){
+      confirmBtn=`<button class="fee-btn-confirm done" disabled>✓ Confirmed</button>
+        <button class="fee-btn-edit-confirm" onclick="resetCardConfirm('${month}','${safeEx}','${safeCtry}')">Edit &amp; re-confirm</button>`;
+    } else if(!isAuthed){
+      confirmBtn=`<button class="fee-btn-confirm" disabled title="Sign in via Settings to enable sheet sync" style="opacity:.4;cursor:not-allowed">Confirm (sign in first)</button>`;
+    } else if(canConfirm){
+      confirmBtn=`<button class="fee-btn-confirm" onclick="confirmCard('${month}','${safeEx}','${safeCtry}',this)">Confirm</button>`;
+    } else {
+      confirmBtn=`<button class="fee-btn-confirm" disabled title="Confirm all site amounts in details first">Confirm</button>`;
+    }
 
     return`<div class="fee-card ${stateCls}" style="background:${b.color}0a">
       <div class="fee-card-body">
@@ -1417,6 +1426,13 @@ async function confirmCard(month,exhibitor,country,btn){
       if(t){t.textContent='✓ saved to sheet';setTimeout(()=>{if(t.textContent.includes('saved'))t.textContent=''},3000);}
     }
   }
+  renderFees();
+}
+
+function resetCardConfirm(month,exhibitor,country){
+  const cardKey=`CARD|${month}|${exhibitor}|${country}`;
+  delete S.feeStatus[cardKey];
+  localStorage.setItem('feeStatus',JSON.stringify(S.feeStatus));
   renderFees();
 }
 
