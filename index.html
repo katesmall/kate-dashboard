@@ -1,0 +1,866 @@
+!DOCTYPE html
+html lang=en
+head
+meta charset=UTF-8
+meta name=viewport content=width=device-width, initial-scale=1.0
+title4DPLEX — Exhibitor Intelligencetitle
+link href=httpsfonts.googleapis.comcss2family=Synewght@400;500;600&family=DM+Sansital,wght@0,300;0,400;0,500;1,300&family=DM+Monowght@400;500&display=swap rel=stylesheet
+style
+root{
+  --lilac#8878d0;--lilac-l#f2f0fc;--lilac-m#c4bce8;--lilac-d#5e52a8;
+  --black#0f0f0f;--g1#383838;--g2#767676;--g3#b0b0b0;--g4#e4e4e4;--g5#f6f6f6;--white#ffffff;
+  --green#287a50;--green-l#eaf4ee;--amber#9a6c0a;--amber-l#fef6e4;
+  --red#b83030;--red-l#fdecea;--blue#2060a8;--blue-l#e8f0fb;
+  --sans'DM Sans',sans-serif;--display'Syne',sans-serif;--mono'DM Mono',monospace;
+  --sidebar210px;--topbar52px;
+}
+{box-sizingborder-box;margin0;padding0}
+html,body{height100%;overflowhidden}
+body{font-familyvar(--sans);backgroundvar(--white);colorvar(--black);font-size13px;line-height1.5}
+.shell{displayflex;height100vh;overflowhidden}
+.sidebar{widthvar(--sidebar);min-widthvar(--sidebar);border-right1px solid var(--g4);displayflex;flex-directioncolumn;backgroundvar(--white);height100vh;overflow-yauto}
+.logo{padding18px 16px 16px;border-bottom1px solid var(--g4)}
+.logo-eyebrow{font-familyvar(--mono);font-size9px;letter-spacing.12em;colorvar(--g3);text-transformuppercase;margin-bottom3px}
+.logo-name{font-familyvar(--display);font-size15px;font-weight600;colorvar(--black);letter-spacing-.01em}
+.logo-sub{font-size11px;colorvar(--g2);margin-top1px}
+.nav{padding10px 8px;flex1}
+.nav-group{margin-bottom20px}
+.nav-group-label{font-size9px;font-weight500;colorvar(--g3);letter-spacing.1em;text-transformuppercase;padding0 8px;margin-bottom3px}
+.nav-item{displayflex;align-itemscenter;gap9px;width100%;padding7px 8px;border-radius6px;bordernone;backgroundnone;cursorpointer;font-familyvar(--sans);font-size12px;colorvar(--g1);text-alignleft;transitionbackground .12s,color .12s}
+.nav-itemhover{backgroundvar(--g5);colorvar(--black)}
+.nav-item.active{backgroundvar(--lilac-l);colorvar(--lilac-d);font-weight500}
+.nav-icon{width15px;height15px;flex-shrink0;opacity.7}
+.nav-item.active .nav-icon{opacity1}
+.sidebar-foot{padding12px 16px;border-top1px solid var(--g4)}
+.sheet-pill{displayflex;align-itemscenter;gap7px;padding7px 10px;border-radius6px;border1px solid var(--g4);cursorpointer;transitionborder-color .15s;font-size11px;colorvar(--g2)}
+.sheet-pillhover{border-colorvar(--lilac-m)}
+.s-dot{width6px;height6px;border-radius50%;backgroundvar(--g3);flex-shrink0;transitionbackground .3s}
+.s-dot.on{backgroundvar(--green)}
+.main{flex1;min-width0;displayflex;flex-directioncolumn;height100vh;overflowhidden}
+.topbar{heightvar(--topbar);min-heightvar(--topbar);border-bottom1px solid var(--g4);displayflex;align-itemscenter;justify-contentspace-between;padding0 24px;backgroundvar(--white);positionrelative;z-index20}
+.page-title{font-familyvar(--display);font-size14px;font-weight600;letter-spacing-.01em}
+.topbar-right{displayflex;align-itemscenter;gap8px}
+.content{flex1;overflow-yauto;padding24px}
+.pane{displaynone}.pane.active{displayblock}
+select,input[type=text],input[type=url],textarea{border1px solid var(--g4);border-radius6px;padding6px 10px;font-size12px;font-familyvar(--sans);backgroundvar(--white);colorvar(--black);outlinenone;transitionborder-color .15s}
+selectfocus,inputfocus,textareafocus{border-colorvar(--lilac-m)}
+textarea{resizevertical}
+.btn{border1px solid var(--g4);border-radius6px;padding6px 13px;font-size12px;font-familyvar(--sans);backgroundvar(--white);colorvar(--black);cursorpointer;transitionbackground .1s,border-color .15s;white-spacenowrap}
+.btnhover{backgroundvar(--g5)}
+.btn-primary{backgroundvar(--lilac);colorvar(--white);border-colorvar(--lilac)}
+.btn-primaryhover{backgroundvar(--lilac-d);border-colorvar(--lilac-d)}
+.btn-sm{padding4px 9px;font-size11px}
+.btn-ghost{border-colortransparent;colorvar(--g2)}
+.btn-ghosthover{backgroundvar(--g5);colorvar(--black);border-colorvar(--g4)}
+.stat-row{displaygrid;grid-template-columnsrepeat(4,1fr);gap12px;margin-bottom24px}
+.stat{backgroundvar(--g5);border-radius8px;padding16px 18px}
+.stat-label{font-size10px;font-weight500;colorvar(--g2);letter-spacing.05em;text-transformuppercase;margin-bottom6px}
+.stat-value{font-familyvar(--display);font-size28px;font-weight600;colorvar(--lilac-d);letter-spacing-.02em;line-height1}
+.stat-sub{font-size11px;colorvar(--g3);margin-top5px}
+.stat-urgent .stat-value{colorvar(--amber)}
+.sec-head{displayflex;align-itemscenter;justify-contentspace-between;margin-bottom10px}
+.sec-title{font-size10px;font-weight500;colorvar(--g2);letter-spacing.08em;text-transformuppercase}
+.sec-controls{displayflex;gap6px;align-itemscenter}
+.panel{border1px solid var(--g4);border-radius8px;overflowhidden;margin-bottom18px}
+.panel-head{padding9px 14px;border-bottom1px solid var(--g4);displayflex;align-itemscenter;justify-contentspace-between;backgroundvar(--white)}
+.panel-head-title{font-size12px;font-weight500}
+.panel-body{padding16px}
+.tbl-wrap{overflow-xauto}
+table{width100%;border-collapsecollapse;font-size12px}
+th{padding7px 14px;text-alignleft;font-size10px;font-weight500;colorvar(--g2);letter-spacing.06em;text-transformuppercase;border-bottom1px solid var(--g4);white-spacenowrap;backgroundvar(--white)}
+td{padding9px 14px;border-bottom1px solid var(--g4);vertical-alignmiddle}
+trlast-child td{border-bottomnone}
+tbody tr{transitionbackground .08s}
+tbody trhover td{backgroundvar(--lilac-l)}
+.fw{font-weight500}.dim{colorvar(--g2)}.mono{font-familyvar(--mono);font-size11px}
+.pill{displayinline-flex;align-itemscenter;padding2px 7px;border-radius99px;font-size10px;font-weight500;white-spacenowrap}
+.p-4dx{backgroundvar(--lilac-l);colorvar(--lilac-d)}
+.p-sx{background#e5f3ee;color#1a6b50}
+.p-green{backgroundvar(--green-l);colorvar(--green)}
+.p-amber{backgroundvar(--amber-l);colorvar(--amber)}
+.p-red{backgroundvar(--red-l);colorvar(--red)}
+.p-gray{backgroundvar(--g5);colorvar(--g2)}
+.p-blue{backgroundvar(--blue-l);colorvar(--blue)}
+.dot{width6px;height6px;border-radius50%;displayinline-block;flex-shrink0}
+.d-green{backgroundvar(--green)}.d-amber{backgroundvar(--amber)}.d-red{backgroundvar(--red)}.d-gray{backgroundvar(--g3)}.d-blue{backgroundvar(--blue)}
+.occ{displayinline-flex;align-itemscenter;gap6px}
+.occ-bar{width56px;height3px;border-radius2px;backgroundvar(--g4);overflowhidden}
+.occ-fill{height100%;border-radius2px;backgroundvar(--lilac)}
+.occ-fill.hi{backgroundvar(--green)}.occ-fill.lo{backgroundvar(--red)}
+.occ-n{font-size11px;colorvar(--g1);min-width30px}
+.flag{displayinline-flex;align-itemscenter;gap4px;padding2px 7px;border-radius4px;font-size10px;font-weight500}
+.flag-warn{backgroundvar(--amber-l);colorvar(--amber)}
+.flag-alert{backgroundvar(--red-l);colorvar(--red)}
+.flag-info{backgroundvar(--blue-l);colorvar(--blue)}
+.flag-ok{backgroundvar(--green-l);colorvar(--green)}
+.alert-bar{displayflex;align-itemscenter;gap10px;padding10px 14px;border-radius6px;margin-bottom12px;font-size12px}
+.alert-bar.warn{backgroundvar(--amber-l);colorvar(--amber)}
+.alert-bar.info{backgroundvar(--blue-l);colorvar(--blue)}
+.alert-bar.danger{backgroundvar(--red-l);colorvar(--red)}
+.alert-bar.ok{backgroundvar(--green-l);colorvar(--green)}
+.tl-outer{overflow-xauto;border1px solid var(--g4);border-radius8px}
+.tl-head-row{displayflex;border-bottom1px solid var(--g4)}
+.tl-label-spacer{min-width200px;width200px;border-right1px solid var(--g4);flex-shrink0}
+.tl-months{displayflex}
+.tl-month{flex-shrink0;font-size10px;colorvar(--g2);text-aligncenter;padding6px 0;border-right1px solid var(--g4);font-familyvar(--mono)}
+.tl-row{displayflex;border-bottom1px solid var(--g4)}
+.tl-rowlast-child{border-bottomnone}
+.tl-label{min-width200px;width200px;padding10px 14px;border-right1px solid var(--g4);backgroundvar(--white);positionsticky;left0;z-index2;flex-shrink0}
+.tl-name{font-weight500;font-size12px}.tl-sub{font-size10px;colorvar(--g2);margin-top1px}
+.tl-track{positionrelative;height46px;flex-shrink0}
+.tl-today-line{positionabsolute;top0;bottom0;width1.5px;backgroundvar(--lilac);opacity.5;z-index1;pointer-eventsnone}
+.tl-grid-line{positionabsolute;top0;bottom0;width1px;backgroundvar(--g4);pointer-eventsnone}
+.tl-block{positionabsolute;top9px;height28px;border-radius4px;displayflex;align-itemscenter;padding0 7px;font-size10px;colorvar(--white);white-spacenowrap;overflowhidden;text-overflowellipsis;cursordefault;transitionopacity .12s;font-weight500}
+.tl-blockhover{opacity.8;z-index5}
+.b4dx{backgroundvar(--lilac)}.bsx{background#3a9470}.past{opacity.3}
+.tl-preview{positionabsolute;top9px;height28px;width3px;backgroundvar(--amber);border-radius2px;opacity.8}
+.two-col{displaygrid;grid-template-columns1fr 1fr;gap16px}
+.three-col{displaygrid;grid-template-columns1fr 1fr 1fr;gap16px}
+.upload-zone{border1.5px dashed var(--g3);border-radius8px;padding18px 16px;text-aligncenter;cursorpointer;colorvar(--g2);font-size12px;margin-bottom8px;transitionborder-color .15s,background .15s}
+.upload-zonehover{border-colorvar(--lilac-m);backgroundvar(--lilac-l)}
+.upload-title{font-weight500;colorvar(--g1);margin-bottom3px;font-size12px}
+.upload-hint{font-size10px;colorvar(--g3);line-height1.7}
+.empty{colorvar(--g3);text-aligncenter;padding36px 20px;font-size12px}
+-webkit-scrollbar{width5px;height5px}
+-webkit-scrollbar-track{backgroundtransparent}
+-webkit-scrollbar-thumb{backgroundvar(--g4);border-radius3px}
+-webkit-scrollbar-thumbhover{backgroundvar(--g3)}
+@media(max-width900px){.sidebar{displaynone}.stat-row{grid-template-columns1fr 1fr}.two-col,.three-col{grid-template-columns1fr}}
+style
+head
+body
+div class=shell
+
+nav class=sidebar
+  div class=logo
+    div class=logo-eyebrowCJ 4DPLEXdiv
+    div class=logo-nameExhibitor Inteldiv
+    div class=logo-subMEA + Australiadiv
+  div
+  div class=nav
+    div class=nav-group
+      div class=nav-group-labelDashboarddiv
+      button class=nav-item active onclick=nav('overview',this)
+        svg class=nav-icon viewBox=0 0 16 16 fill=none stroke=currentColor stroke-width=1.4rect x=1.5 y=1.5 width=5.5 height=5.5 rx=1rect x=9 y=1.5 width=5.5 height=5.5 rx=1rect x=1.5 y=9 width=5.5 height=5.5 rx=1rect x=9 y=9 width=5.5 height=5.5 rx=1svg
+        Overview
+      button
+      button class=nav-item onclick=nav('timeline',this)
+        svg class=nav-icon viewBox=0 0 16 16 fill=none stroke=currentColor stroke-width=1.4line x1=1 y1=4 x2=15 y2=4line x1=1 y1=8 x2=15 y2=8line x1=1 y1=12 x2=15 y2=12rect x=2 y=2.5 width=4 height=3 rx=.5 fill=currentColor stroke=none opacity=.25rect x=7 y=6.5 width=6 height=3 rx=.5 fill=currentColor stroke=none opacity=.25svg
+        Timeline
+      button
+      button class=nav-item onclick=nav('performance',this)
+        svg class=nav-icon viewBox=0 0 16 16 fill=none stroke=currentColor stroke-width=1.4polyline points=1,13 5,8 9,10 15,3svg
+        Performance
+      button
+      button class=nav-item onclick=nav('codefees',this)
+        svg class=nav-icon viewBox=0 0 16 16 fill=none stroke=currentColor stroke-width=1.4rect x=2 y=1.5 width=12 height=13 rx=1.5line x1=5 y1=5.5 x2=11 y2=5.5line x1=5 y1=8.5 x2=9 y2=8.5line x1=5 y1=11.5 x2=7 y2=11.5svg
+        Code fees
+      button
+      button class=nav-item onclick=nav('gaps',this)
+        svg class=nav-icon viewBox=0 0 16 16 fill=none stroke=currentColor stroke-width=1.4circle cx=8 cy=8 r=6.5line x1=8 y1=5 x2=8 y2=8.5circle cx=8 cy=11 r=.6 fill=currentColor stroke=nonesvg
+        Booking gaps
+      button
+    div
+    div class=nav-group
+      div class=nav-group-labelManagediv
+
+      button class=nav-item onclick=nav('settings',this)
+        svg class=nav-icon viewBox=0 0 16 16 fill=none stroke=currentColor stroke-width=1.4circle cx=8 cy=8 r=2.2path d=M8 1v2M8 13v2M1 8h2M13 8h2M3.1 3.1l1.4 1.4M11.5 11.5l1.4 1.4M3.1 12.9l1.4-1.4M11.5 4.5l1.4-1.4svg
+        Settings
+      button
+    div
+  div
+  div class=sidebar-foot
+    div class=sheet-pill onclick=nav('settings',null) id=sheet-pill
+      span class=s-dot id=s-dotspan
+      span id=s-labelNo sheet connectedspan
+    div
+  div
+nav
+
+div class=main
+  div class=topbar
+    span class=page-title id=page-titleOverviewspan
+    div class=topbar-right
+      select id=f-region onchange=applyFilters()
+        option value=allAll regionsoption
+        option value=MENAMENAoption
+        option value=AUSAustraliaoption
+      select
+      select id=f-format onchange=applyFilters()
+        option value=allAll formatsoption
+        option value=4DX4DXoption
+        option value=ScreenXScreenXoption
+      select
+      input type=text id=f-search placeholder=Search… oninput=applyFilters() style=width150px
+      button class=btn btn-sm onclick=syncSheets()↻ Syncbutton
+      span id=topbar-sync-status style=font-size11px;colorvar(--g3);font-familyvar(--mono)span
+    div
+  div
+
+  div class=content
+
+    !-- OVERVIEW --
+    div id=pane-overview class=pane active
+      div class=stat-row
+        div class=statdiv class=stat-labelExhibitorsdivdiv class=stat-value id=st-exhib—divdiv class=stat-subacross all formatsdivdiv
+        div class=statdiv class=stat-labelActive titlesdivdiv class=stat-value id=st-titles—divdiv class=stat-subthis monthdivdiv
+        div class=statdiv class=stat-labelAvg occupancydivdiv class=stat-value id=st-occ—divdiv class=stat-subcurrent runsdivdiv
+        div class=stat stat-urgentdiv class=stat-labelFees pendingdivdiv class=stat-value id=st-fees—divdiv class=stat-sub id=st-fees-subthis monthdivdiv
+      div
+      div id=ov-alertsdiv
+      div id=sync-debug style=font-size11px;colorvar(--g3);margin-bottom10px;font-familyvar(--mono)div
+      div class=sec-headspan class=sec-titleExhibitor statusspandiv
+      div class=panel
+        div class=tbl-wraptable
+          theadtrthExhibitorththCountryththFormatththCurrent titleththNext titleththAvg occththCode feethtrthead
+          tbody id=ov-tbodytbody
+        tablediv
+      div
+      div class=sec-head style=margin-top6pxspan class=sec-titleUpcoming — not yet bookedspanspan class=sec-title style=colorvar(--g3)from lineup sheetspandiv
+      div class=panel
+        div class=tbl-wraptable
+          theadtrthTitleththFormatththAvailable fromththMissing exhibitorsththFilm typethtrthead
+          tbody id=ov-gaps-tbodytbody
+        tablediv
+      div
+    div
+
+    !-- TIMELINE --
+    div id=pane-timeline class=pane
+      div class=sec-head style=margin-bottom14px
+        span class=sec-titleBooking timelinespan
+        div class=sec-controls
+          select id=tl-window onchange=renderTimeline()option value=33 monthsoptionoption value=6 selected6 monthsoptionoption value=1212 monthsoptionselect
+          select id=tl-fmt onchange=renderTimeline()option value=allAll formatsoptionoption value=4DX4DX onlyoptionoption value=ScreenXScreenX onlyoptionselect
+        div
+      div
+      div id=tl-containerdiv class=emptyLoad booking data to see the timelinedivdiv
+    div
+
+    !-- PERFORMANCE --
+    div id=pane-performance class=pane
+      div class=two-col style=margin-bottom18px
+        div
+          div class=sec-headspan class=sec-titleBy exhibitor × titlespandiv
+          div class=paneldiv class=tbl-wraptable
+            theadtrthExhibitorththTitleththFormatththOcc %ththAdmissionsththScreeningsthtrthead
+            tbody id=perf-tbodytbody
+          tabledivdiv
+        div
+        div
+          div class=sec-headspan class=sec-titleTop titles by occupancyspandiv
+          div class=paneldiv class=tbl-wraptable
+            theadtrthTitleththFormatththAvg occththSitesththTotal admthtrthead
+            tbody id=title-tbodytbody
+          tabledivdiv
+        div
+      div
+      div class=sec-headspan class=sec-titleAnomaly flagsspandiv
+      div class=paneldiv class=tbl-wraptable
+        theadtrthExhibitorththSiteththTitleththFlagththDetailthtrthead
+        tbody id=anomaly-tbodytbody
+      tabledivdiv
+    div
+
+    !-- CODE FEES --
+    div id=pane-codefees class=pane
+      div class=sec-head
+        span class=sec-titleCode fee trackerspan
+        div class=sec-controls
+          select id=fee-month onchange=renderFees()
+            option value=2026-03March 2026option
+            option value=2026-02February 2026option
+            option value=2026-01January 2026option
+            option value=2025-12December 2025option
+            option value=2025-11November 2025option
+          select
+          button class=btn btn-sm onclick=exportFees()Export TSVbutton
+        div
+      div
+      div id=fee-alertsdiv
+      div class=paneldiv class=tbl-wraptable
+        theadtrthExhibitorththSiteththFormatththTitleththRelease dateththFeeththCap statusththStatusththNotesthtrthead
+        tbody id=fees-tbodytbody
+      tabledivdiv
+      div style=font-size11px;colorvar(--g3);margin-top6pxStatus and notes saved in your browser. Fee amounts from code_fee sheet. Only confirmed bookings (CT022010) appear here.div
+    div
+
+    !-- BOOKING GAPS --
+    div id=pane-gaps class=pane
+      div class=sec-head style=margin-bottom14px
+        span class=sec-titleAvailable titles not yet bookedspan
+        div class=sec-controls
+          select id=gap-horizon onchange=renderGaps()option value=4Next 4 weeksoptionoption value=8 selectedNext 8 weeksoptionoption value=16Next 16 weeksoptionselect
+        div
+      div
+      div class=paneldiv class=tbl-wraptable
+        theadtrthTitleththFormatththAvailable fromththExhibitorththCountryththFilm typeththActionthtrthead
+        tbody id=gaps-tbodytbody
+      tabledivdiv
+    div
+
+    !-- DATA --
+    div id=pane-data class=pane
+      div class=sec-head style=margin-bottom10pxspan class=sec-titleData statusspandiv
+      div class=panel panel-body style=padding16px;margin-bottom18px
+        div id=data-summary style=font-size12px;colorvar(--g2)No data loaded yet. Connect your Google Sheet in Settings and hit Sync.div
+      div
+      div class=sec-head style=margin-bottom10pxspan class=sec-titleHidden data buffers (used by sync)spandiv
+      div style=displaynone
+        textarea id=t-bookingtextarea
+        textarea id=t-botextarea
+      div
+      div class=panel panel-body style=padding16px
+        p style=font-size12px;colorvar(--g2);line-height1.8;margin-bottom14pxAll data comes from your Google Sheet. Use the strong style=colorvar(--black)↻ Syncstrong button in the top bar to refresh, or it syncs automatically on load if a sheet is connected.p
+        div style=displaygrid;grid-template-columnsrepeat(3,1fr);gap10px
+          div style=backgroundvar(--g5);border-radius6px;padding12px 14px
+            div style=font-size10px;colorvar(--g2);font-weight500;letter-spacing.06em;text-transformuppercase;margin-bottom4pxbookings_rawdiv
+            div style=font-size11px;font-familyvar(--mono);colorvar(--g2);line-height1.9Header row 1brformat  country  titlebrexhibitor  site  screenbrscreen_format  confirmedbrpreview_date  start_datediv
+          div
+          div style=backgroundvar(--g5);border-radius6px;padding12px 14px
+            div style=font-size10px;colorvar(--g2);font-weight500;letter-spacing.06em;text-transformuppercase;margin-bottom4pxbodata_rawdiv
+            div style=font-size11px;font-familyvar(--mono);colorvar(--g2);line-height1.9Korean header row 1br극장사업자  국가  사이트br스크린유형  타이틀br상영회차  객석율br시작일자  상영일수div
+          div
+          div style=backgroundvar(--g5);border-radius6px;padding12px 14px
+            div style=font-size10px;colorvar(--g2);font-weight500;letter-spacing.06em;text-transformuppercase;margin-bottom4pxlineupdiv
+            div style=font-size11px;font-familyvar(--mono);colorvar(--g2);line-height1.9Row 1 blankbrRow 2 headersbrTitle  Studiobr4DX  SX  First ReleasebrHollywoodLocaldiv
+          div
+        div
+      div
+    div
+
+    !-- SETTINGS --
+    div id=pane-settings class=pane
+      div class=sec-head style=margin-bottom10pxspan class=sec-titleGoogle Sheets connectionspandiv
+      div class=panel panel-body style=margin-bottom20px;padding16px
+        p style=font-size12px;colorvar(--g2);margin-bottom14px;line-height1.8
+          Set sheet to strong style=colorvar(--black)Anyone with link → Viewerstrong, then paste URL below.br
+          Required tabs
+          code style=font-familyvar(--mono);backgroundvar(--g5);padding1px 5px;border-radius3px;font-size11pxbookings_rawcode
+          code style=font-familyvar(--mono);backgroundvar(--g5);padding1px 5px;border-radius3px;font-size11pxbodata_rawcode
+          code style=font-familyvar(--mono);backgroundvar(--g5);padding1px 5px;border-radius3px;font-size11pxlineupcode
+          code style=font-familyvar(--mono);backgroundvar(--g5);padding1px 5px;border-radius3px;font-size11pxcode_feecode
+        p
+        div style=displayflex;gap8px;margin-bottom10px
+          input type=url id=gs-url placeholder=httpsdocs.google.comspreadsheetsd… style=flex1;font-familyvar(--mono);font-size11px
+          button class=btn btn-primary onclick=connectSheet()Connectbutton
+          button class=btn onclick=syncSheets()Sync nowbutton
+        div
+        div id=gs-feedback style=font-size11px;colorvar(--g2)Not connecteddiv
+      div
+
+      div class=sec-head style=margin-bottom10pxspan class=sec-titleExhibitor directoryspandiv
+      div class=paneldiv class=tbl-wraptable
+        theadtrthExhibitorththCountryththFormatsththContactththRegionthtrthead
+        tbody id=dir-tbodytbody
+      tabledivdiv
+
+      div class=sec-head style=margin-top18px;margin-bottom10pxspan class=sec-titleSheet column referencespandiv
+      div class=panel panel-body style=padding16px
+        div class=three-col
+          div
+            div style=font-size11px;font-weight500;margin-bottom8pxbookings_rawdiv
+            div style=font-size10px;colorvar(--g2);font-familyvar(--mono);line-height2.1
+              1 format codebr2 countrybr3 titlebr4 exhibitorbr5 sitebr6 screen IDbr7 SO# (type)br8 CT# (status)br9 preview datebr10 release datebr11–12 ignoredbr13 entered bybr14 date entered
+            div
+          div
+          div
+            div style=font-size11px;font-weight500;margin-bottom8pxbodata_rawdiv
+            div style=font-size10px;colorvar(--g2);font-familyvar(--mono);line-height2.1
+              1 극장사업자 (exhibitor)br2 국가 (country)br3 사이트 (site)br4 스크린유형 (format)br5 타이틀 (title)br6 상영회차 (screenings)br7 총가용좌석수 (seats)br8 관객수유료 (paid adm)br9 관객수무료 (free adm)br10 관객수전체 (total adm)br11 BO localbr12 BO USDbr13 admseatbr14 객석율 (occ %)br15 ATP localbr16 ATP USDbr17 시작일자 (start date)br18 상영일수 (run days)
+            div
+          div
+          div
+            div style=font-size11px;font-weight500;margin-bottom8pxcode_feediv
+            div style=font-size10px;colorvar(--g2);font-familyvar(--mono);line-height2.1
+              exhibitorbrsitebrformatbrfee_typebrstandard_termsbrstandard_fee_amountbrrequested_fee_amountbrflat_monthly_amountbrcurrencybrcap_per_sitebrcap_per_exhibitorbrmonthly_cap_amountbryearly_cap_amountbrcontract_start_datebrcontract_end_datebrnotes
+            div
+          div
+        div
+      div
+    div
+
+  div
+div
+div
+
+script
+const S={booking[],bo[],catalogue[],contracts[],sheetIdlocalStorage.getItem('sheetId')'',feeStatusJSON.parse(localStorage.getItem('feeStatus')'{}'),feeNotesJSON.parse(localStorage.getItem('feeNotes')'{}')};
+
+const EXHIBITORS=[
+  {name'Cinescape',country'Kuwait',formats['4DX','ScreenX'],contact'Renice Jacobs',region'MENA'},
+  {name'VOX Cinemas',country'UAE',formats['4DX','ScreenX'],contact'Kifah',region'MENA'},
+  {name'Muvi Cinemas',country'Saudi Arabia',formats['4DX','ScreenX'],contact'Homer',region'MENA'},
+  {name'Reel Cinemas',country'UAE',formats['4DX','ScreenX'],contact'Suhas',region'MENA'},
+  {name'Novo Cinemas',country'Qatar',formats['4DX','ScreenX'],contact'Mahesh Simpson',region'MENA'},
+  {name'Scene Cinema',country'Egypt',formats['4DX','ScreenX'],contact'Rowan',region'MENA'},
+  {name'Event',country'Australia',formats['4DX','ScreenX'],contact'—',region'AUS'},
+];
+
+const SO_FMT={'SO201100''4DX','SO201200''ScreenX'};
+const CT_CONFIRMED='CT022010';
+
+function nav(id,el){
+  document.querySelectorAll('.pane').forEach(p=p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=n.classList.remove('active'));
+  document.getElementById('pane-'+id).classList.add('active');
+  if(el)el.classList.add('active');
+  const T={overview'Overview',timeline'Timeline',performance'Performance',codefees'Code fees',gaps'Booking gaps',settings'Settings'};
+  document.getElementById('page-title').textContent=T[id]id;
+  if(id==='timeline')renderTimeline();
+  if(id==='performance')renderPerformance();
+  if(id==='codefees')renderFees();
+  if(id==='gaps')renderGaps();
+  if(id==='settings')renderDirectory();
+}
+
+function normEx(e){
+  const n=(e'').toLowerCase();
+  if(n.includes('birch')n.includes('greater union')n.includes('event cinema'))return'Event';
+  return e;
+}
+function fmtFromSO(so){return SO_FMT[so]''}
+function isAlt(ft){const f=(ft'').toLowerCase();return f.includes('alternative')f.includes('event')f.includes('concert')}
+function avg(arr){const v=arr.filter(x=x!=null&&!isNaN(x));return v.lengthv.reduce((a,b)=a+b,0)v.lengthnull}
+function applyFilters(){renderOverview()}
+function getF(){return{regiondocument.getElementById('f-region').value,formatdocument.getElementById('f-format').value,searchdocument.getElementById('f-search').value.toLowerCase()}}
+
+function parseBooking(){
+  const raw=document.getElementById('t-booking').value.trim();
+  if(!raw){console.warn('parseBooking no raw data');return}
+  const lines=raw.split('n').filter(l=l.trim());
+  console.log('parseBooking lines=',lines.length,'first=',lines[0].substring(0,60));
+   skip header row
+  const dataLines=lines[0].toLowerCase().includes('format')lines[0].toLowerCase().includes('title')lines.slice(1)lines;
+  console.log('parseBooking dataLines=',dataLines.length);
+  S.booking=dataLines.filter(l=l.trim()).map(l={
+    const c=l.split('t');
+    const so=(c[6]'').trim(),ct=(c[7]'').trim();
+    return{
+      formatCode(c[0]'').trim(),
+      country(c[1]'').trim(),
+      title(c[2]'').trim(),
+      exhibitornormEx((c[3]'').trim()),
+      site(c[4]'').trim(),
+      screenId(c[5]'').trim(),
+      so,ct,
+      formatfmtFromSO(so),
+      confirmedct===CT_CONFIRMED,
+      previewDate(c[8]'').trim(),
+      releaseDate(c[9]'').trim(),   start_date is the release date
+      enteredBy(c[12]'').trim(),
+      dateEntered(c[13]'').trim()
+    };
+  });
+  renderOverview();updateDataSummary();
+}
+
+function parseBO(){
+  const raw=document.getElementById('t-bo').value.trim();
+  if(!raw){console.warn('parseBO no raw data');return}
+  const lines=raw.split('n').filter(l=l.trim());
+  console.log('parseBO lines=',lines.length,'first=',lines[0].substring(0,60));
+  const start=lines[0].includes('극장')lines[0].includes('exhibitor')10;
+  S.bo=lines.slice(start).filter(l=l.trim()).map(l={
+    const c=l.split('t');
+    return{exhibitornormEx((c[0]'').trim()),country(c[1]'').trim(),site(c[2]'').trim(),screenType(c[3]'').trim(),title(c[4]'').trim(),screenings+(c[5]0),totalSeats+(c[6]0),paidAdm+(c[7]0),freeAdm+(c[8]0),totalAdm+(c[9]0),boLocal+(c[10]0),boUSD+(c[11]0),admPerSeatparseFloat(c[12])0,occupancyparseFloat(c[13])null,atpLocal+(c[14]0),atpUSD+(c[15]0),startDate(c[16]'').trim(),runDays+(c[17]0)};
+  });
+  renderOverview();renderPerformance();updateDataSummary();
+}
+
+function parseCatalogue(rows){
+  if(rows.length2)return;
+  const hdr=rows[1].map(h=h.toLowerCase().replace([s()]+g,'_').replace([^a-z0-9_]g,''));
+  S.catalogue=rows.slice(2).filter(r=r.some(c=c.trim())).map(r={
+    const o={};hdr.forEach((h,i)=o[h]=(r[i]'').trim());
+    o.imdb_official_title=o.title'';
+    o.format_4dx=o['4dx']'';
+    o.format_sx=o.sx'';
+    o.first_available_date=o.first_release'';
+    o.film_type=o.hollywood_local'';
+    return o;
+  });
+}
+function parseContracts(rows){
+  if(!rows.length)return;
+  const hdr=rows[0].map(h=h.toLowerCase().trim());
+  S.contracts=rows.slice(1).map(r={const o={};hdr.forEach((h,i)=o[h]=(r[i]'').trim());return o});
+}
+function getContract(exhibitor,site,format){
+   code_fee tab keyed by site+format (no exhibitor column)
+  return S.contracts.find(c=c.site===site&&c.format===format)
+         S.contracts.find(c=c.site===site)null;
+}
+
+function renderOverview(){
+  const{region,format,search}=getF();
+  const today=new Date();
+  const thisM=today.getMonth(),thisY=today.getFullYear();
+  const allEx=[...new Set(S.booking.map(d=d.exhibitor))].filter(Boolean);
+  document.getElementById('st-exhib').textContent=allEx.lengthEXHIBITORS.length;
+  const titlesM=[...new Set(S.booking.filter(d={const rd=new Date(d.releaseDate);return rd.getMonth()===thisM&&rd.getFullYear()===thisY}).map(d=d.title))];
+  document.getElementById('st-titles').textContent=titlesM.length'—';
+  const occs=S.bo.map(d=d.occupancy).filter(o=o!=null&&!isNaN(o));
+  document.getElementById('st-occ').textContent=occs.lengthMath.round(occs.reduce((a,b)=a+b,0)occs.length)+'%''—';
+
+  const feeMonth=`${thisY}-${String(thisM+1).padStart(2,'0')}`;
+  const fRows=getFeeRows(feeMonth);
+  const pending=fRows.filter(r=(S.feeStatus[feeKey(feeMonth,r)]'Pending')==='Pending').length;
+  document.getElementById('st-fees').textContent=pending'0';
+
+  const day=today.getDate();
+  const al=document.getElementById('ov-alerts');
+  if(pending0&&day=10)al.innerHTML=`div class=alert-bar warn⚠ ${pending} code fee${pending1's'''} pending — confirm before end of first weekdiv`;
+  else if(pending0)al.innerHTML=`div class=alert-bar danger⚠ ${pending} code fee${pending1's'''} overdue — should have been confirmed in first weekdiv`;
+  else al.innerHTML='';
+
+  const tbody=document.getElementById('ov-tbody');
+  const srcEx=S.booking.length[...new Set(S.booking.map(d=d.exhibitor))].filter(Boolean)EXHIBITORS.map(e=e.name);
+  const rows=srcEx.map(ex={
+    const info=EXHIBITORS.find(e=e.name===ex){};
+    if(region!=='all'&&info.region&&info.region!==region)return null;
+    const exB=S.booking.filter(b=b.exhibitor===ex);
+    const exFmts=exB.length[...new Set(exB.map(b=b.format).filter(Boolean))](info.formats[]);
+    if(format!=='all'&&!exFmts.some(f=f===format))return null;
+    const country=exB[0].countryinfo.country'—';
+    if(search&&!ex.toLowerCase().includes(search)&&!country.toLowerCase().includes(search))return null;
+    const sorted=[...exB].sort((a,b)=new Date(a.releaseDate)-new Date(b.releaseDate));
+    const current=[...sorted].filter(t=new Date(t.releaseDate)=today).pop();
+    const next=sorted.find(t=new Date(t.releaseDate)today);
+    const exBO=S.bo.filter(b=b.exhibitor===ex);
+    const exOccs=exBO.map(b=b.occupancy).filter(o=o!=null);
+    const avgOcc=exOccs.lengthMath.round(exOccs.reduce((a,b)=a+b,0)exOccs.length)null;
+    const exFees=fRows.filter(r=r.exhibitor===ex);
+    const exPend=exFees.filter(r=(S.feeStatus[feeKey(feeMonth,r)]'Pending')==='Pending').length;
+    return{ex,country,exFmts,current,next,avgOcc,exPend};
+  }).filter(Boolean);
+
+  if(!rows.length){tbody.innerHTML=`trtd colspan=7 class=emptyLoad booking data or connect Google Sheets to populatetdtr`;return}
+  tbody.innerHTML=rows.map(r={
+    const fs=r.exFmts.join('+');
+    const pc=fs.includes('4DX')&&fs.includes('ScreenX')'p-4dx'fs.includes('4DX')'p-4dx''p-sx';
+    const oc=r.avgOcc==null''r.avgOcc=70'hi'r.avgOcc40'lo''';
+    const oh=r.avgOcc!=null`div class=occdiv class=occ-bardiv class=occ-fill ${oc} style=width${Math.min(r.avgOcc,100)}%divdivspan class=occ-n${r.avgOcc}%spandiv`'span class=dim—span';
+    const fh=r.exPend0`span class=flag flag-warn${r.exPend} pendingspan`'span class=flag flag-ok✓ clearspan';
+    return`trtd class=fw${r.ex}tdtd class=dim${r.country}tdtdspan class=pill ${pc}${fs'—'}spantdtd${r.currentr.current.title'span class=dim—span'}tdtd style=colorvar(--lilac-d)${r.nextr.next.title'span class=dim—span'}tdtd${oh}tdtd${fh}tdtr`;
+  }).join('');
+
+  renderGapsOverview();
+}
+
+function renderGapsOverview(){
+  const tbody=document.getElementById('ov-gaps-tbody');
+  if(!S.catalogue.length){tbody.innerHTML=`trtd colspan=5 class=emptyConnect lineup sheet to see upcoming titlestdtr`;return}
+  const today=new Date(),horizon=new Date(today);horizon.setDate(today.getDate()+56);
+  const bookedLower=new Set(S.booking.map(b=b.title.toLowerCase()));
+  const upcoming=S.catalogue.filter(t={
+    const av=new Date(t.first_available_datet.first_screening_date);
+    return!isNaN(av)&&av=today&&av=horizon;
+  });
+  if(!upcoming.length){tbody.innerHTML=`trtd colspan=5 class=emptyNo upcoming titles in catalogue within 8 weekstdtr`;return}
+  const rows=[];
+  upcoming.forEach(t={
+    const title=t.imdb_official_titlet.current_erp_title'—';
+    const fmt=t.formatt.original_production'—';
+    const avail=t.first_available_datet.first_screening_date'—';
+    const ft=t.film_type'—';
+    const missing=EXHIBITORS.filter(e=!S.booking.some(b=b.title.toLowerCase()===title.toLowerCase()&&b.exhibitor===e.name)).map(e=e.name);
+    if(missing.length)rows.push({title,fmt,avail,ft,missing});
+  });
+  if(!rows.length){tbody.innerHTML=`trtd colspan=5 class=emptyAll upcoming titles have bookings ✓tdtr`;return}
+  tbody.innerHTML=rows.map(r=`trtd class=fw${r.title}tdtdspan class=pill p-4dx${r.fmt}spantdtd class=mono dim${r.avail}tdtd${r.missing.map(e=`span class=flag flag-warn style=margin-right3px${e}span`).join('')}tdtdspan class=pill ${isAlt(r.ft)'p-gray''p-blue'}${r.ft}spantdtr`).join('');
+}
+
+function renderTimeline(){
+  const container=document.getElementById('tl-container');
+  if(!S.booking.length){container.innerHTML='div class=emptyLoad booking data to see the timelinediv';return}
+  const months=parseInt(document.getElementById('tl-window').value);
+  const fmtF=document.getElementById('tl-fmt').value;
+  const today=new Date();
+  const start=new Date(today.getFullYear(),today.getMonth()-1,1);
+  const end=new Date(start);end.setMonth(end.getMonth()+months+1);
+  const PX=4.2;
+  const totalW=Math.round((end-start)86400000PX);
+  const todayOff=Math.round((today-start)86400000PX);
+
+  let mHtml='div class=tl-head-rowdiv class=tl-label-spacerdivdiv class=tl-months';
+  const gridOff=[];
+  const md=new Date(start);
+  while(mdend){
+    const days=new Date(md.getFullYear(),md.getMonth()+1,0).getDate();
+    const w=Math.round(daysPX);
+    gridOff.push(Math.round((md-start)86400000PX));
+    mHtml+=`div class=tl-month style=width${w}px;min-width${w}px${md.toLocaleString('en',{month'short'})} ${md.getFullYear()}div`;
+    md.setMonth(md.getMonth()+1);
+  }
+  mHtml+='divdiv';
+  const gridHtml=gridOff.map(o=`div class=tl-grid-line style=left${o}pxdiv`).join('');
+
+  const exhibs=[...new Set(S.booking.map(d=d.exhibitor))].filter(Boolean);
+  const rowsHtml=exhibs.map(ex={
+    const books=S.booking.filter(b=b.exhibitor===ex&&(fmtF==='all'b.format===fmtF));
+    const country=books[0].country'';
+    const blocks=books.map(b={
+      const rd=new Date(b.releaseDate);if(isNaN(rd))return'';
+      const off=Math.round((rd-start)86400000PX);
+      if(offtotalWoff+14PX0)return'';
+      const past=rdtoday,isSX=b.format==='ScreenX';
+      const prevHtml=b.previewDate`div class=tl-preview style=left${Math.round((new Date(b.previewDate)-start)86400000PX)}px title=Preview ${b.previewDate}div`'';
+      return`${prevHtml}div class=tl-block ${isSX'bsx''b4dx'} ${past'past'''} style=left${off}px;width${Math.round(14PX)}px title=${b.title} · ${b.format} · ${b.releaseDate}${b.confirmed''' (unconfirmed)'}${b.title}div`;
+    }).join('');
+    return`div class=tl-rowdiv class=tl-labeldiv class=tl-name${ex}divdiv class=tl-sub${country}divdivdiv class=tl-track style=width${totalW}px${gridHtml}div class=tl-today-line style=left${todayOff}pxdiv${blocks}divdiv`;
+  }).join('');
+  container.innerHTML=`div class=tl-outer${mHtml}${rowsHtml}div`;
+}
+
+function renderPerformance(){
+  const t1=document.getElementById('perf-tbody'),t2=document.getElementById('title-tbody');
+  if(!S.bo.length){[t1,t2].forEach(t=t.innerHTML='trtd colspan=6 class=emptyLoad BO data to see performancetdtr');document.getElementById('anomaly-tbody').innerHTML='trtd colspan=5 class=emptyLoad BO data to detect anomaliestdtr';return}
+  const byET={};
+  S.bo.forEach(d={
+    const k=d.exhibitor+''+d.title+''+d.screenType;
+    if(!byET[k])byET[k]={exhibitord.exhibitor,titled.title,fmtd.screenType,occs[],adm0,screenings0};
+    if(d.occupancy!=null)byET[k].occs.push(d.occupancy);
+    byET[k].adm+=d.totalAdm0;byET[k].screenings+=d.screenings0;
+  });
+  const sET=Object.values(byET).sort((a,b)=avg(b.occs)-avg(a.occs));
+  t1.innerHTML=sET.slice(0,40).map(r={
+    const a=avg(r.occs),cls=a==null'p-gray'a=70'p-green'a=40'p-amber''p-red';
+    const fc=r.fmt==='ScreenX''p-sx''p-4dx';
+    return`trtd class=fw${r.exhibitor}tdtd${r.title}tdtdspan class=pill ${fc}${r.fmt'—'}spantdtdspan class=pill ${cls}${a!=nullMath.round(a)+'%''—'}spantdtd${r.adm.toLocaleString()}tdtd${r.screenings.toLocaleString()}tdtr`;
+  }).join('');
+  const byT={};
+  S.bo.forEach(d={
+    const k=d.title+''+(d.screenType'');
+    if(!byT[k])byT[k]={titled.title,fmtd.screenType,occs[],adm0,sitesnew Set()};
+    if(d.occupancy!=null)byT[k].occs.push(d.occupancy);
+    byT[k].adm+=d.totalAdm0;byT[k].sites.add(d.site);
+  });
+  const sT=Object.values(byT).sort((a,b)=avg(b.occs)-avg(a.occs));
+  t2.innerHTML=sT.slice(0,20).map(r={
+    const a=avg(r.occs),cls=a==null'p-gray'a=70'p-green'a=40'p-amber''p-red';
+    const fc=r.fmt==='ScreenX''p-sx''p-4dx';
+    return`trtd class=fw${r.title}tdtdspan class=pill ${fc}${r.fmt'—'}spantdtdspan class=pill ${cls}${a!=nullMath.round(a)+'%''—'}spantdtd${r.sites.size}tdtd${r.adm.toLocaleString()}tdtr`;
+  }).join('');
+  renderAnomalies();
+}
+
+function renderAnomalies(){
+  const tbody=document.getElementById('anomaly-tbody');
+  const flags=[];
+  const byST={};
+  S.bo.forEach(d={
+    const k=d.exhibitor+''+d.site+''+d.title;
+    if(!byST[k])byST[k]={exhibitord.exhibitor,sited.site,titled.title,days[]};
+    byST[k].days.push({datenew Date(d.startDate),screeningsd.screenings,occd.occupancy,admd.totalAdm});
+  });
+  Object.values(byST).forEach(run={
+    const sd=run.days.sort((a,b)=a.date-b.date);
+    const meanAdm=avg(sd.map(d=d.adm).filter(a=a!=null));
+    sd.forEach((d,i)={
+      if(i0&&isd.length-1&&d.screenings===0)flags.push({exhibitorrun.exhibitor,siterun.site,titlerun.title,type'warn',label'Zero screenings',detail`${d.date.toLocaleDateString()} — no screenings mid-run`});
+      if(i0&&d.occ!=null&&sd[i-1].occ!=null&&(sd[i-1].occ-d.occ)30)flags.push({exhibitorrun.exhibitor,siterun.site,titlerun.title,type'warn',label'Occ drop',detail`${d.date.toLocaleDateString()} — dropped ${Math.round(sd[i-1].occ-d.occ)}pp`});
+      if(meanAdm&&d.admmeanAdm0.4&&d.adm0)flags.push({exhibitorrun.exhibitor,siterun.site,titlerun.title,type'info',label'Low admissions',detail`${d.date.toLocaleDateString()} — ${d.adm} vs avg ${Math.round(meanAdm)}`});
+      if(meanAdm&&d.admmeanAdm2.5)flags.push({exhibitorrun.exhibitor,siterun.site,titlerun.title,type'info',label'High admissions',detail`${d.date.toLocaleDateString()} — ${d.adm} vs avg ${Math.round(meanAdm)}`});
+    });
+    const last=sd[sd.length-1];
+    if(last&&(new Date()-last.date)8640000014&&sd.length=3)flags.push({exhibitorrun.exhibitor,siterun.site,titlerun.title,type'alert',label'Site went dark',detail`No data since ${last.date.toLocaleDateString()} (${Math.round((new Date()-last.date)86400000)}d ago)`});
+  });
+  if(!flags.length){tbody.innerHTML='trtd colspan=5 class=emptyNo anomalies detectedtdtr';return}
+  tbody.innerHTML=flags.slice(0,50).map(f={
+    const cls=f.type==='alert''flag-alert'f.type==='warn''flag-warn''flag-info';
+    return`trtd class=fw${f.exhibitor}tdtd class=dim${f.site}tdtd${f.title}tdtdspan class=flag ${cls}${f.label}spantdtd class=dim style=font-size11px${f.detail}tdtr`;
+  }).join('');
+}
+
+function feeKey(month,row){return`${month}${row.exhibitor}${row.site}${row.format}${row.title}`}
+function getFeeRows(month){
+  const[yr,mo]=month.split('-').map(Number);
+  return S.booking.filter(b={
+    if(!b.confirmed)return false;
+    const rd=new Date(b.releaseDate);
+    return rd.getFullYear()===yr&&rd.getMonth()+1===mo;
+  }).map(b=({exhibitorb.exhibitor,siteb.site,formatb.format,titleb.title,releaseDateb.releaseDate}));
+}
+
+function getYearlyUsage(exhibitor,site,format,month){
+  const yr=month.split('-')[0];
+  return Object.keys(S.feeStatus).filter(k={
+    const p=k.split('');
+    return p[0].startsWith(yr)&&p[1]===exhibitor&&p[2]===site&&p[3]===format&&S.feeStatus[k]!=='Waived';
+  }).length;
+}
+
+function renderFees(){
+  const month=document.getElementById('fee-month').value;
+  const tbody=document.getElementById('fees-tbody');
+  const rows=getFeeRows(month);
+  const today=new Date(),day=today.getDate();
+  const pending=rows.filter(r=(S.feeStatus[feeKey(month,r)]'Pending')==='Pending').length;
+  const fa=document.getElementById('fee-alerts');
+  if(!S.booking.length){fa.innerHTML='';tbody.innerHTML='trtd colspan=9 class=emptyLoad booking data to generate fee trackertdtr';return}
+  if(pending0&&day=7)fa.innerHTML=`div class=alert-bar warn⚠ ${pending} fee${pending1's'''} pending — confirm before end of first weekdiv`;
+  else if(pending0)fa.innerHTML=`div class=alert-bar danger⚠ ${pending} fee${pending1's'''} overduediv`;
+  else fa.innerHTML=`div class=alert-bar ok✓ All fees confirmed for this monthdiv`;
+  if(!rows.length){tbody.innerHTML='trtd colspan=9 class=emptyNo confirmed bookings for this monthtdtr';return}
+  tbody.innerHTML=rows.map(r={
+    const key=feeKey(month,r);
+    const status=S.feeStatus[key]'Pending';
+    const notes=S.feeNotes[key]'';
+    const c=getContract(r.exhibitor,r.site,r.format);
+    let feeAmt='—',capHtml='';
+    if(c){
+      if(c.fee_type==='flat_monthly'){feeAmt=c.flat_monthly_amount`${c.currency'USD'} ${Number(c.flat_monthly_amount).toLocaleString()}`'—';capHtml='span class=pill p-blueFlat monthlyspan';}
+      else{
+        feeAmt=c.standard_fee_amount`${c.currency'USD'} ${Number(c.standard_fee_amount).toLocaleString()}`'—';
+        if(c.cap_per_site==='TRUE'&&c.yearly_cap_amount){
+          const used=getYearlyUsage(r.exhibitor,r.site,r.format,month);
+          const cap=Number(c.yearly_cap_amount),stdFee=Number(c.standard_fee_amount)0;
+          const maxT=stdFeeMath.round(capstdFee)0;
+          capHtml=used=maxT`span class=flag flag-warnCap reached (${used}${maxT})span``span class=dim style=font-size11px${used}${maxT} titlesspan`;
+        }
+      }
+    }
+    const dc={Pending'd-gray',Confirmed'd-green',Waived'd-blue',Invoiced'd-amber'}[status]'d-gray';
+    const fc=r.format==='ScreenX''p-sx''p-4dx';
+    return`trtd class=fw${r.exhibitor}tdtd class=dim${r.site}tdtdspan class=pill ${fc}${r.format}spantdtd${r.title}tdtd class=mono dim${r.releaseDate}tdtd class=fw${feeAmt}tdtd${capHtml}tdtddiv style=displayflex;align-itemscenter;gap6pxspan class=dot ${dc}spanselect style=font-size11px;padding3px 6px onchange=saveFeeStatus('${key}',this.value);renderFees()${['Pending','Confirmed','Waived','Invoiced'].map(s=`option${s===status' selected'''}${s}option`).join('')}selectdivtdtdinput type=text value=${notes.replace(g,'&quot;')} placeholder=Notes… style=font-size11px;width140px;padding3px 7px onchange=saveFeeNote('${key}',this.value)tdtr`;
+  }).join('');
+}
+
+function saveFeeStatus(key,val){S.feeStatus[key]=val;localStorage.setItem('feeStatus',JSON.stringify(S.feeStatus))}
+function saveFeeNote(key,val){S.feeNotes[key]=val;localStorage.setItem('feeNotes',JSON.stringify(S.feeNotes))}
+
+function exportFees(){
+  const month=document.getElementById('fee-month').value;
+  const rows=getFeeRows(month);
+  if(!rows.length){alert('No data to export');return}
+  const hdr='ExhibitortSitetFormattTitletRelease DatetFeetStatustNotes';
+  const body=rows.map(r={
+    const key=feeKey(month,r),c=getContract(r.exhibitor,r.site,r.format);
+    const fee=c`${c.currency'USD'} ${c.standard_fee_amount'—'}`'—';
+    return[r.exhibitor,r.site,r.format,r.title,r.releaseDate,fee,S.feeStatus[key]'Pending',S.feeNotes[key]''].join('t');
+  }).join('n');
+  const blob=new Blob([hdr+'n'+body],{type'texttab-separated-values'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`code-fees-${month}.tsv`;a.click();
+}
+
+function renderGaps(){
+  const tbody=document.getElementById('gaps-tbody');
+  if(!S.catalogue.length){tbody.innerHTML='trtd colspan=7 class=emptyConnect lineup sheet to see gapstdtr';return}
+  const weeks=parseInt(document.getElementById('gap-horizon').value);
+  const today=new Date(),horizon=new Date(today);horizon.setDate(today.getDate()+weeks7);
+  const upcoming=S.catalogue.filter(t={const av=new Date(t.first_available_datet.first_screening_date);return!isNaN(av)&&av=today&&av=horizon});
+  if(!upcoming.length){tbody.innerHTML='trtd colspan=7 class=emptyNo upcoming titles within this windowtdtr';return}
+  const rows=[];
+  upcoming.forEach(t={
+    const title=t.imdb_official_titlet.current_erp_title'—';
+    const fmt=t.formatt.original_production'—';
+    const avail=t.first_available_datet.first_screening_date'—';
+    const ft=t.film_type'—';
+    const eligible=EXHIBITORS.filter(e=fmt.includes('4DX')e.formats.includes('4DX')e.formats.includes('ScreenX'));
+    eligible.forEach(e={
+      if(!S.booking.some(b=b.title.toLowerCase()===title.toLowerCase()&&b.exhibitor===e.name))
+        rows.push({title,fmt,avail,ft,exhibitore.name,countrye.country});
+    });
+  });
+  if(!rows.length){tbody.innerHTML='trtd colspan=7 class=emptyAll upcoming available titles have bookings ✓tdtr';return}
+  tbody.innerHTML=rows.map(r={
+    const fc=r.fmt.includes('ScreenX')'p-sx''p-4dx';
+    return`trtd class=fw${r.title}tdtdspan class=pill ${fc}${r.fmt}spantdtd class=mono dim${r.avail}tdtd class=fw${r.exhibitor}tdtd class=dim${r.country}tdtdspan class=pill ${isAlt(r.ft)'p-gray''p-blue'}${r.ft}spantdtdbutton class=btn btn-sm btn-ghost onclick=draftEmail('${r.exhibitor.replace('g,')}','${r.title.replace('g,')}','${r.avail}')Draft email ↗buttontdtr`;
+  }).join('');
+}
+
+function draftEmail(exhibitor,title,date){
+  const info=EXHIBITORS.find(e=e.name===exhibitor){};
+  const contact=info.contactexhibitor;
+  const body=`Hi ${contact},nnI wanted to reach out regarding ${title}, which is available from ${date}.nnWould you like to book this title Happy to share more details.nnKind regards,nKate SmallnRegional Manager, Distribution and ProgrammingnCJ 4DPLEX`;
+  window.location.href=`mailtosubject=Booking enquiry — ${title}&body=${encodeURIComponent(body)}`;
+}
+
+function renderDirectory(){
+  document.getElementById('dir-tbody').innerHTML=EXHIBITORS.map(e=`trtd class=fw${e.name}tdtd class=dim${e.country}tdtd${e.formats.map(f=`span class=pill ${f==='4DX''p-4dx''p-sx'} style=margin-right3px${f}span`).join('')}tdtd${e.contact}tdtdspan class=pill p-gray${e.region}spantdtr`).join('');
+}
+
+function connectSheet(){
+  const url=document.getElementById('gs-url').value.trim();
+  const match=url.match(d([a-zA-Z0-9-_]+));
+  if(!match){document.getElementById('gs-feedback').textContent='Could not parse sheet ID — check the URL';return}
+  S.sheetId=match[1];localStorage.setItem('sheetId',S.sheetId);
+  setConnected();syncSheets();
+}
+function setConnected(){
+  document.getElementById('s-dot').classList.add('on');
+  document.getElementById('s-label').textContent='Sheet connected';
+  document.getElementById('gs-feedback').textContent='Connected · ID '+S.sheetId.substring(0,16)+'…';
+}
+async function fetchTab(tab){
+  const url=`httpsdocs.google.comspreadsheetsd${S.sheetId}gviztqtqx=outcsv&sheet=${encodeURIComponent(tab)}`;
+  const res=await fetch(url);if(!res.ok)throw new Error('Could not fetch '+tab);
+  return parseCSV(await res.text());
+}
+function parseCSV(text){
+  return text.split('n').filter(l=l.trim()).map(line={
+    const cols=[];let cur='',inQ=false;
+    for(let i=0;iline.length;i++){
+      const ch=line[i];
+      if(ch===''){if(inQ&&line[i+1]===''){cur+='';i++;}else inQ=!inQ;}
+      else if(ch===','&&!inQ){cols.push(cur.trim());cur='';}
+      else cur+=ch;
+    }
+    cols.push(cur.trim());return cols;
+  });
+}
+async function syncSheets(){
+  if(!S.sheetId){document.getElementById('gs-feedback').textContent='No sheet ID — paste URL and click Connect first';return}
+  const fb=document.getElementById('gs-feedback');
+  const dbg=document.getElementById('sync-debug');
+  fb.textContent='Syncing…';
+  const synced=[],errors=[];
+  const tabs=[
+    ['bookings_raw',r={document.getElementById('t-booking').value=r.map(x=x.join('t')).join('n');parseBooking()}],
+    ['bodata_raw',r={document.getElementById('t-bo').value=r.map(x=x.join('t')).join('n');parseBO()}],
+    ['lineup',parseCatalogue],
+    ['code_fee',parseContracts]
+  ];
+  for(const[tab,fn] of tabs){
+    try{
+      const url=`httpsdocs.google.comspreadsheetsd${S.sheetId}gviztqtqx=outcsv&sheet=${encodeURIComponent(tab)}`;
+      console.log('Fetching',url);
+      const res=await fetch(url);
+      console.log(tab,'status',res.status,'ok',res.ok);
+      if(!res.ok){errors.push(`${tab}HTTP${res.status}`);continue}
+      const text=await res.text();
+      console.log(tab,'raw length',text.length,'preview',text.substring(0,120));
+      const rows=parseCSV(text);
+      console.log(tab,'parsed rows',rows.length);
+      if(rows.length0){fn(rows);synced.push(`${tab}(${rows.length}r)`)}
+      else errors.push(`${tab}empty`);
+    }catch(e){
+      console.error(tab,'error',e);
+      errors.push(`${tab}${e.message}`);
+    }
+  }
+  const syncMsg=`Synced ${synced.join(', ')'none'} ${errors.length' Errors '+errors.join(', ')''} — ${new Date().toLocaleTimeString()}`;
+  fb.textContent=syncMsg;
+  const topStatus=document.getElementById('topbar-sync-status');
+  if(topStatus)topStatus.textContent=errors.length`⚠ ${errors.join(', ')}``✓ synced ${new Date().toLocaleTimeString()}`;
+  if(dbg)dbg.textContent=`booking${S.booking.length}  bo${S.bo.length}  catalogue${S.catalogue.length}  contracts${S.contracts.length}`;
+  setConnected();renderOverview();
+}
+
+
+
+function updateDataSummary(){
+  const ex=[...new Set(S.booking.map(d=d.exhibitor))].filter(Boolean).length;
+  const titles=[...new Set(S.booking.map(d=d.title))].filter(Boolean).length;
+  document.getElementById('data-summary').innerHTML=`strong${S.booking.length}strong booking rows · strong${S.bo.length}strong BO rows · strong${ex}strong exhibitors · strong${titles}strong titles · strong${S.catalogue.length}strong catalogue titles · strong${S.contracts.length}strong contract rules`;
+}
+
+(function init(){
+  renderOverview();renderDirectory();
+  if(S.sheetId){document.getElementById('gs-url').value=`httpsdocs.google.comspreadsheetsd${S.sheetId}`;setConnected();syncSheets();}
+})();
+script
+body
+html
