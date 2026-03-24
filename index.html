@@ -171,25 +171,27 @@ tbody tr:hover td{background:var(--lilac-l)}
 @media(max-width:900px){.sidebar{display:none}.stat-row{grid-template-columns:1fr 1fr}.two-col,.three-col{grid-template-columns:1fr}}
 
 /* ── Fee cards ── */
-.fee-month-nav{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;margin-bottom:22px;width:100%}
-.fee-month-btn{width:100%;padding:14px 0;border-radius:8px;font-size:14px;font-weight:600;border:1.5px solid var(--g4);background:var(--white);color:var(--g2);cursor:pointer;transition:all .15s;font-family:var(--sans);text-align:center;line-height:1.2}
-.fee-month-btn:hover{border-color:var(--lilac-m);color:var(--lilac-d);background:var(--lilac-l)}
-.fee-month-btn.active{font-weight:800;font-size:15px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
-.fee-month-btn.m-future{background:var(--g5);color:var(--g3);border-color:var(--g4)}
+.fee-month-nav{display:flex;gap:0;margin-bottom:24px;border:1.5px solid var(--g4);border-radius:10px;overflow:hidden;width:100%}
+.fee-month-btn{flex:1;padding:13px 4px;font-size:13px;font-weight:600;border:none;border-right:1px solid var(--g4);background:var(--white);color:var(--g2);cursor:pointer;transition:all .15s;font-family:var(--sans);text-align:center;line-height:1}
+.fee-month-btn:last-child{border-right:none}
+.fee-month-btn:hover{background:var(--lilac-l);color:var(--lilac-d)}
+.fee-month-btn.active{font-weight:800;font-size:14px;position:relative;z-index:1}
+.fee-month-btn.m-future{background:var(--g5);color:var(--g3)}
+.fee-month-btn.m-future:hover{background:var(--g4);color:var(--g2)}
 .fee-month-btn.m-future.active{background:var(--g4);color:var(--g2)}
-.fee-month-btn.m-overdue{background:var(--amber-l);color:var(--amber);border-color:var(--amber)}
-.fee-month-btn.m-overdue.active{background:var(--amber);color:var(--white);border-color:var(--amber)}
-.fee-month-btn.m-confirmed{background:var(--green-l);color:var(--green);border-color:var(--green)}
-.fee-month-btn.m-confirmed.active{background:var(--green);color:var(--white);border-color:var(--green)}
-.fee-month-btn.m-current{background:var(--lilac-l);color:var(--lilac-d);border-color:var(--lilac)}
-.fee-month-btn.m-current.active{background:var(--lilac);color:var(--white);border-color:var(--lilac)}
+.fee-month-btn.m-overdue{background:var(--amber-l);color:var(--amber)}
+.fee-month-btn.m-overdue.active{background:var(--amber);color:var(--white)}
+.fee-month-btn.m-confirmed{background:var(--green-l);color:var(--green)}
+.fee-month-btn.m-confirmed.active{background:var(--green);color:var(--white)}
+.fee-month-btn.m-current{background:var(--lilac-l);color:var(--lilac-d)}
+.fee-month-btn.m-current.active{background:var(--lilac);color:var(--white)}
 .fee-zone-label{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g2);margin:22px 0 12px;display:flex;align-items:center;gap:10px}
 .fee-zone-label::after{content:'';flex:1;height:1px;background:var(--g4)}
 .fee-card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:14px;margin-bottom:6px}
 .fee-card{background:var(--white);border:1px solid var(--g4);border-radius:10px;overflow:hidden;transition:box-shadow .15s}
 .fee-card:hover{box-shadow:0 2px 14px rgba(0,0,0,.07)}
 .fee-card.is-confirmed{border-left:3px solid var(--green);opacity:.82}
-.fee-card.is-overdue{border-left:3px solid var(--red)}
+.fee-card.is-overdue{border-left:3px solid var(--lilac)}
 .fee-card.is-pending{border-left:3px solid var(--lilac)}
 .fee-card-head{padding:14px 16px;border-bottom:1px solid var(--g4);display:flex;align-items:center;justify-content:space-between;gap:10px}
 .fee-card-identity{display:flex;align-items:center;gap:12px}
@@ -198,7 +200,7 @@ tbody tr:hover td{background:var(--lilac-l)}
 .fee-card-status-badge{font-size:12px;font-weight:700;display:flex;align-items:center;gap:5px;white-space:nowrap;padding:4px 10px;border-radius:99px}
 .fee-card-status-badge.s-confirmed{background:var(--green-l);color:var(--green)}
 .fee-card-status-badge.s-partial{background:var(--amber-l);color:var(--amber)}
-.fee-card-status-badge.s-unconfirmed{background:var(--g5);color:var(--g2)}
+.fee-card-status-badge.s-unconfirmed{background:var(--red-l);color:var(--red)}
 .fee-formats-grid{display:flex;flex-direction:column}
 .fee-fmt-block{padding:14px 16px}.fee-fmt-block:nth-child(2){background:var(--g5)}
 .fee-fmt-block+.fee-fmt-block{border-top:none;padding-top:8px}
@@ -457,7 +459,7 @@ tbody tr:hover td{background:var(--lilac-l)}
           <code style="font-family:var(--mono);background:var(--g5);padding:1px 5px;border-radius:3px;font-size:11px">bookings_raw</code>
           <code style="font-family:var(--mono);background:var(--g5);padding:1px 5px;border-radius:3px;font-size:11px">bodata_raw</code>
           <code style="font-family:var(--mono);background:var(--g5);padding:1px 5px;border-radius:3px;font-size:11px">lineup</code>
-          <code style="font-family:var(--mono);background:var(--g5);padding:1px 5px;border-radius:3px;font-size:11px">code_fee</code>
+          <code style="font-family:var(--mono);background:var(--g5);padding:1px 5px;border-radius:3px;font-size:11px">site_data</code>
         </p>
         <div style="display:flex;gap:8px;margin-bottom:10px">
           <input type="url" id="gs-url" placeholder="https://docs.google.com/spreadsheets/d/…" style="flex:1;font-family:var(--mono);font-size:11px">
@@ -513,7 +515,7 @@ tbody tr:hover td{background:var(--lilac-l)}
             </div>
           </div>
           <div>
-            <div style="font-size:11px;font-weight:500;margin-bottom:8px">code_fee</div>
+            <div style="font-size:11px;font-weight:500;margin-bottom:8px">site_data</div>
             <div style="font-size:10px;color:var(--g2);font-family:var(--mono);line-height:2.1">
               exhibitor<br>site<br>format<br>fee_type<br>standard_terms<br>standard_fee_amount<br>requested_fee_amount<br>flat_monthly_amount<br>currency<br>cap_per_site<br>cap_per_exhibitor<br>monthly_cap_amount<br>yearly_cap_amount<br>contract_start_date<br>contract_end_date<br>notes
             </div>
@@ -542,7 +544,6 @@ const EXHIBITOR_BRANDS = {
   'Pathé':          {color:'#e9c46a', initials:'PT', dark:true},
   'Reel Cinemas':   {color:'#f4a261', initials:'RC', dark:true},
   'Scene Cinemas':  {color:'#48cae4', initials:'SC', dark:true},
-  'Galaxy Cinemas': {color:'#6a0572', initials:'GX', dark:false},
   'Village Cinemas':{color:'#e63965', initials:'VG', dark:false},
   'Vox Cinemas':    {color:'#d62828', initials:'VX', dark:false},
   // Legacy/alternate names
@@ -571,7 +572,6 @@ const EXHIBITORS=[
   {name:'Pathé',          country:'France',        formats:['4DX','ScreenX'],contact:'—',              region:'MENA'},
   {name:'Reel Cinemas',   country:'UAE',           formats:['4DX','ScreenX'],contact:'Suhas',          region:'MENA'},
   {name:'Scene Cinemas',  country:'Egypt',         formats:['4DX','ScreenX'],contact:'Rowan',          region:'MENA'},
-  {name:'Galaxy Cinemas', country:'—',             formats:['4DX','ScreenX'],contact:'—',              region:'MENA'},
   {name:'Village Cinemas',country:'Australia',     formats:['4DX','ScreenX'],contact:'—',              region:'AUS'},
   {name:'Vox Cinemas',    country:'UAE',           formats:['4DX','ScreenX'],contact:'Kifah',          region:'MENA'},
 ];
@@ -601,7 +601,7 @@ function normEx(e){
   if(lower==='event'||lower==='event cinema'||lower==='event cinemas')return'Event Cinemas';
   if(lower==='pathe'||lower==='pathé'||lower==='pathe cinemas'||lower==='pathé cinemas')return'Pathé';
   if(lower==='nu metro'||lower==='nu metro cinemas'||lower==='numetro')return'Nu Metro';
-  if(lower==='galaxy cinemas'||lower==='galaxy')return'Galaxy Cinemas';
+  if(lower==='galaxy cinemas'||lower==='galaxy')return'Scene Cinemas';
   if(lower==='hoyts'||lower==='hoyts cinema'||lower==='hoyts cinemas')return'Hoyts Cinemas';
   if(lower==='muvi'||lower==='muvi cinema'||lower==='muvi cinemas')return'Muvi Cinemas';
   if(lower==='novo'||lower==='novo cinema'||lower==='novo cinemas')return'Novo Cinemas';
@@ -688,19 +688,49 @@ function parseCatalogue(rows){
 function parseContracts(rows){
   if(!rows.length)return;
   const hdr=rows[0].map(h=>h.toLowerCase().trim());
-  S.contracts=rows.slice(1).map(r=>{
+  S.contracts=rows.slice(1).filter(r=>r.some(c=>c.trim())).map(r=>{
     const o={};
     hdr.forEach((h,i)=>o[h]=(r[i]||'').trim());
     if(o.exhibitor)o.exhibitor=normEx(o.exhibitor);
+    // handle ULTRA — expand to both formats in contracts too
+    if((o.format||'').toUpperCase()==='ULTRA'||(o.format||'').toUpperCase()==='ULTRA4DX'){
+      o.format='4DX'; // primary; ScreenX variant added below
+    }
     return o;
   });
+  // For ULTRA rows duplicate as ScreenX too
+  const extras=[];
+  S.contracts.forEach(c=>{
+    if((c.format||'').toUpperCase()==='ULTRA'){
+      extras.push({...c,format:'ScreenX'});
+      c.format='4DX';
+    }
+  });
+  S.contracts=[...S.contracts,...extras];
+  // Build dynamic EXHIBITORS from site_data
+  buildExhibitorsFromContracts();
+}
+
+function buildExhibitorsFromContracts(){
+  if(!S.contracts.length)return;
+  const map={};
+  S.contracts.forEach(c=>{
+    if(!c.exhibitor)return;
+    const ex=c.exhibitor;
+    if(!map[ex])map[ex]={name:ex,country:c.country||'—',region:c.region||'MENA',formats:new Set(),contact:'—'};
+    if(c.format&&c.format!=='ULTRA')map[ex].formats.add(c.format);
+  });
+  // Replace EXHIBITORS array contents
+  EXHIBITORS.length=0;
+  Object.values(map).forEach(e=>{
+    EXHIBITORS.push({...e,formats:[...e.formats]});
+  });
+  console.log('Built',EXHIBITORS.length,'exhibitors from site_data');
 }
 function getContract(exhibitor,site,format){
-  // Try exhibitor+format exact match first (most reliable)
+  // Exact exhibitor+format match (site_data has one fee rule per exhibitor+format)
   return S.contracts.find(c=>c.exhibitor===exhibitor&&c.format===format)
-      // Then exhibitor+site+format
-      || S.contracts.find(c=>c.exhibitor===exhibitor&&c.site===site&&c.format===format)
-      // Then just exhibitor (any format row for this exhibitor — for flat monthly etc)
+      || S.contracts.find(c=>c.exhibitor===exhibitor&&c.site===site)
       || S.contracts.find(c=>c.exhibitor===exhibitor)
       || null;
 }
@@ -1361,7 +1391,7 @@ async function syncSheets(){
     ['bookings_raw',r=>{document.getElementById('t-booking').value=r.map(x=>x.join('\t')).join('\n');parseBooking()}],
     ['bodata_raw',r=>{document.getElementById('t-bo').value=r.map(x=>x.join('\t')).join('\n');parseBO()}],
     ['lineup',parseCatalogue],
-    ['code_fee',parseContracts]
+    ['site_data',parseContracts]
   ];
   for(const[tab,fn] of tabs){
     try{
