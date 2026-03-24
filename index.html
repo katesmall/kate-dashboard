@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4DPLEX — Exhibitor Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --lilac:#8878d0;--lilac-l:#f2f0fc;--lilac-m:#c4bce8;--lilac-d:#5e52a8;
+  --black:#0f0f0f;--g1:#383838;--g2:#767676;--g3:#b0b0b0;--g4:#e4e4e4;--g5:#f6f6f6;--white:#ffffff;
+  --green:#287a50;--green-l:#eaf4ee;--amber:#9a6c0a;--amber-l:#fef6e4;
+  --red:#b83030;--red-l:#fdecea;--blue:#2060a8;--blue-l:#e8f0fb;
+  --sans:'DM Sans',sans-serif;--display:'Syne',sans-serif;--mono:'DM Mono',monospace;
+  --sidebar:210px;--topbar:52px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--sans);background:var(--white);color:var(--black);font-size:13px;line-height:1.5}
+.shell{display:flex;height:100vh;overflow:hidden}
+.sidebar{width:var(--sidebar);min-width:var(--sidebar);border-right:1px solid var(--g4);display:flex;flex-direction:column;background:var(--white);height:100vh;overflow-y:auto}
+.logo{padding:18px 16px 16px;border-bottom:1px solid var(--g4)}
+.logo-eyebrow{font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--g3);text-transform:uppercase;margin-bottom:3px}
+.logo-name{font-family:var(--display);font-size:15px;font-weight:600;color:var(--black);letter-spacing:-.01em}
+.logo-sub{font-size:11px;color:var(--g2);margin-top:1px}
+.nav{padding:10px 8px;flex:1}
+.nav-group{margin-bottom:20px}
+.nav-group-label{font-size:9px;font-weight:500;color:var(--g3);letter-spacing:.1em;text-transform:uppercase;padding:0 8px;margin-bottom:3px}
+.nav-item{display:flex;align-items:center;gap:9px;width:100%;padding:7px 8px;border-radius:6px;border:none;background:none;cursor:pointer;font-family:var(--sans);font-size:12px;color:var(--g1);text-align:left;transition:background .12s,color .12s}
+.nav-item:hover{background:var(--g5);color:var(--black)}
+.nav-item.active{background:var(--lilac-l);color:var(--lilac-d);font-weight:500}
+.nav-icon{width:15px;height:15px;flex-shrink:0;opacity:.7}
+.nav-item.active .nav-icon{opacity:1}
+.sidebar-foot{padding:12px 16px;border-top:1px solid var(--g4)}
+.sheet-pill{display:flex;align-items:center;gap:7px;padding:7px 10px;border-radius:6px;border:1px solid var(--g4);cursor:pointer;transition:border-color .15s;font-size:11px;color:var(--g2)}
+.sheet-pill:hover{border-color:var(--lilac-m)}
+.s-dot{width:6px;height:6px;border-radius:50%;background:var(--g3);flex-shrink:0;transition:background .3s}
+.s-dot.on{background:var(--green)}
+.main{flex:1;min-width:0;display:flex;flex-direction:column;height:100vh;overflow:hidden}
+.topbar{height:var(--topbar);min-height:var(--topbar);border-bottom:1px solid var(--g4);display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:var(--white);position:relative;z-index:20}
+.page-title{font-family:var(--display);font-size:14px;font-weight:600;letter-spacing:-.01em}
+.topbar-right{display:flex;align-items:center;gap:8px}
+.content{flex:1;overflow-y:auto;padding:24px}
+.pane{display:none}.pane.active{display:block}
+select,input[type=text],input[type=url],textarea{border:1px solid var(--g4);border-radius:6px;padding:6px 10px;font-size:12px;font-family:var(--sans);background:var(--white);color:var(--black);outline:none;transition:border-color .15s}
+select:focus,input:focus,textarea:focus{border-color:var(--lilac-m)}
+textarea{resize:vertical}
+.btn{border:1px solid var(--g4);border-radius:6px;padding:6px 13px;font-size:12px;font-family:var(--sans);background:var(--white);color:var(--black);cursor:pointer;transition:background .1s,border-color .15s;white-space:nowrap}
+.btn:hover{background:var(--g5)}
+.btn-primary{background:var(--lilac);color:var(--white);border-color:var(--lilac)}
+.btn-primary:hover{background:var(--lilac-d);border-color:var(--lilac-d)}
+.btn-sm{padding:4px 9px;font-size:11px}
+.btn-ghost{border-color:transparent;color:var(--g2)}
+.btn-ghost:hover{background:var(--g5);color:var(--black);border-color:var(--g4)}
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.stat{background:var(--g5);border-radius:8px;padding:16px 18px}
+.stat-label{font-size:10px;font-weight:500;color:var(--g2);letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px}
+.stat-value{font-family:var(--display);font-size:28px;font-weight:600;color:var(--lilac-d);letter-spacing:-.02em;line-height:1}
+.stat-sub{font-size:11px;color:var(--g3);margin-top:5px}
+.stat-urgent .stat-value{color:var(--amber)}
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.sec-title{font-size:10px;font-weight:500;color:var(--g2);letter-spacing:.08em;text-transform:uppercase}
+.sec-controls{display:flex;gap:6px;align-items:center}
+.panel{border:1px solid var(--g4);border-radius:8px;overflow:hidden;margin-bottom:18px}
+.panel-head{padding:9px 14px;border-bottom:1px solid var(--g4);display:flex;align-items:center;justify-content:space-between;background:var(--white)}
+.panel-head-title{font-size:12px;font-weight:500}
+.panel-body{padding:16px}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{padding:7px 14px;text-align:left;font-size:10px;font-weight:500;color:var(--g2);letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--g4);white-space:nowrap;background:var(--white)}
+td{padding:9px 14px;border-bottom:1px solid var(--g4);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tbody tr{transition:background .08s}
+tbody tr:hover td{background:var(--lilac-l)}
+.fw{font-weight:500}.dim{color:var(--g2)}.mono{font-family:var(--mono);font-size:11px}
+.pill{display:inline-flex;align-items:center;padding:2px 7px;border-radius:99px;font-size:10px;font-weight:500;white-space:nowrap}
+.p-4dx{background:var(--lilac-l);color:var(--lilac-d)}
+.p-sx{background:#e5f3ee;color:#1a6b50}
+.p-green{background:var(--green-l);color:var(--green)}
+.p-amber{background:var(--amber-l);color:var(--amber)}
+.p-red{background:var(--red-l);color:var(--red)}
+.p-gray{background:var(--g5);color:var(--g2)}
+.p-blue{background:var(--blue-l);color:var(--blue)}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block;flex-shrink:0}
+.d-green{background:var(--green)}.d-amber{background:var(--amber)}.d-red{background:var(--red)}.d-gray{background:var(--g3)}.d-blue{background:var(--blue)}
+.occ{display:inline-flex;align-items:center;gap:6px}
+.occ-bar{width:56px;height:3px;border-radius:2px;background:var(--g4);overflow:hidden}
+.occ-fill{height:100%;border-radius:2px;background:var(--lilac)}
+.occ-fill.hi{background:var(--green)}.occ-fill.lo{background:var(--red)}
+.occ-n{font-size:11px;color:var(--g1);min-width:30px}
+.flag{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:500}
+.flag-warn{background:var(--amber-l);color:var(--amber)}
+.flag-alert{background:var(--red-l);color:var(--red)}
+.flag-info{background:var(--blue-l);color:var(--blue)}
+.flag-ok{background:var(--green-l);color:var(--green)}
+.alert-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:6px;margin-bottom:12px;font-size:12px}
+.alert-bar.warn{background:var(--amber-l);color:var(--amber)}
+.alert-bar.info{background:var(--blue-l);color:var(--blue)}
+.alert-bar.danger{background:var(--red-l);color:var(--red)}
+.alert-bar.ok{background:var(--green-l);color:var(--green)}
+.tl-outer{overflow-x:auto;border:1px solid var(--g4);border-radius:8px}
+.tl-head-row{display:flex;border-bottom:1px solid var(--g4)}
+.tl-label-spacer{min-width:200px;width:200px;border-right:1px solid var(--g4);flex-shrink:0}
+.tl-months{display:flex}
+.tl-month{flex-shrink:0;font-size:10px;color:var(--g2);text-align:center;padding:6px 0;border-right:1px solid var(--g4);font-family:var(--mono)}
+.tl-row{display:flex;border-bottom:1px solid var(--g4)}
+.tl-row:last-child{border-bottom:none}
+.tl-label{min-width:200px;width:200px;padding:10px 14px;border-right:1px solid var(--g4);background:var(--white);position:sticky;left:0;z-index:2;flex-shrink:0}
+.tl-name{font-weight:500;font-size:12px}.tl-sub{font-size:10px;color:var(--g2);margin-top:1px}
+.tl-track{position:relative;height:46px;flex-shrink:0}
+.tl-today-line{position:absolute;top:0;bottom:0;width:1.5px;background:var(--lilac);opacity:.5;z-index:1;pointer-events:none}
+.tl-grid-line{position:absolute;top:0;bottom:0;width:1px;background:var(--g4);pointer-events:none}
+.tl-block{position:absolute;top:9px;height:28px;border-radius:4px;display:flex;align-items:center;padding:0 7px;font-size:10px;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:default;transition:opacity .12s;font-weight:500}
+.tl-block:hover{opacity:.8;z-index:5}
+.b4dx{background:var(--lilac)}.bsx{background:#3a9470}.past{opacity:.3}
+.tl-preview{position:absolute;top:9px;height:28px;width:3px;background:var(--amber);border-radius:2px;opacity:.8}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.upload-zone{border:1.5px dashed var(--g3);border-radius:8px;padding:18px 16px;text-align:center;cursor:pointer;color:var(--g2);font-size:12px;margin-bottom:8px;transition:border-color .15s,background .15s}
+.upload-zone:hover{border-color:var(--lilac-m);background:var(--lilac-l)}
+.upload-title{font-weight:500;color:var(--g1);margin-bottom:3px;font-size:12px}
+.upload-hint{font-size:10px;color:var(--g3);line-height:1.7}
+.empty{color:var(--g3);text-align:center;padding:36px 20px;font-size:12px}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--g4);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--g3)}
+@media(max-width:900px){.sidebar{display:none}.stat-row{grid-template-columns:1fr 1fr}.two-col,.three-col{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<nav class="sidebar">
+  <div class="logo">
+    <div class="logo-eyebrow">CJ 4DPLEX</div>
+    <div class="logo-name">Exhibitor Intel</div>
+    <div class="logo-sub">MEA + Australia</div>
+  </div>
+  <div class="nav">
+    <div class="nav-group">
+      <div class="nav-group-label">Dashboard</div>
+      <button class="nav-item active" onclick="nav('overview',this)">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="1.5" y="1.5" width="5.5" height="5.5" rx="1"/><rect x="9" y="1.5" width="5.5" height="5.5" rx="1"/><rect x="1.5" y="9" width="5.5" height="5.5" rx="1"/><rect x="9" y="9" width="5.5" height="5.5" rx="1"/></svg>
+        Overview
+      </button>
+      <button class="nav-item" onclick="nav('timeline',this)">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><line x1="1" y1="4" x2="15" y2="4"/><line x1="1" y1="8" x2="15" y2="8"/><line x1="1" y1="12" x2="15" y2="12"/><rect x="2" y="2.5" width="4" height="3" rx=".5" fill="currentColor" stroke="none" opacity=".25"/><rect x="7" y="6.5" width="6" height="3" rx=".5" fill="currentColor" stroke="none" opacity=".25"/></svg>
+        Timeline
+      </button>
+      <button class="nav-item" onclick="nav('performance',this)">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><polyline points="1,13 5,8 9,10 15,3"/></svg>
+        Performance
+      </button>
+      <button class="nav-item" onclick="nav('codefees',this)">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="1.5" width="12" height="13" rx="1.5"/><line x1="5" y1="5.5" x2="11" y2="5.5"/><line x1="5" y1="8.5" x2="9" y2="8.5"/><line x1="5" y1="11.5" x2="7" y2="11.5"/></svg>
+        Code fees
+      </button>
+      <button class="nav-item" onclick="nav('gaps',this)">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="6.5"/><line x1="8" y1="5" x2="8" y2="8.5"/><circle cx="8" cy="11" r=".6" fill="currentColor" stroke="none"/></svg>
+        Booking gaps
+      </button>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Manage</div>
+
+      <button class="nav-item" onclick="nav('settings',this)">
+        <svg class="nav-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="2.2"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.1 3.1l1.4 1.4M11.5 11.5l1.4 1.4M3.1 12.9l1.4-1.4M11.5 4.5l1.4-1.4"/></svg>
+        Settings
+      </button>
+    </div>
+  </div>
+  <div class="sidebar-foot">
+    <div class="sheet-pill" onclick="nav('settings',null)" id="sheet-pill">
+      <span class="s-dot" id="s-dot"></span>
+      <span id="s-label">No sheet connected</span>
+    </div>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="topbar">
+    <span class="page-title" id="page-title">Overview</span>
+    <div class="topbar-right">
+      <select id="f-region" onchange="applyFilters()">
+        <option value="all">All regions</option>
+        <option value="MENA">MENA</option>
+        <option value="AUS">Australia</option>
+      </select>
+      <select id="f-format" onchange="applyFilters()">
+        <option value="all">All formats</option>
+        <option value="4DX">4DX</option>
+        <option value="ScreenX">ScreenX</option>
+      </select>
+      <input type="text" id="f-search" placeholder="Search…" oninput="applyFilters()" style="width:150px">
+      <button class="btn btn-sm" onclick="syncSheets()">↻ Sync</button>
+      <span id="topbar-sync-status" style="font-size:11px;color:var(--g3);font-family:var(--mono)"></span>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- OVERVIEW -->
+    <div id="pane-overview" class="pane active">
+      <div class="stat-row">
+        <div class="stat"><div class="stat-label">Exhibitors</div><div class="stat-value" id="st-exhib">—</div><div class="stat-sub">across all formats</div></div>
+        <div class="stat"><div class="stat-label">Active titles</div><div class="stat-value" id="st-titles">—</div><div class="stat-sub">this month</div></div>
+        <div class="stat"><div class="stat-label">Avg occupancy</div><div class="stat-value" id="st-occ">—</div><div class="stat-sub">current runs</div></div>
+        <div class="stat stat-urgent"><div class="stat-label">Fees pending</div><div class="stat-value" id="st-fees">—</div><div class="stat-sub" id="st-fees-sub">this month</div></div>
+      </div>
+      <div id="ov-alerts"></div>
+      <div id="sync-debug" style="font-size:11px;color:var(--g3);margin-bottom:10px;font-family:var(--mono)"></div>
+      <div class="sec-head"><span class="sec-title">Exhibitor status</span></div>
+      <div class="panel">
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Exhibitor</th><th>Country</th><th>Format</th><th>Current title</th><th>Next title</th><th>Avg occ</th><th>Code fee</th></tr></thead>
+          <tbody id="ov-tbody"></tbody>
+        </table></div>
+      </div>
+      <div class="sec-head" style="margin-top:6px"><span class="sec-title">Upcoming — not yet booked</span><span class="sec-title" style="color:var(--g3)">from lineup sheet</span></div>
+      <div class="panel">
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Title</th><th>Format</th><th>Available from</th><th>Missing exhibitors</th><th>Film type</th></tr></thead>
+          <tbody id="ov-gaps-tbody"></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- TIMELINE -->
+    <div id="pane-timeline" class="pane">
+      <div class="sec-head" style="margin-bottom:14px">
+        <span class="sec-title">Booking timeline</span>
+        <div class="sec-controls">
+          <select id="tl-window" onchange="renderTimeline()"><option value="3">3 months</option><option value="6" selected>6 months</option><option value="12">12 months</option></select>
+          <select id="tl-fmt" onchange="renderTimeline()"><option value="all">All formats</option><option value="4DX">4DX only</option><option value="ScreenX">ScreenX only</option></select>
+        </div>
+      </div>
+      <div id="tl-container"><div class="empty">Load booking data to see the timeline</div></div>
+    </div>
+
+    <!-- PERFORMANCE -->
+    <div id="pane-performance" class="pane">
+      <div class="two-col" style="margin-bottom:18px">
+        <div>
+          <div class="sec-head"><span class="sec-title">By exhibitor × title</span></div>
+          <div class="panel"><div class="tbl-wrap"><table>
+            <thead><tr><th>Exhibitor</th><th>Title</th><th>Format</th><th>Occ %</th><th>Admissions</th><th>Screenings</th></tr></thead>
+            <tbody id="perf-tbody"></tbody>
+          </table></div></div>
+        </div>
+        <div>
+          <div class="sec-head"><span class="sec-title">Top titles by occupancy</span></div>
+          <div class="panel"><div class="tbl-wrap"><table>
+            <thead><tr><th>Title</th><th>Format</th><th>Avg occ</th><th>Sites</th><th>Total adm</th></tr></thead>
+            <tbody id="title-tbody"></tbody>
+          </table></div></div>
+        </div>
+      </div>
+      <div class="sec-head"><span class="sec-title">Anomaly flags</span></div>
+      <div class="panel"><div class="tbl-wrap"><table>
+        <thead><tr><th>Exhibitor</th><th>Site</th><th>Title</th><th>Flag</th><th>Detail</th></tr></thead>
+        <tbody id="anomaly-tbody"></tbody>
+      </table></div></div>
+    </div>
+
+    <!-- CODE FEES -->
+    <div id="pane-codefees" class="pane">
+      <div class="sec-head">
+        <span class="sec-title">Code fee tracker</span>
+        <div class="sec-controls">
+          <select id="fee-month" onchange="renderFees()">
+            <option value="2026-03">March 2026</option>
+            <option value="2026-02">February 2026</option>
+            <option value="2026-01">January 2026</option>
+            <option value="2025-12">December 2025</option>
+            <option value="2025-11">November 2025</option>
+          </select>
+          <button class="btn btn-sm" onclick="exportFees()">Export TSV</button>
+        </div>
+      </div>
+      <div id="fee-alerts"></div>
+      <div class="panel"><div class="tbl-wrap"><table>
+        <thead><tr><th>Exhibitor</th><th>Site</th><th>Format</th><th>Title</th><th>Release date</th><th>Fee</th><th>Cap status</th><th>Status</th><th>Notes</th></tr></thead>
+        <tbody id="fees-tbody"></tbody>
+      </table></div></div>
+      <div style="font-size:11px;color:var(--g3);margin-top:6px">Status and notes saved in your browser. Fee amounts from code_fee sheet. Only confirmed bookings (CT022010) appear here.</div>
+    </div>
+
+    <!-- BOOKING GAPS -->
+    <div id="pane-gaps" class="pane">
+      <div class="sec-head" style="margin-bottom:14px">
+        <span class="sec-title">Available titles not yet booked</span>
+        <div class="sec-controls">
+          <select id="gap-horizon" onchange="renderGaps()"><option value="4">Next 4 weeks</option><option value="8" selected>Next 8 weeks</option><option value="16">Next 16 weeks</option></select>
+        </div>
+      </div>
+      <div class="panel"><div class="tbl-wrap"><table>
+        <thead><tr><th>Title</th><th>Format</th><th>Available from</th><th>Exhibitor</th><th>Country</th><th>Film type</th><th>Action</th></tr></thead>
+        <tbody id="gaps-tbody"></tbody>
+      </table></div></div>
+    </div>
+
+    <!-- DATA -->
+    <div id="pane-data" class="pane">
+      <div class="sec-head" style="margin-bottom:10px"><span class="sec-title">Data status</span></div>
+      <div class="panel panel-body" style="padding:16px;margin-bottom:18px">
+        <div id="data-summary" style="font-size:12px;color:var(--g2)">No data loaded yet. Connect your Google Sheet in Settings and hit Sync.</div>
+      </div>
+      <div class="sec-head" style="margin-bottom:10px"><span class="sec-title">Hidden data buffers (used by sync)</span></div>
+      <div style="display:none">
+        <textarea id="t-booking"></textarea>
+        <textarea id="t-bo"></textarea>
+      </div>
+      <div class="panel panel-body" style="padding:16px">
+        <p style="font-size:12px;color:var(--g2);line-height:1.8;margin-bottom:14px">All data comes from your Google Sheet. Use the <strong style="color:var(--black)">↻ Sync</strong> button in the top bar to refresh, or it syncs automatically on load if a sheet is connected.</p>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+          <div style="background:var(--g5);border-radius:6px;padding:12px 14px">
+            <div style="font-size:10px;color:var(--g2);font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px">bookings_raw</div>
+            <div style="font-size:11px;font-family:var(--mono);color:var(--g2);line-height:1.9">Header row 1<br>format / country / title<br>exhibitor / site / screen<br>screen_format / confirmed<br>preview_date / start_date</div>
+          </div>
+          <div style="background:var(--g5);border-radius:6px;padding:12px 14px">
+            <div style="font-size:10px;color:var(--g2);font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px">bodata_raw</div>
+            <div style="font-size:11px;font-family:var(--mono);color:var(--g2);line-height:1.9">Korean header row 1<br>극장사업자 / 국가 / 사이트<br>스크린유형 / 타이틀<br>상영회차 / 객석율<br>시작일자 / 상영일수</div>
+          </div>
+          <div style="background:var(--g5);border-radius:6px;padding:12px 14px">
+            <div style="font-size:10px;color:var(--g2);font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px">lineup</div>
+            <div style="font-size:11px;font-family:var(--mono);color:var(--g2);line-height:1.9">Row 1 blank<br>Row 2 headers<br>Title / Studio<br>4DX / SX / First Release<br>Hollywood/Local</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="pane-settings" class="pane">
+      <div class="sec-head" style="margin-bottom:10px"><span class="sec-title">Google Sheets connection</span></div>
+      <div class="panel panel-body" style="margin-bottom:20px;padding:16px">
+        <p style="font-size:12px;color:var(--g2);margin-bottom:14px;line-height:1.8">
+          Set sheet to <strong style="color:var(--black)">Anyone with link → Viewer</strong>, then paste URL below.<br>
+          Required tabs:
+          <code style="font-family:var(--mono);background:var(--g5);padding:1px 5px;border-radius:3px;font-size:11px">bookings_raw</code>
+          <code style="font-family:var(--mono);background:var(--g5);padding:1px 5px;border-radius:3px;font-size:11px">bodata_raw</code>
+          <code style="font-family:var(--mono);background:var(--g5);padding:1px 5px;border-radius:3px;font-size:11px">lineup</code>
+          <code style="font-family:var(--mono);background:var(--g5);padding:1px 5px;border-radius:3px;font-size:11px">code_fee</code>
+        </p>
+        <div style="display:flex;gap:8px;margin-bottom:10px">
+          <input type="url" id="gs-url" placeholder="https://docs.google.com/spreadsheets/d/…" style="flex:1;font-family:var(--mono);font-size:11px">
+          <button class="btn btn-primary" onclick="connectSheet()">Connect</button>
+          <button class="btn" onclick="syncSheets()">Sync now</button>
+        </div>
+        <div id="gs-feedback" style="font-size:11px;color:var(--g2)">Not connected</div>
+      </div>
+
+      <div class="sec-head" style="margin-bottom:10px"><span class="sec-title">Exhibitor directory</span></div>
+      <div class="panel"><div class="tbl-wrap"><table>
+        <thead><tr><th>Exhibitor</th><th>Country</th><th>Formats</th><th>Contact</th><th>Region</th></tr></thead>
+        <tbody id="dir-tbody"></tbody>
+      </table></div></div>
+
+      <div class="sec-head" style="margin-top:18px;margin-bottom:10px"><span class="sec-title">Sheet column reference</span></div>
+      <div class="panel panel-body" style="padding:16px">
+        <div class="three-col">
+          <div>
+            <div style="font-size:11px;font-weight:500;margin-bottom:8px">bookings_raw</div>
+            <div style="font-size:10px;color:var(--g2);font-family:var(--mono);line-height:2.1">
+              1: format code<br>2: country<br>3: title<br>4: exhibitor<br>5: site<br>6: screen ID<br>7: SO# (type)<br>8: CT# (status)<br>9: preview date<br>10: release date<br>11–12: ignored<br>13: entered by<br>14: date entered
+            </div>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:500;margin-bottom:8px">bodata_raw</div>
+            <div style="font-size:10px;color:var(--g2);font-family:var(--mono);line-height:2.1">
+              1: 극장사업자 (exhibitor)<br>2: 국가 (country)<br>3: 사이트 (site)<br>4: 스크린유형 (format)<br>5: 타이틀 (title)<br>6: 상영회차 (screenings)<br>7: 총가용좌석수 (seats)<br>8: 관객수유료 (paid adm)<br>9: 관객수무료 (free adm)<br>10: 관객수전체 (total adm)<br>11: BO local<br>12: BO USD<br>13: adm/seat<br>14: 객석율 (occ %)<br>15: ATP local<br>16: ATP USD<br>17: 시작일자 (start date)<br>18: 상영일수 (run days)
+            </div>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:500;margin-bottom:8px">code_fee</div>
+            <div style="font-size:10px;color:var(--g2);font-family:var(--mono);line-height:2.1">
+              exhibitor<br>site<br>format<br>fee_type<br>standard_terms<br>standard_fee_amount<br>requested_fee_amount<br>flat_monthly_amount<br>currency<br>cap_per_site<br>cap_per_exhibitor<br>monthly_cap_amount<br>yearly_cap_amount<br>contract_start_date<br>contract_end_date<br>notes
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<script>
+const S={booking:[],bo:[],catalogue:[],contracts:[],sheetId:localStorage.getItem('sheetId')||'',feeStatus:JSON.parse(localStorage.getItem('feeStatus')||'{}'),feeNotes:JSON.parse(localStorage.getItem('feeNotes')||'{}')};
+
+const EXHIBITORS=[
+  {name:'Cinescape',country:'Kuwait',formats:['4DX','ScreenX'],contact:'Renice Jacobs',region:'MENA'},
+  {name:'VOX Cinemas',country:'UAE',formats:['4DX','ScreenX'],contact:'Kifah',region:'MENA'},
+  {name:'Muvi Cinemas',country:'Saudi Arabia',formats:['4DX','ScreenX'],contact:'Homer',region:'MENA'},
+  {name:'Reel Cinemas',country:'UAE',formats:['4DX','ScreenX'],contact:'Suhas',region:'MENA'},
+  {name:'Novo Cinemas',country:'Qatar',formats:['4DX','ScreenX'],contact:'Mahesh Simpson',region:'MENA'},
+  {name:'Scene Cinema',country:'Egypt',formats:['4DX','ScreenX'],contact:'Rowan',region:'MENA'},
+  {name:'Event',country:'Australia',formats:['4DX','ScreenX'],contact:'—',region:'AUS'},
+];
+
+const SO_FMT={'SO201100':'4DX','SO201200':'ScreenX'};
+const CT_CONFIRMED='CT022010';
+
+function nav(id,el){
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('pane-'+id).classList.add('active');
+  if(el)el.classList.add('active');
+  const T={overview:'Overview',timeline:'Timeline',performance:'Performance',codefees:'Code fees',gaps:'Booking gaps',settings:'Settings'};
+  document.getElementById('page-title').textContent=T[id]||id;
+  if(id==='timeline')renderTimeline();
+  if(id==='performance')renderPerformance();
+  if(id==='codefees')renderFees();
+  if(id==='gaps')renderGaps();
+  if(id==='settings')renderDirectory();
+}
+
+function normEx(e){
+  const n=(e||'').toLowerCase();
+  if(n.includes('birch')||n.includes('greater union')||n.includes('event cinema'))return'Event';
+  return e;
+}
+function fmtFromSO(so){return SO_FMT[so]||''}
+function isAlt(ft){const f=(ft||'').toLowerCase();return f.includes('alternative')||f.includes('event')||f.includes('concert')}
+function avg(arr){const v=arr.filter(x=>x!=null&&!isNaN(x));return v.length?v.reduce((a,b)=>a+b,0)/v.length:null}
+function applyFilters(){renderOverview()}
+function getF(){return{region:document.getElementById('f-region').value,format:document.getElementById('f-format').value,search:document.getElementById('f-search').value.toLowerCase()}}
+
+function parseBooking(){
+  const raw=document.getElementById('t-booking').value.trim();
+  if(!raw){console.warn('parseBooking: no raw data');return}
+  const lines=raw.split('\n').filter(l=>l.trim());
+  console.log('parseBooking: lines=',lines.length,'first=',lines[0]?.substring(0,60));
+  // skip header row
+  const dataLines=lines[0].toLowerCase().includes('format')||lines[0].toLowerCase().includes('title')?lines.slice(1):lines;
+  console.log('parseBooking: dataLines=',dataLines.length);
+  S.booking=dataLines.filter(l=>l.trim()).map(l=>{
+    const c=l.split('\t');
+    const so=(c[6]||'').trim(),ct=(c[7]||'').trim();
+    return{
+      formatCode:(c[0]||'').trim(),
+      country:(c[1]||'').trim(),
+      title:(c[2]||'').trim(),
+      exhibitor:normEx((c[3]||'').trim()),
+      site:(c[4]||'').trim(),
+      screenId:(c[5]||'').trim(),
+      so,ct,
+      format:fmtFromSO(so),
+      confirmed:ct===CT_CONFIRMED,
+      previewDate:(c[8]||'').trim(),
+      releaseDate:(c[9]||'').trim(),  // start_date is the release date
+      enteredBy:(c[12]||'').trim(),
+      dateEntered:(c[13]||'').trim()
+    };
+  });
+  renderOverview();updateDataSummary();
+}
+
+function parseBO(){
+  const raw=document.getElementById('t-bo').value.trim();
+  if(!raw){console.warn('parseBO: no raw data');return}
+  const lines=raw.split('\n').filter(l=>l.trim());
+  console.log('parseBO: lines=',lines.length,'first=',lines[0]?.substring(0,60));
+  const start=lines[0].includes('극장')||lines[0].includes('exhibitor')?1:0;
+  S.bo=lines.slice(start).filter(l=>l.trim()).map(l=>{
+    const c=l.split('\t');
+    return{exhibitor:normEx((c[0]||'').trim()),country:(c[1]||'').trim(),site:(c[2]||'').trim(),screenType:(c[3]||'').trim(),title:(c[4]||'').trim(),screenings:+(c[5]||0),totalSeats:+(c[6]||0),paidAdm:+(c[7]||0),freeAdm:+(c[8]||0),totalAdm:+(c[9]||0),boLocal:+(c[10]||0),boUSD:+(c[11]||0),admPerSeat:parseFloat(c[12])||0,occupancy:parseFloat(c[13])||null,atpLocal:+(c[14]||0),atpUSD:+(c[15]||0),startDate:(c[16]||'').trim(),runDays:+(c[17]||0)};
+  });
+  renderOverview();renderPerformance();updateDataSummary();
+}
+
+function parseCatalogue(rows){
+  if(rows.length<2)return;
+  const hdr=rows[1].map(h=>h.toLowerCase().replace(/[\s\/\(\)]+/g,'_').replace(/[^a-z0-9_]/g,''));
+  S.catalogue=rows.slice(2).filter(r=>r.some(c=>c.trim())).map(r=>{
+    const o={};hdr.forEach((h,i)=>o[h]=(r[i]||'').trim());
+    o.imdb_official_title=o.title||'';
+    o.format_4dx=o['4dx']||'';
+    o.format_sx=o.sx||'';
+    o.first_available_date=o.first_release||'';
+    o.film_type=o.hollywood_local||'';
+    return o;
+  });
+}
+function parseContracts(rows){
+  if(!rows.length)return;
+  const hdr=rows[0].map(h=>h.toLowerCase().trim());
+  S.contracts=rows.slice(1).map(r=>{const o={};hdr.forEach((h,i)=>o[h]=(r[i]||'').trim());return o});
+}
+function getContract(exhibitor,site,format){
+  // code_fee tab keyed by site+format (no exhibitor column)
+  return S.contracts.find(c=>c.site===site&&c.format===format)||
+         S.contracts.find(c=>c.site===site)||null;
+}
+
+function renderOverview(){
+  const{region,format,search}=getF();
+  const today=new Date();
+  const thisM=today.getMonth(),thisY=today.getFullYear();
+  const allEx=[...new Set(S.booking.map(d=>d.exhibitor))].filter(Boolean);
+  document.getElementById('st-exhib').textContent=allEx.length||EXHIBITORS.length;
+  const titlesM=[...new Set(S.booking.filter(d=>{const rd=new Date(d.releaseDate);return rd.getMonth()===thisM&&rd.getFullYear()===thisY}).map(d=>d.title))];
+  document.getElementById('st-titles').textContent=titlesM.length||'—';
+  const occs=S.bo.map(d=>d.occupancy).filter(o=>o!=null&&!isNaN(o));
+  document.getElementById('st-occ').textContent=occs.length?Math.round(occs.reduce((a,b)=>a+b,0)/occs.length)+'%':'—';
+
+  const feeMonth=`${thisY}-${String(thisM+1).padStart(2,'0')}`;
+  const fRows=getFeeRows(feeMonth);
+  const pending=fRows.filter(r=>(S.feeStatus[feeKey(feeMonth,r)]||'Pending')==='Pending').length;
+  document.getElementById('st-fees').textContent=pending||'0';
+
+  const day=today.getDate();
+  const al=document.getElementById('ov-alerts');
+  if(pending>0&&day<=10)al.innerHTML=`<div class="alert-bar warn">⚠ ${pending} code fee${pending>1?'s':''} pending — confirm before end of first week</div>`;
+  else if(pending>0)al.innerHTML=`<div class="alert-bar danger">⚠ ${pending} code fee${pending>1?'s':''} overdue — should have been confirmed in first week</div>`;
+  else al.innerHTML='';
+
+  const tbody=document.getElementById('ov-tbody');
+  const srcEx=S.booking.length?[...new Set(S.booking.map(d=>d.exhibitor))].filter(Boolean):EXHIBITORS.map(e=>e.name);
+  const rows=srcEx.map(ex=>{
+    const info=EXHIBITORS.find(e=>e.name===ex)||{};
+    if(region!=='all'&&info.region&&info.region!==region)return null;
+    const exB=S.booking.filter(b=>b.exhibitor===ex);
+    const exFmts=exB.length?[...new Set(exB.map(b=>b.format).filter(Boolean))]:(info.formats||[]);
+    if(format!=='all'&&!exFmts.some(f=>f===format))return null;
+    const country=exB[0]?.country||info.country||'—';
+    if(search&&!ex.toLowerCase().includes(search)&&!country.toLowerCase().includes(search))return null;
+    const sorted=[...exB].sort((a,b)=>new Date(a.releaseDate)-new Date(b.releaseDate));
+    const current=[...sorted].filter(t=>new Date(t.releaseDate)<=today).pop();
+    const next=sorted.find(t=>new Date(t.releaseDate)>today);
+    const exBO=S.bo.filter(b=>b.exhibitor===ex);
+    const exOccs=exBO.map(b=>b.occupancy).filter(o=>o!=null);
+    const avgOcc=exOccs.length?Math.round(exOccs.reduce((a,b)=>a+b,0)/exOccs.length):null;
+    const exFees=fRows.filter(r=>r.exhibitor===ex);
+    const exPend=exFees.filter(r=>(S.feeStatus[feeKey(feeMonth,r)]||'Pending')==='Pending').length;
+    return{ex,country,exFmts,current,next,avgOcc,exPend};
+  }).filter(Boolean);
+
+  if(!rows.length){tbody.innerHTML=`<tr><td colspan="7" class="empty">Load booking data or connect Google Sheets to populate</td></tr>`;return}
+  tbody.innerHTML=rows.map(r=>{
+    const fs=r.exFmts.join('+');
+    const pc=fs.includes('4DX')&&fs.includes('ScreenX')?'p-4dx':fs.includes('4DX')?'p-4dx':'p-sx';
+    const oc=r.avgOcc==null?'':r.avgOcc>=70?'hi':r.avgOcc<40?'lo':'';
+    const oh=r.avgOcc!=null?`<div class="occ"><div class="occ-bar"><div class="occ-fill ${oc}" style="width:${Math.min(r.avgOcc,100)}%"></div></div><span class="occ-n">${r.avgOcc}%</span></div>`:'<span class="dim">—</span>';
+    const fh=r.exPend>0?`<span class="flag flag-warn">${r.exPend} pending</span>`:'<span class="flag flag-ok">✓ clear</span>';
+    return`<tr><td class="fw">${r.ex}</td><td class="dim">${r.country}</td><td><span class="pill ${pc}">${fs||'—'}</span></td><td>${r.current?r.current.title:'<span class="dim">—</span>'}</td><td style="color:var(--lilac-d)">${r.next?r.next.title:'<span class="dim">—</span>'}</td><td>${oh}</td><td>${fh}</td></tr>`;
+  }).join('');
+
+  renderGapsOverview();
+}
+
+function renderGapsOverview(){
+  const tbody=document.getElementById('ov-gaps-tbody');
+  if(!S.catalogue.length){tbody.innerHTML=`<tr><td colspan="5" class="empty">Connect lineup sheet to see upcoming titles</td></tr>`;return}
+  const today=new Date(),horizon=new Date(today);horizon.setDate(today.getDate()+56);
+  const bookedLower=new Set(S.booking.map(b=>b.title.toLowerCase()));
+  const upcoming=S.catalogue.filter(t=>{
+    const av=new Date(t.first_available_date||t.first_screening_date);
+    return!isNaN(av)&&av>=today&&av<=horizon;
+  });
+  if(!upcoming.length){tbody.innerHTML=`<tr><td colspan="5" class="empty">No upcoming titles in catalogue within 8 weeks</td></tr>`;return}
+  const rows=[];
+  upcoming.forEach(t=>{
+    const title=t.imdb_official_title||t.current_erp_title||'—';
+    const fmt=t.format||t.original_production||'—';
+    const avail=t.first_available_date||t.first_screening_date||'—';
+    const ft=t.film_type||'—';
+    const missing=EXHIBITORS.filter(e=>!S.booking.some(b=>b.title.toLowerCase()===title.toLowerCase()&&b.exhibitor===e.name)).map(e=>e.name);
+    if(missing.length)rows.push({title,fmt,avail,ft,missing});
+  });
+  if(!rows.length){tbody.innerHTML=`<tr><td colspan="5" class="empty">All upcoming titles have bookings ✓</td></tr>`;return}
+  tbody.innerHTML=rows.map(r=>`<tr><td class="fw">${r.title}</td><td><span class="pill p-4dx">${r.fmt}</span></td><td class="mono dim">${r.avail}</td><td>${r.missing.map(e=>`<span class="flag flag-warn" style="margin-right:3px">${e}</span>`).join('')}</td><td><span class="pill ${isAlt(r.ft)?'p-gray':'p-blue'}">${r.ft}</span></td></tr>`).join('');
+}
+
+function renderTimeline(){
+  const container=document.getElementById('tl-container');
+  if(!S.booking.length){container.innerHTML='<div class="empty">Load booking data to see the timeline</div>';return}
+  const months=parseInt(document.getElementById('tl-window').value);
+  const fmtF=document.getElementById('tl-fmt').value;
+  const today=new Date();
+  const start=new Date(today.getFullYear(),today.getMonth()-1,1);
+  const end=new Date(start);end.setMonth(end.getMonth()+months+1);
+  const PX=4.2;
+  const totalW=Math.round((end-start)/86400000*PX);
+  const todayOff=Math.round((today-start)/86400000*PX);
+
+  let mHtml='<div class="tl-head-row"><div class="tl-label-spacer"></div><div class="tl-months">';
+  const gridOff=[];
+  const md=new Date(start);
+  while(md<end){
+    const days=new Date(md.getFullYear(),md.getMonth()+1,0).getDate();
+    const w=Math.round(days*PX);
+    gridOff.push(Math.round((md-start)/86400000*PX));
+    mHtml+=`<div class="tl-month" style="width:${w}px;min-width:${w}px">${md.toLocaleString('en',{month:'short'})} ${md.getFullYear()}</div>`;
+    md.setMonth(md.getMonth()+1);
+  }
+  mHtml+='</div></div>';
+  const gridHtml=gridOff.map(o=>`<div class="tl-grid-line" style="left:${o}px"></div>`).join('');
+
+  const exhibs=[...new Set(S.booking.map(d=>d.exhibitor))].filter(Boolean);
+  const rowsHtml=exhibs.map(ex=>{
+    const books=S.booking.filter(b=>b.exhibitor===ex&&(fmtF==='all'||b.format===fmtF));
+    const country=books[0]?.country||'';
+    const blocks=books.map(b=>{
+      const rd=new Date(b.releaseDate);if(isNaN(rd))return'';
+      const off=Math.round((rd-start)/86400000*PX);
+      if(off>totalW||off+14*PX<0)return'';
+      const past=rd<today,isSX=b.format==='ScreenX';
+      const prevHtml=b.previewDate?`<div class="tl-preview" style="left:${Math.round((new Date(b.previewDate)-start)/86400000*PX)}px" title="Preview: ${b.previewDate}"></div>`:'';
+      return`${prevHtml}<div class="tl-block ${isSX?'bsx':'b4dx'} ${past?'past':''}" style="left:${off}px;width:${Math.round(14*PX)}px" title="${b.title} · ${b.format} · ${b.releaseDate}${b.confirmed?'':' (unconfirmed)'}">${b.title}</div>`;
+    }).join('');
+    return`<div class="tl-row"><div class="tl-label"><div class="tl-name">${ex}</div><div class="tl-sub">${country}</div></div><div class="tl-track" style="width:${totalW}px">${gridHtml}<div class="tl-today-line" style="left:${todayOff}px"></div>${blocks}</div></div>`;
+  }).join('');
+  container.innerHTML=`<div class="tl-outer">${mHtml}${rowsHtml}</div>`;
+}
+
+function renderPerformance(){
+  const t1=document.getElementById('perf-tbody'),t2=document.getElementById('title-tbody');
+  if(!S.bo.length){[t1,t2].forEach(t=>t.innerHTML='<tr><td colspan="6" class="empty">Load BO data to see performance</td></tr>');document.getElementById('anomaly-tbody').innerHTML='<tr><td colspan="5" class="empty">Load BO data to detect anomalies</td></tr>';return}
+  const byET={};
+  S.bo.forEach(d=>{
+    const k=d.exhibitor+'||'+d.title+'||'+d.screenType;
+    if(!byET[k])byET[k]={exhibitor:d.exhibitor,title:d.title,fmt:d.screenType,occs:[],adm:0,screenings:0};
+    if(d.occupancy!=null)byET[k].occs.push(d.occupancy);
+    byET[k].adm+=d.totalAdm||0;byET[k].screenings+=d.screenings||0;
+  });
+  const sET=Object.values(byET).sort((a,b)=>avg(b.occs)-avg(a.occs));
+  t1.innerHTML=sET.slice(0,40).map(r=>{
+    const a=avg(r.occs),cls=a==null?'p-gray':a>=70?'p-green':a>=40?'p-amber':'p-red';
+    const fc=r.fmt==='ScreenX'?'p-sx':'p-4dx';
+    return`<tr><td class="fw">${r.exhibitor}</td><td>${r.title}</td><td><span class="pill ${fc}">${r.fmt||'—'}</span></td><td><span class="pill ${cls}">${a!=null?Math.round(a)+'%':'—'}</span></td><td>${r.adm.toLocaleString()}</td><td>${r.screenings.toLocaleString()}</td></tr>`;
+  }).join('');
+  const byT={};
+  S.bo.forEach(d=>{
+    const k=d.title+'||'+(d.screenType||'');
+    if(!byT[k])byT[k]={title:d.title,fmt:d.screenType,occs:[],adm:0,sites:new Set()};
+    if(d.occupancy!=null)byT[k].occs.push(d.occupancy);
+    byT[k].adm+=d.totalAdm||0;byT[k].sites.add(d.site);
+  });
+  const sT=Object.values(byT).sort((a,b)=>avg(b.occs)-avg(a.occs));
+  t2.innerHTML=sT.slice(0,20).map(r=>{
+    const a=avg(r.occs),cls=a==null?'p-gray':a>=70?'p-green':a>=40?'p-amber':'p-red';
+    const fc=r.fmt==='ScreenX'?'p-sx':'p-4dx';
+    return`<tr><td class="fw">${r.title}</td><td><span class="pill ${fc}">${r.fmt||'—'}</span></td><td><span class="pill ${cls}">${a!=null?Math.round(a)+'%':'—'}</span></td><td>${r.sites.size}</td><td>${r.adm.toLocaleString()}</td></tr>`;
+  }).join('');
+  renderAnomalies();
+}
+
+function renderAnomalies(){
+  const tbody=document.getElementById('anomaly-tbody');
+  const flags=[];
+  const byST={};
+  S.bo.forEach(d=>{
+    const k=d.exhibitor+'||'+d.site+'||'+d.title;
+    if(!byST[k])byST[k]={exhibitor:d.exhibitor,site:d.site,title:d.title,days:[]};
+    byST[k].days.push({date:new Date(d.startDate),screenings:d.screenings,occ:d.occupancy,adm:d.totalAdm});
+  });
+  Object.values(byST).forEach(run=>{
+    const sd=run.days.sort((a,b)=>a.date-b.date);
+    const meanAdm=avg(sd.map(d=>d.adm).filter(a=>a!=null));
+    sd.forEach((d,i)=>{
+      if(i>0&&i<sd.length-1&&d.screenings===0)flags.push({exhibitor:run.exhibitor,site:run.site,title:run.title,type:'warn',label:'Zero screenings',detail:`${d.date.toLocaleDateString()} — no screenings mid-run`});
+      if(i>0&&d.occ!=null&&sd[i-1].occ!=null&&(sd[i-1].occ-d.occ)>30)flags.push({exhibitor:run.exhibitor,site:run.site,title:run.title,type:'warn',label:'Occ drop',detail:`${d.date.toLocaleDateString()} — dropped ${Math.round(sd[i-1].occ-d.occ)}pp`});
+      if(meanAdm&&d.adm<meanAdm*0.4&&d.adm>0)flags.push({exhibitor:run.exhibitor,site:run.site,title:run.title,type:'info',label:'Low admissions',detail:`${d.date.toLocaleDateString()} — ${d.adm} vs avg ${Math.round(meanAdm)}`});
+      if(meanAdm&&d.adm>meanAdm*2.5)flags.push({exhibitor:run.exhibitor,site:run.site,title:run.title,type:'info',label:'High admissions',detail:`${d.date.toLocaleDateString()} — ${d.adm} vs avg ${Math.round(meanAdm)}`});
+    });
+    const last=sd[sd.length-1];
+    if(last&&(new Date()-last.date)/86400000>14&&sd.length>=3)flags.push({exhibitor:run.exhibitor,site:run.site,title:run.title,type:'alert',label:'Site went dark',detail:`No data since ${last.date.toLocaleDateString()} (${Math.round((new Date()-last.date)/86400000)}d ago)`});
+  });
+  if(!flags.length){tbody.innerHTML='<tr><td colspan="5" class="empty">No anomalies detected</td></tr>';return}
+  tbody.innerHTML=flags.slice(0,50).map(f=>{
+    const cls=f.type==='alert'?'flag-alert':f.type==='warn'?'flag-warn':'flag-info';
+    return`<tr><td class="fw">${f.exhibitor}</td><td class="dim">${f.site}</td><td>${f.title}</td><td><span class="flag ${cls}">${f.label}</span></td><td class="dim" style="font-size:11px">${f.detail}</td></tr>`;
+  }).join('');
+}
+
+function feeKey(month,row){return`${month}|${row.exhibitor}|${row.site}|${row.format}|${row.title}`}
+function getFeeRows(month){
+  const[yr,mo]=month.split('-').map(Number);
+  return S.booking.filter(b=>{
+    if(!b.confirmed)return false;
+    const rd=new Date(b.releaseDate);
+    return rd.getFullYear()===yr&&rd.getMonth()+1===mo;
+  }).map(b=>({exhibitor:b.exhibitor,site:b.site,format:b.format,title:b.title,releaseDate:b.releaseDate}));
+}
+
+function getYearlyUsage(exhibitor,site,format,month){
+  const yr=month.split('-')[0];
+  return Object.keys(S.feeStatus).filter(k=>{
+    const p=k.split('|');
+    return p[0].startsWith(yr)&&p[1]===exhibitor&&p[2]===site&&p[3]===format&&S.feeStatus[k]!=='Waived';
+  }).length;
+}
+
+function renderFees(){
+  const month=document.getElementById('fee-month').value;
+  const tbody=document.getElementById('fees-tbody');
+  const rows=getFeeRows(month);
+  const today=new Date(),day=today.getDate();
+  const pending=rows.filter(r=>(S.feeStatus[feeKey(month,r)]||'Pending')==='Pending').length;
+  const fa=document.getElementById('fee-alerts');
+  if(!S.booking.length){fa.innerHTML='';tbody.innerHTML='<tr><td colspan="9" class="empty">Load booking data to generate fee tracker</td></tr>';return}
+  if(pending>0&&day<=7)fa.innerHTML=`<div class="alert-bar warn">⚠ ${pending} fee${pending>1?'s':''} pending — confirm before end of first week</div>`;
+  else if(pending>0)fa.innerHTML=`<div class="alert-bar danger">⚠ ${pending} fee${pending>1?'s':''} overdue</div>`;
+  else fa.innerHTML=`<div class="alert-bar ok">✓ All fees confirmed for this month</div>`;
+  if(!rows.length){tbody.innerHTML='<tr><td colspan="9" class="empty">No confirmed bookings for this month</td></tr>';return}
+  tbody.innerHTML=rows.map(r=>{
+    const key=feeKey(month,r);
+    const status=S.feeStatus[key]||'Pending';
+    const notes=S.feeNotes[key]||'';
+    const c=getContract(r.exhibitor,r.site,r.format);
+    let feeAmt='—',capHtml='';
+    if(c){
+      if(c.fee_type==='flat_monthly'){feeAmt=c.flat_monthly_amount?`${c.currency||'USD'} ${Number(c.flat_monthly_amount).toLocaleString()}`:'—';capHtml='<span class="pill p-blue">Flat monthly</span>';}
+      else{
+        feeAmt=c.standard_fee_amount?`${c.currency||'USD'} ${Number(c.standard_fee_amount).toLocaleString()}`:'—';
+        if(c.cap_per_site==='TRUE'&&c.yearly_cap_amount){
+          const used=getYearlyUsage(r.exhibitor,r.site,r.format,month);
+          const cap=Number(c.yearly_cap_amount),stdFee=Number(c.standard_fee_amount)||0;
+          const maxT=stdFee?Math.round(cap/stdFee):0;
+          capHtml=used>=maxT?`<span class="flag flag-warn">Cap reached (${used}/${maxT})</span>`:`<span class="dim" style="font-size:11px">${used}/${maxT} titles</span>`;
+        }
+      }
+    }
+    const dc={Pending:'d-gray',Confirmed:'d-green',Waived:'d-blue',Invoiced:'d-amber'}[status]||'d-gray';
+    const fc=r.format==='ScreenX'?'p-sx':'p-4dx';
+    return`<tr><td class="fw">${r.exhibitor}</td><td class="dim">${r.site}</td><td><span class="pill ${fc}">${r.format}</span></td><td>${r.title}</td><td class="mono dim">${r.releaseDate}</td><td class="fw">${feeAmt}</td><td>${capHtml}</td><td><div style="display:flex;align-items:center;gap:6px"><span class="dot ${dc}"></span><select style="font-size:11px;padding:3px 6px" onchange="saveFeeStatus('${key}',this.value);renderFees()">${['Pending','Confirmed','Waived','Invoiced'].map(s=>`<option${s===status?' selected':''}>${s}</option>`).join('')}</select></div></td><td><input type="text" value="${notes.replace(/"/g,'&quot;')}" placeholder="Notes…" style="font-size:11px;width:140px;padding:3px 7px" onchange="saveFeeNote('${key}',this.value)"></td></tr>`;
+  }).join('');
+}
+
+function saveFeeStatus(key,val){S.feeStatus[key]=val;localStorage.setItem('feeStatus',JSON.stringify(S.feeStatus))}
+function saveFeeNote(key,val){S.feeNotes[key]=val;localStorage.setItem('feeNotes',JSON.stringify(S.feeNotes))}
+
+function exportFees(){
+  const month=document.getElementById('fee-month').value;
+  const rows=getFeeRows(month);
+  if(!rows.length){alert('No data to export');return}
+  const hdr='Exhibitor\tSite\tFormat\tTitle\tRelease Date\tFee\tStatus\tNotes';
+  const body=rows.map(r=>{
+    const key=feeKey(month,r),c=getContract(r.exhibitor,r.site,r.format);
+    const fee=c?`${c.currency||'USD'} ${c.standard_fee_amount||'—'}`:'—';
+    return[r.exhibitor,r.site,r.format,r.title,r.releaseDate,fee,S.feeStatus[key]||'Pending',S.feeNotes[key]||''].join('\t');
+  }).join('\n');
+  const blob=new Blob([hdr+'\n'+body],{type:'text/tab-separated-values'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`code-fees-${month}.tsv`;a.click();
+}
+
+function renderGaps(){
+  const tbody=document.getElementById('gaps-tbody');
+  if(!S.catalogue.length){tbody.innerHTML='<tr><td colspan="7" class="empty">Connect lineup sheet to see gaps</td></tr>';return}
+  const weeks=parseInt(document.getElementById('gap-horizon').value);
+  const today=new Date(),horizon=new Date(today);horizon.setDate(today.getDate()+weeks*7);
+  const upcoming=S.catalogue.filter(t=>{const av=new Date(t.first_available_date||t.first_screening_date);return!isNaN(av)&&av>=today&&av<=horizon});
+  if(!upcoming.length){tbody.innerHTML='<tr><td colspan="7" class="empty">No upcoming titles within this window</td></tr>';return}
+  const rows=[];
+  upcoming.forEach(t=>{
+    const title=t.imdb_official_title||t.current_erp_title||'—';
+    const fmt=t.format||t.original_production||'—';
+    const avail=t.first_available_date||t.first_screening_date||'—';
+    const ft=t.film_type||'—';
+    const eligible=EXHIBITORS.filter(e=>fmt.includes('4DX')?e.formats.includes('4DX'):e.formats.includes('ScreenX'));
+    eligible.forEach(e=>{
+      if(!S.booking.some(b=>b.title.toLowerCase()===title.toLowerCase()&&b.exhibitor===e.name))
+        rows.push({title,fmt,avail,ft,exhibitor:e.name,country:e.country});
+    });
+  });
+  if(!rows.length){tbody.innerHTML='<tr><td colspan="7" class="empty">All upcoming available titles have bookings ✓</td></tr>';return}
+  tbody.innerHTML=rows.map(r=>{
+    const fc=r.fmt.includes('ScreenX')?'p-sx':'p-4dx';
+    return`<tr><td class="fw">${r.title}</td><td><span class="pill ${fc}">${r.fmt}</span></td><td class="mono dim">${r.avail}</td><td class="fw">${r.exhibitor}</td><td class="dim">${r.country}</td><td><span class="pill ${isAlt(r.ft)?'p-gray':'p-blue'}">${r.ft}</span></td><td><button class="btn btn-sm btn-ghost" onclick="draftEmail('${r.exhibitor.replace(/'/g,"\\'")}','${r.title.replace(/'/g,"\\'")}','${r.avail}')">Draft email ↗</button></td></tr>`;
+  }).join('');
+}
+
+function draftEmail(exhibitor,title,date){
+  const info=EXHIBITORS.find(e=>e.name===exhibitor)||{};
+  const contact=info.contact||exhibitor;
+  const body=`Hi ${contact},\n\nI wanted to reach out regarding ${title}, which is available from ${date}.\n\nWould you like to book this title? Happy to share more details.\n\nKind regards,\nKate Small\nRegional Manager, Distribution and Programming\nCJ 4DPLEX`;
+  window.location.href=`mailto:?subject=Booking enquiry — ${title}&body=${encodeURIComponent(body)}`;
+}
+
+function renderDirectory(){
+  document.getElementById('dir-tbody').innerHTML=EXHIBITORS.map(e=>`<tr><td class="fw">${e.name}</td><td class="dim">${e.country}</td><td>${e.formats.map(f=>`<span class="pill ${f==='4DX'?'p-4dx':'p-sx'}" style="margin-right:3px">${f}</span>`).join('')}</td><td>${e.contact}</td><td><span class="pill p-gray">${e.region}</span></td></tr>`).join('');
+}
+
+function connectSheet(){
+  const url=document.getElementById('gs-url').value.trim();
+  const match=url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+  if(!match){document.getElementById('gs-feedback').textContent='Could not parse sheet ID — check the URL';return}
+  S.sheetId=match[1];localStorage.setItem('sheetId',S.sheetId);
+  setConnected();syncSheets();
+}
+function setConnected(){
+  document.getElementById('s-dot').classList.add('on');
+  document.getElementById('s-label').textContent='Sheet connected';
+  document.getElementById('gs-feedback').textContent='Connected · ID: '+S.sheetId.substring(0,16)+'…';
+}
+async function fetchTab(tab){
+  const url=`https://docs.google.com/spreadsheets/d/${S.sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tab)}`;
+  const res=await fetch(url);if(!res.ok)throw new Error('Could not fetch '+tab);
+  return parseCSV(await res.text());
+}
+function parseCSV(text){
+  return text.split('\n').filter(l=>l.trim()).map(line=>{
+    const cols=[];let cur='',inQ=false;
+    for(let i=0;i<line.length;i++){
+      const ch=line[i];
+      if(ch==='"'){if(inQ&&line[i+1]==='"'){cur+='"';i++;}else inQ=!inQ;}
+      else if(ch===','&&!inQ){cols.push(cur.trim());cur='';}
+      else cur+=ch;
+    }
+    cols.push(cur.trim());return cols;
+  });
+}
+async function syncSheets(){
+  if(!S.sheetId){document.getElementById('gs-feedback').textContent='No sheet ID — paste URL and click Connect first';return}
+  const fb=document.getElementById('gs-feedback');
+  const dbg=document.getElementById('sync-debug');
+  fb.textContent='Syncing…';
+  const synced=[],errors=[];
+  const tabs=[
+    ['bookings_raw',r=>{document.getElementById('t-booking').value=r.map(x=>x.join('\t')).join('\n');parseBooking()}],
+    ['bodata_raw',r=>{document.getElementById('t-bo').value=r.map(x=>x.join('\t')).join('\n');parseBO()}],
+    ['lineup',parseCatalogue],
+    ['code_fee',parseContracts]
+  ];
+  for(const[tab,fn] of tabs){
+    try{
+      const url=`https://docs.google.com/spreadsheets/d/${S.sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tab)}`;
+      console.log('Fetching:',url);
+      const res=await fetch(url);
+      console.log(tab,'status:',res.status,'ok:',res.ok);
+      if(!res.ok){errors.push(`${tab}:HTTP${res.status}`);continue}
+      const text=await res.text();
+      console.log(tab,'raw length:',text.length,'preview:',text.substring(0,120));
+      const rows=parseCSV(text);
+      console.log(tab,'parsed rows:',rows.length);
+      if(rows.length>0){fn(rows);synced.push(`${tab}(${rows.length}r)`)}
+      else errors.push(`${tab}:empty`);
+    }catch(e){
+      console.error(tab,'error:',e);
+      errors.push(`${tab}:${e.message}`);
+    }
+  }
+  const syncMsg=`Synced: ${synced.join(', ')||'none'} ${errors.length?'| Errors: '+errors.join(', '):''} — ${new Date().toLocaleTimeString()}`;
+  fb.textContent=syncMsg;
+  const topStatus=document.getElementById('topbar-sync-status');
+  if(topStatus)topStatus.textContent=errors.length?`⚠ ${errors.join(', ')}`:`✓ synced ${new Date().toLocaleTimeString()}`;
+  if(dbg)dbg.textContent=`booking:${S.booking.length} | bo:${S.bo.length} | catalogue:${S.catalogue.length} | contracts:${S.contracts.length}`;
+  setConnected();renderOverview();
+}
+
+
+
+function updateDataSummary(){
+  const ex=[...new Set(S.booking.map(d=>d.exhibitor))].filter(Boolean).length;
+  const titles=[...new Set(S.booking.map(d=>d.title))].filter(Boolean).length;
+  document.getElementById('data-summary').innerHTML=`<strong>${S.booking.length}</strong> booking rows · <strong>${S.bo.length}</strong> BO rows · <strong>${ex}</strong> exhibitors · <strong>${titles}</strong> titles · <strong>${S.catalogue.length}</strong> catalogue titles · <strong>${S.contracts.length}</strong> contract rules`;
+}
+
+(function init(){
+  renderOverview();renderDirectory();
+  if(S.sheetId){document.getElementById('gs-url').value=`https://docs.google.com/spreadsheets/d/${S.sheetId}`;setConnected();syncSheets();}
+})();
+</script>
+</body>
+</html>
