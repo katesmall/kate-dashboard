@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>4DPLEX — Exhibitor Intelligence</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
 :root{
@@ -12,7 +12,7 @@
   --black:#0f0f0f;--g1:#383838;--g2:#767676;--g3:#b0b0b0;--g4:#e4e4e4;--g5:#f6f6f6;--white:#ffffff;
   --green:#287a50;--green-l:#eaf4ee;--amber:#9a6c0a;--amber-l:#fef6e4;
   --red:#b83030;--red-l:#fdecea;--blue:#2060a8;--blue-l:#e8f0fb;
-  --sans:'Helvetica Neue',Helvetica,Arial,sans-serif;--display:'Syne',sans-serif;--mono:'DM Mono',monospace;
+  --sans:'Inter',system-ui,sans-serif;--display:'Syne',sans-serif;--mono:'DM Mono',monospace;
   --sidebar:210px;--topbar:52px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -22,11 +22,11 @@ body{font-family:var(--sans);background:var(--white);color:var(--black);font-siz
 .sidebar{width:var(--sidebar);min-width:var(--sidebar);border-right:1px solid var(--g4);display:flex;flex-direction:column;background:var(--white);height:100vh;overflow-y:auto}
 .logo{padding:18px 16px 16px;border-bottom:1px solid var(--g4)}
 .logo-eyebrow{font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--g3);text-transform:uppercase;margin-bottom:3px}
-.logo-name{font-family:var(--display);font-size:15px;font-weight:600;color:var(--black);letter-spacing:-.01em}
+.logo-name{font-family:var(--display);font-size:15px;font-weight:600;color:var(--black);letter-spacing:-.01em;font-variant-numeric:tabular-nums}
 .logo-sub{font-size:11px;color:var(--g2);margin-top:1px}
 .nav{padding:10px 8px;flex:1}
 .nav-group{margin-bottom:20px}
-.nav-group-label{font-size:9px;font-weight:500;color:var(--g3);letter-spacing:.1em;text-transform:uppercase;padding:0 8px;margin-bottom:3px}
+.nav-group-label{font-size:9px;font-weight:700;color:var(--g3);letter-spacing:.1em;text-transform:uppercase;padding:0 8px;margin-bottom:3px}
 .nav-item{display:flex;align-items:center;gap:9px;width:100%;padding:7px 8px;border-radius:6px;border:none;background:none;cursor:pointer;font-family:var(--sans);font-size:13px;color:var(--g1);text-align:left;transition:background .12s,color .12s}
 .nav-item:hover{background:var(--g5);color:var(--black)}
 .nav-item.active{background:var(--lilac-l);color:var(--lilac-d);font-weight:500}
@@ -39,7 +39,7 @@ body{font-family:var(--sans);background:var(--white);color:var(--black);font-siz
 .s-dot.on{background:var(--green)}
 .main{flex:1;min-width:0;display:flex;flex-direction:column;height:100vh;overflow:hidden}
 .topbar{height:var(--topbar);min-height:var(--topbar);border-bottom:1px solid var(--g4);display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:var(--white);position:relative;z-index:20}
-.page-title{font-family:var(--display);font-size:14px;font-weight:600;letter-spacing:-.01em}
+.page-title{font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:-.01em}
 .topbar-right{display:flex;align-items:center;gap:8px}
 .content{flex:1;overflow-y:auto;padding:24px}
 .pane{display:none}.pane.active{display:block}
@@ -56,11 +56,11 @@ textarea{resize:vertical}
 .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
 .stat{background:var(--g5);border-radius:8px;padding:16px 18px}
 .stat-label{font-size:11px;font-weight:500;color:var(--g2);letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}
-.stat-value{font-family:var(--display);font-size:30px;font-weight:600;color:var(--lilac-d);letter-spacing:-.02em;line-height:1}
+.stat-value{font-family:var(--display);font-size:32px;font-weight:600;color:var(--lilac-d);letter-spacing:-.02em;line-height:1}
 .stat-sub{font-size:12px;color:var(--g3);margin-top:5px}
 .stat-urgent .stat-value{color:var(--amber)}
 .sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.sec-title{font-size:11px;font-weight:500;color:var(--g2);letter-spacing:.06em;text-transform:uppercase}
+.sec-title{font-size:11px;font-weight:600;color:var(--g2);letter-spacing:.07em;text-transform:uppercase}
 .sec-controls{display:flex;gap:6px;align-items:center}
 .panel{border:1px solid var(--g4);border-radius:8px;overflow:hidden;margin-bottom:18px}
 .panel-head{padding:9px 14px;border-bottom:1px solid var(--g4);display:flex;align-items:center;justify-content:space-between;background:var(--white)}
@@ -68,7 +68,7 @@ textarea{resize:vertical}
 .panel-body{padding:16px}
 .tbl-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:13px}
-th{padding:8px 14px;text-align:left;font-size:11px;font-weight:500;color:var(--g2);letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid var(--g4);white-space:nowrap;background:var(--white)}
+th{padding:8px 14px;text-align:left;font-size:11px;font-weight:600;color:var(--g2);letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--g4);white-space:nowrap;background:var(--white)}
 td{padding:10px 14px;border-bottom:1px solid var(--g4);vertical-align:middle}
 tr:last-child td{border-bottom:none}
 tbody tr{transition:background .08s}
@@ -122,11 +122,102 @@ tbody tr:hover td{background:var(--lilac-l)}
 .upload-title{font-weight:500;color:var(--g1);margin-bottom:3px;font-size:12px}
 .upload-hint{font-size:10px;color:var(--g3);line-height:1.7}
 .empty{color:var(--g3);text-align:center;padding:36px 20px;font-size:12px}
+
+/* ── Fee cards ── */
+.fee-month-pill{padding:5px 11px;border-radius:99px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--g4);background:var(--white);color:var(--g2);transition:all .12s;white-space:nowrap}
+.fee-month-pill:hover{border-color:var(--lilac-m);color:var(--lilac-d)}
+.fee-month-pill.active{background:var(--lilac);color:var(--white);border-color:var(--lilac)}
+.fee-month-pill.past{opacity:.6}
+.fee-month-pill.future{opacity:.45}
+.fee-zone-label{font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--g3);margin:18px 0 8px;display:flex;align-items:center;gap:8px}
+.fee-zone-label::after{content:'';flex:1;height:1px;background:var(--g4)}
+.fee-card{border:1px solid var(--g4);border-radius:10px;background:var(--white);margin-bottom:10px;overflow:hidden;transition:border-color .15s}
+.fee-card:hover{border-color:var(--lilac-m)}
+.fee-card.overdue{border-color:var(--red-l)}
+.fee-card-head{padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--g4)}
+.fee-card-name{font-weight:500;font-size:14px}
+.fee-card-country{font-size:12px;color:var(--g2);margin-left:6px}
+.fee-card-body{padding:12px 16px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fee-fmt-block{border:1px solid var(--g4);border-radius:8px;padding:11px 13px;position:relative}
+.fee-fmt-block.confirmed{border-color:var(--green-l);background:#fafffe}
+.fee-fmt-block.overdue{border-color:#ffd0d0;background:#fff8f8}
+.fee-fmt-label{font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--g2);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
+.fee-fmt-titles{font-size:12px;color:var(--g1);margin-bottom:8px;line-height:1.5}
+.fee-fmt-titles .title-name{display:inline-block;background:var(--g5);border-radius:4px;padding:1px 6px;margin:1px 2px;font-size:11px}
+.fee-fmt-fees{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.fee-fmt-fee-block{font-size:11px}
+.fee-fmt-fee-label{color:var(--g3);margin-bottom:2px}
+.fee-fmt-fee-val{font-weight:500;font-size:13px}
+.fee-variance{font-size:11px;font-weight:500;margin-bottom:8px}
+.fee-variance.pos{color:var(--green)}
+.fee-variance.neg{color:var(--amber)}
+.fee-cap-bar{margin-bottom:8px}
+.fee-cap-label{font-size:10px;color:var(--g2);margin-bottom:3px;display:flex;justify-content:space-between}
+.fee-cap-track{height:4px;background:var(--g4);border-radius:2px;overflow:hidden}
+.fee-cap-fill{height:100%;border-radius:2px;background:var(--lilac);transition:width .3s}
+.fee-cap-fill.warning{background:var(--amber)}
+.fee-cap-fill.danger{background:var(--red)}
+.fee-fmt-footer{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+.fee-confirm-all{font-size:11px;color:var(--lilac-d);cursor:pointer;border:none;background:none;padding:0;text-decoration:underline;text-underline-offset:2px}
+.fee-confirm-all:hover{color:var(--lilac)}
+.fee-progress-summary{display:flex;align-items:center;gap:16px;padding:10px 14px;background:var(--g5);border-radius:8px;font-size:12px}
+.fee-progress-fmt{display:flex;align-items:center;gap:8px}
+.fee-progress-track{width:80px;height:4px;background:var(--g4);border-radius:2px;overflow:hidden}
+.fee-progress-fill{height:100%;border-radius:2px;background:var(--lilac)}
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--g4);border-radius:3px}
 ::-webkit-scrollbar-thumb:hover{background:var(--g3)}
 @media(max-width:900px){.sidebar{display:none}.stat-row{grid-template-columns:1fr 1fr}.two-col,.three-col{grid-template-columns:1fr}}
+
+/* ── Fee cards ── */
+.fee-month-btn{padding:5px 13px;border-radius:99px;font-size:12px;font-weight:500;border:1px solid var(--g4);background:var(--white);color:var(--g2);cursor:pointer;transition:all .15s;font-family:var(--sans)}
+.fee-month-btn:hover{border-color:var(--lilac-m);color:var(--lilac-d)}
+.fee-month-btn.active{background:var(--lilac);color:var(--white);border-color:var(--lilac);font-weight:600}
+.fee-month-btn.past{opacity:.55}
+.fee-month-btn.future{opacity:.45}
+.fee-zone-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--g2);margin:20px 0 10px;display:flex;align-items:center;gap:10px}
+.fee-zone-label::after{content:'';flex:1;height:1px;background:var(--g4)}
+.fee-card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:14px;margin-bottom:6px}
+.fee-card{background:var(--white);border:1px solid var(--g4);border-radius:10px;overflow:hidden;transition:box-shadow .15s}
+.fee-card:hover{box-shadow:0 2px 14px rgba(0,0,0,.07)}
+.fee-card.is-confirmed{border-left:3px solid var(--green);opacity:.8}
+.fee-card.is-overdue{border-left:3px solid var(--red)}
+.fee-card.is-pending{border-left:3px solid var(--lilac)}
+.fee-card-head{padding:13px 16px 11px;border-bottom:1px solid var(--g4);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.fee-card-name{font-size:15px;font-weight:700;color:var(--black)}
+.fee-card-country{font-size:12px;color:var(--g2);font-weight:400;margin-left:6px}
+.fee-confirm-all-btn{font-size:11px;font-weight:600;color:var(--lilac-d);background:var(--lilac-l);border:none;border-radius:5px;padding:4px 10px;cursor:pointer;font-family:var(--sans);white-space:nowrap}
+.fee-confirm-all-btn:hover{background:var(--lilac-m);color:var(--white)}
+.fee-formats-grid{display:grid;grid-template-columns:1fr 1fr}
+.fee-fmt-block{padding:14px 16px}
+.fee-fmt-block:first-child{border-right:1px solid var(--g4)}
+.fee-fmt-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.fee-fmt-status{font-size:11px;font-weight:600;display:flex;align-items:center;gap:4px}
+.fee-titles-section{margin-bottom:10px}
+.fee-titles-label{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--g3);margin-bottom:4px}
+.fee-title-item{font-size:12px;color:var(--g1);line-height:1.7}
+.fee-amounts-section{margin-bottom:10px}
+.fee-amt-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.fee-amt-label{font-size:11px;color:var(--g2);font-weight:500}
+.fee-amt-val{font-size:13px;font-weight:600;color:var(--black)}
+.fee-actual-input{font-size:13px;font-weight:600;color:var(--black);border:none;border-bottom:1.5px solid var(--g4);padding:1px 2px;width:100%;background:transparent;font-family:var(--sans);outline:none;text-align:right}
+.fee-actual-input:focus{border-bottom-color:var(--lilac)}
+.fee-actual-input::placeholder{color:var(--g3);font-weight:400}
+.fee-variance{font-size:11px;font-weight:600;text-align:right;margin-bottom:8px}
+.fee-variance.neg{color:var(--amber)}.fee-variance.pos{color:var(--green)}
+.fee-cap-wrap{margin-bottom:10px}
+.fee-cap-top{display:flex;justify-content:space-between;font-size:10px;color:var(--g2);font-weight:500;margin-bottom:3px}
+.fee-cap-track{height:3px;border-radius:2px;background:var(--g4);overflow:hidden}
+.fee-cap-fill{height:100%;border-radius:2px;transition:width .3s;background:var(--lilac-m)}
+.fee-cap-fill.cap-warn{background:var(--amber)}.fee-cap-fill.cap-full{background:var(--red)}
+.fee-fmt-footer{display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid var(--g4)}
+.fee-progress-wrap{display:flex;gap:20px;padding:12px 16px;background:var(--g5);border-radius:8px;margin-bottom:16px;flex-wrap:wrap}
+.fee-progress-fmt{display:flex;align-items:center;gap:8px;font-size:12px}
+.fee-progress-track{width:90px;height:4px;border-radius:2px;background:var(--g4);overflow:hidden}
+.fee-progress-fill{height:100%;border-radius:2px;background:var(--lilac);transition:width .3s}
+.fee-progress-fill.prog-done{background:var(--green)}
+.fee-progress-pct{color:var(--g2);font-size:11px;font-weight:500}
 </style>
 </head>
 <body>
@@ -268,38 +359,27 @@ tbody tr:hover td{background:var(--lilac-l)}
     <div id="pane-codefees" class="pane">
       <!-- OVERVIEW LEVEL -->
       <div id="fees-overview-view">
-        <div class="sec-head">
-          <span class="sec-title">Code fee tracker</span>
-          <div class="sec-controls">
-            <select id="fee-month" onchange="renderFees()">
-              <option value="2026-03">March 2026</option>
-              <option value="2026-02">February 2026</option>
-              <option value="2026-01">January 2026</option>
-              <option value="2025-12">December 2025</option>
-              <option value="2025-11">November 2025</option>
-            </select>
-            <button class="btn btn-sm" onclick="exportFees()">Export TSV</button>
-          </div>
+        <!-- Month strip -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <div id="fee-month-nav" style="display:flex;gap:4px;flex-wrap:wrap"></div>
+          <button class="btn btn-sm" onclick="exportFees()">Export TSV</button>
         </div>
-        <div id="fee-alerts"></div>
-        <div class="panel"><div class="tbl-wrap"><table>
-          <thead><tr>
-            <th>Exhibitor</th><th>Format</th><th>New titles</th>
-            <th>Expected fee</th><th>Actual fee</th><th>Cap status</th>
-            <th>Status</th><th>Detail</th>
-          </tr></thead>
-          <tbody id="fees-tbody"></tbody>
-        </table></div></div>
-        <div style="font-size:11px;color:var(--g3);margin-top:6px">Status and actual fee saved in your browser. Expected fee from code_fee sheet. New releases only (first screening that month, confirmed bookings).</div>
+        <!-- hidden month value -->
+        <input type="hidden" id="fee-month" value="2026-03">
+        <!-- Progress summary -->
+        <div id="fee-progress-bar" style="margin-bottom:14px"></div>
+        <!-- Alert -->
+        <div id="fee-alerts" style="margin-bottom:10px"></div>
+        <!-- Cards -->
+        <div id="fees-cards"></div>
+        <div style="font-size:11px;color:var(--g3);margin-top:10px">Status and actual fee saved in your browser. Expected fee from code_fee sheet. New releases only (confirmed bookings).</div>
       </div>
 
-      <!-- DETAIL LEVEL (drill-in) -->
+      <!-- DETAIL LEVEL -->
       <div id="fees-detail-view" style="display:none">
-        <div class="sec-head" style="margin-bottom:14px">
-          <div style="display:flex;align-items:center;gap:10px">
-            <button class="btn btn-sm btn-ghost" onclick="closeFeeDetail()">← Back</button>
-            <span class="sec-title" id="fees-detail-title">Exhibitor detail</span>
-          </div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+          <button class="btn btn-sm btn-ghost" onclick="closeFeeDetail()">← Back</button>
+          <span class="sec-title" id="fees-detail-title"></span>
         </div>
         <div class="panel"><div class="tbl-wrap"><table>
           <thead><tr><th>Site</th><th>Title</th><th>Release date</th><th>Notes</th></tr></thead>
@@ -594,7 +674,7 @@ function renderOverview(){
     const exBO=S.bo.filter(b=>b.exhibitor===ex);
     const exOccs=exBO.map(b=>b.occupancy).filter(o=>o!=null);
     const avgOcc=exOccs.length?Math.round(exOccs.reduce((a,b)=>a+b,0)/exOccs.length):null;
-    const exFees=fGroups.filter(g=>g.exhibitor===ex);
+    const exFees=(typeof fGroups!=='undefined'?fGroups:getFeeGroups(feeMonth)).filter(g=>g.exhibitor===ex);
     const exPend=exFees.filter(g=>(S.feeStatus[feeExhibKey(feeMonth,g.exhibitor,g.format)]||'Unconfirmed')==='Unconfirmed').length;
     return{ex,country,exFmts,current,next,avgOcc,exPend};
   }).filter(Boolean);
@@ -788,101 +868,285 @@ function getYearlyUsage(exhibitor,format,month){
   return titlesThisYear.length;
 }
 
+// Month strip data
+const FEE_MONTHS=[
+  {val:'2025-09',label:'Sep 25'},{val:'2025-10',label:'Oct 25'},
+  {val:'2025-11',label:'Nov 25'},{val:'2025-12',label:'Dec 25'},
+  {val:'2026-01',label:'Jan 26'},{val:'2026-02',label:'Feb 26'},
+  {val:'2026-03',label:'Mar 26'},{val:'2026-04',label:'Apr 26'},
+  {val:'2026-05',label:'May 26'},{val:'2026-06',label:'Jun 26'},
+  {val:'2026-07',label:'Jul 26'},{val:'2026-08',label:'Aug 26'},
+];
+
+function initFeeMonthStrip(){
+  const strip=document.getElementById('fee-month-strip');
+  if(!strip||strip.hasChildNodes())return;
+  const today=new Date();
+  const currentMonth=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}`;
+  FEE_MONTHS.forEach(m=>{
+    const btn=document.createElement('button');
+    btn.className='fee-month-pill'+(m.val===currentMonth?' active':m.val<currentMonth?' past':' future');
+    btn.textContent=m.label;
+    btn.onclick=()=>{
+      document.querySelectorAll('.fee-month-pill').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('fee-month').value=m.val;
+      renderFees();
+    };
+    strip.appendChild(btn);
+  });
+}
+
+function getCapInfo(c, exhibitor, format, month){
+  // Returns {bars:[{label,used,max,pct,type}], html}
+  if(!c)return{bars:[],html:''};
+  const bars=[];
+  const perTitle=Number(c.standard_fee_amount)||0;
+  const yr=month.split('-')[0];
+  const mo=month.split('-')[1];
+  const titlesThisYear=[...new Set(S.booking.filter(b=>{
+    if(!b.confirmed)return false;
+    const rd=new Date(b.releaseDate);
+    return rd.getFullYear()===parseInt(yr)&&b.exhibitor===exhibitor&&b.format===format;
+  }).map(b=>b.title))].length;
+  const titlesThisMonth=[...new Set(S.booking.filter(b=>{
+    if(!b.confirmed)return false;
+    const rd=new Date(b.releaseDate);
+    return rd.getFullYear()===parseInt(yr)&&rd.getMonth()+1===parseInt(mo)&&b.exhibitor===exhibitor&&b.format===format;
+  }).map(b=>b.title))].length;
+
+  if(c.yearly_cap_amount&&perTitle){
+    const cap=Number(c.yearly_cap_amount);
+    const maxT=Math.round(cap/perTitle);
+    const pct=Math.min((titlesThisYear/maxT)*100,100);
+    bars.push({label:`Yearly cap`,used:titlesThisYear,max:maxT,pct,type:pct>=100?'danger':pct>=80?'warning':'normal',detail:`${titlesThisYear}/${maxT} titles`});
+  }
+  if(c.monthly_cap_amount&&perTitle){
+    const cap=Number(c.monthly_cap_amount);
+    const maxT=Math.round(cap/perTitle);
+    const pct=Math.min((titlesThisMonth/maxT)*100,100);
+    bars.push({label:`Monthly cap`,used:titlesThisMonth,max:maxT,pct,type:pct>=100?'danger':pct>=80?'warning':'normal',detail:`${titlesThisMonth}/${maxT} titles`});
+  }
+  return{bars};
+}
+
+function initFeeMonthNav(){
+  const nav=document.getElementById('fee-month-nav');
+  if(!nav)return;
+  const today=new Date();
+  const current=document.getElementById('fee-month').value;
+  const months=[];
+  for(let y=2025;y<=2026;y++){
+    for(let m=1;m<=12;m++){
+      if(y===2025&&m<9)continue;
+      if(y===2026&&m>12)continue;
+      months.push({val:`${y}-${String(m).padStart(2,'0')}`,label:new Date(y,m-1,1).toLocaleString('en',{month:'short',year:'2-digit'})});
+    }
+  }
+  const todayStr=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}`;
+  nav.innerHTML=months.map(m=>{
+    const isPast=m.val<todayStr,isFuture=m.val>todayStr,isActive=m.val===current;
+    return`<button class="fee-month-btn${isActive?' active':''}${isPast&&!isActive?' past':''}${isFuture&&!isActive?' future':''}"
+      onclick="setFeeMonth('${m.val}')">${m.label}</button>`;
+  }).join('');
+}
+
+function setFeeMonth(month){
+  document.getElementById('fee-month').value=month;
+  renderFees();
+}
+
+function getCapInfo(c,exhibitor,format,month){
+  if(!c||!c.yearly_cap_amount)return{bars:[]};
+  const cap=Number(c.yearly_cap_amount)||0;
+  const perTitle=Number(c.standard_fee_amount)||0;
+  const maxTitles=perTitle?Math.round(cap/perTitle):0;
+  const yr=parseInt(month.split('-')[0]);
+  const used=[...new Set(S.booking.filter(b=>{
+    if(!b.confirmed)return false;
+    const rd=new Date(b.releaseDate);
+    return rd.getFullYear()===yr&&b.exhibitor===exhibitor&&b.format===format;
+  }).map(b=>b.title))].length;
+  if(!maxTitles)return{bars:[]};
+  const pct=Math.min(Math.round((used/maxTitles)*100),100);
+  const type=pct>=100?'danger':pct>=80?'warning':'';
+  return{bars:[{label:`Yearly cap`,detail:`${used}/${maxTitles} titles`,pct,type}]};
+}
+
 function renderFees(){
+  initFeeMonthNav();
   const month=document.getElementById('fee-month').value;
-  const tbody=document.getElementById('fees-tbody');
   const fa=document.getElementById('fee-alerts');
-  if(!S.booking.length){fa.innerHTML='';tbody.innerHTML='<tr><td colspan="8" class="empty">Sync booking data to generate fee tracker</td></tr>';return}
+  const cardsEl=document.getElementById('fees-cards');
+  if(!S.booking.length){
+    fa.innerHTML='';
+    if(cardsEl)cardsEl.innerHTML='<div class="empty">Sync booking data to generate fee tracker</div>';
+    return;
+  }
 
   const groups=getFeeGroups(month);
   const today=new Date(),day=today.getDate();
+  const todayStr=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}`;
+  const isCurrentMonth=month===todayStr;
+  const isOverdue=isCurrentMonth&&day>7;
 
-  // Alert bar
-  const unconfirmed=groups.filter(g=>{
-    const st=S.feeStatus[feeExhibKey(month,g.exhibitor,g.format)]||'Unconfirmed';
-    return st==='Unconfirmed';
-  }).length;
-  if(unconfirmed>0&&day<=7)fa.innerHTML=`<div class="alert-bar warn">⚠ ${unconfirmed} exhibitor/format${unconfirmed>1?'s':''} unconfirmed — confirm before end of first week</div>`;
-  else if(unconfirmed>0)fa.innerHTML=`<div class="alert-bar danger">⚠ ${unconfirmed} exhibitor/format${unconfirmed>1?'s':''} unconfirmed — overdue</div>`;
-  else if(groups.length)fa.innerHTML=`<div class="alert-bar ok">✓ All fees confirmed for this month</div>`;
+  // Progress bar
+  const progressEl=document.getElementById('fee-progress-bar');
+  if(progressEl){
+    const fmts=['4DX','ScreenX'];
+    progressEl.innerHTML=`<div class="fee-progress-wrap">${fmts.map(fmt=>{
+      const fg=groups.filter(g=>g.format===fmt);
+      const conf=fg.filter(g=>{const st=S.feeStatus[feeExhibKey(month,g.exhibitor,fmt)];return st==='Confirmed'||st==='Waived';}).length;
+      const tot=fg.length;
+      const pct=tot?Math.round((conf/tot)*100):0;
+      const done=conf===tot&&tot>0;
+      return tot===0?'':`<div class="fee-progress-fmt">
+        <span class="pill ${fmt==='ScreenX'?'p-sx':'p-4dx'}" style="min-width:52px;justify-content:center">${fmt}</span>
+        <div class="fee-progress-track"><div class="fee-progress-fill${done?' prog-done':''}" style="width:${pct}%"></div></div>
+        <span class="fee-progress-pct">${conf}/${tot}</span>
+      </div>`;
+    }).join('')}</div>`;
+  }
+
+  // Alert
+  const unconf=groups.filter(g=>{const st=S.feeStatus[feeExhibKey(month,g.exhibitor,g.format)]||'Unconfirmed';return st==='Unconfirmed';}).length;
+  if(!groups.length){fa.innerHTML='';if(cardsEl)cardsEl.innerHTML='<div class="empty">No confirmed new releases for this month</div>';return;}
+  if(unconf===0)fa.innerHTML=`<div class="alert-bar ok">✓ All fees confirmed for ${new Date(month+'-01').toLocaleString('en',{month:'long',year:'numeric'})}</div>`;
+  else if(isOverdue)fa.innerHTML=`<div class="alert-bar danger">⚠ ${unconf} unconfirmed — overdue</div>`;
+  else if(isCurrentMonth)fa.innerHTML=`<div class="alert-bar warn">⚠ ${unconf} unconfirmed — confirm before end of first week</div>`;
   else fa.innerHTML='';
 
-  if(!groups.length){tbody.innerHTML='<tr><td colspan="8" class="empty">No confirmed new releases found for this month</td></tr>';return}
+  // Group by exhibitor
+  const byExhib={};
+  groups.forEach(g=>{if(!byExhib[g.exhibitor])byExhib[g.exhibitor]=[];byExhib[g.exhibitor].push(g);});
 
-  tbody.innerHTML=groups.map(g=>{
-    const key=feeExhibKey(month,g.exhibitor,g.format);
-    const status=S.feeStatus[key]||'Unconfirmed';
-    const actualFee=S.feeActual[key]||'';
-    const c=getContract(g.exhibitor,'',g.format)||
-             S.contracts.find(ct=>ct.format===g.format&&ct.exhibitor===g.exhibitor)||null;
+  const needsAttn=[],confList=[];
+  Object.entries(byExhib).forEach(([ex,fg])=>{
+    const allDone=fg.every(g=>{const st=S.feeStatus[feeExhibKey(month,ex,g.format)];return st==='Confirmed'||st==='Waived';});
+    if(allDone)confList.push([ex,fg]);
+    else needsAttn.push([ex,fg]);
+  });
 
-    // Expected fee calculation
-    let expectedFee='—',capHtml='';
-    if(c){
-      if(c.fee_type==='flat_monthly'){
-        expectedFee=c.flat_monthly_amount?`${c.currency||'USD'} ${Number(c.flat_monthly_amount).toLocaleString()}`:'—';
-        capHtml='<span class="pill p-blue">Flat monthly</span>';
-      } else if(c.standard_fee_amount){
-        const perTitle=Number(c.standard_fee_amount)||0;
-        const titleCount=g.titles.length;
-        const total=perTitle*titleCount;
-        expectedFee=`${c.currency||'USD'} ${total.toLocaleString()}`;
-        // Cap check
-        if((c.cap_per_site==='TRUE'||c.cap_per_exhibitor==='TRUE')&&c.yearly_cap_amount){
-          const used=getYearlyUsage(g.exhibitor,g.format,month);
-          const cap=Number(c.yearly_cap_amount),maxT=perTitle?Math.round(cap/perTitle):0;
-          capHtml=used>=maxT?`<span class="flag flag-warn">Cap reached (${used}/${maxT})</span>`:`<span class="dim" style="font-size:11px">${used}/${maxT} yr</span>`;
-        }
+  function buildCard(ex,fmtGroups){
+    const info=EXHIBITORS.find(e=>e.name===ex)||{};
+    const allDone=fmtGroups.every(g=>{const st=S.feeStatus[feeExhibKey(month,ex,g.format)];return st==='Confirmed'||st==='Waived';});
+    const anyOverdue=isOverdue&&!allDone;
+    const canConfirm=fmtGroups.some(g=>{const st=S.feeStatus[feeExhibKey(month,ex,g.format)]||'Unconfirmed';return st!=='Confirmed'&&st!=='Waived';});
+    const cardCls=allDone?'is-confirmed':anyOverdue?'is-overdue':'is-pending';
+    const safeEx=ex.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+
+    const fmtBlocks=fmtGroups.map(g=>{
+      const key=feeExhibKey(month,ex,g.format);
+      const status=S.feeStatus[key]||'Unconfirmed';
+      const actual=S.feeActual?.[key]||'';
+      const c=S.contracts.find(ct=>ct.format===g.format&&(ct.exhibitor===ex||!ct.exhibitor))||null;
+      let expVal='—',cur='USD';
+      if(c){
+        cur=c.currency||'USD';
+        if(c.fee_type==='flat_monthly'&&c.flat_monthly_amount)expVal=`${cur} ${Number(c.flat_monthly_amount).toLocaleString()}`;
+        else if(c.standard_fee_amount)expVal=`${cur} ${(Number(c.standard_fee_amount)*g.titles.length).toLocaleString()}`;
       }
-    }
+      // Variance
+      let varHtml='';
+      if(actual&&expVal!=='—'){
+        const an=parseFloat(actual.replace(/[^0-9.-]/g,'')),en=parseFloat(expVal.replace(/[^0-9.-]/g,''));
+        if(!isNaN(an)&&!isNaN(en)&&an!==en){const d=an-en;varHtml=`<div class="fee-variance ${d>0?'pos':'neg'}">${d>0?'+':''}${cur} ${Math.abs(Math.round(d)).toLocaleString()} vs expected</div>`;}
+      }
+      // Cap
+      const capInfo=getCapInfo(c,ex,g.format,month);
+      const capHtml=capInfo.bars.map(b=>`<div class="fee-cap-wrap">
+        <div class="fee-cap-top"><span>${b.label}</span><span>${b.detail}</span></div>
+        <div class="fee-cap-track"><div class="fee-cap-fill${b.type==='danger'?' cap-full':b.type==='warning'?' cap-warn':''}" style="width:${b.pct}%"></div></div>
+      </div>`).join('');
+      // Status colours
+      const stColor={Unconfirmed:'var(--g3)','In Progress':'var(--amber)',Confirmed:'var(--green)',Waived:'var(--blue)'}[status]||'var(--g3)';
+      const fmtCls=g.format==='ScreenX'?'p-sx':'p-4dx';
+      const safeFmt=g.format.replace(/'/g,"\\'");
+      const titleItems=g.titles.map(t=>`<div class="fee-title-item">${t.title}</div>`).join('');
+      return`<div class="fee-fmt-block">
+        <div class="fee-fmt-header">
+          <span class="pill ${fmtCls}">${g.format}</span>
+          <span class="fee-fmt-status" style="color:${stColor}">● ${status}</span>
+        </div>
+        <div class="fee-titles-section">
+          <div class="fee-titles-label">${g.titles.length} title${g.titles.length>1?'s':''}</div>
+          ${titleItems}
+        </div>
+        <div class="fee-amounts-section">
+          <div class="fee-amt-row"><span class="fee-amt-label">Expected</span><span class="fee-amt-val">${expVal}</span></div>
+          <div class="fee-amt-row"><span class="fee-amt-label">Actual</span>
+            <input class="fee-actual-input" type="text" value="${actual.replace(/"/g,'&quot;')}" placeholder="enter amount"
+              onchange="saveFeeActual('${key}',this.value);renderFees()">
+          </div>
+        </div>
+        ${varHtml}
+        ${capHtml}
+        <div class="fee-fmt-footer">
+          <select style="font-size:12px;padding:4px 8px;border:1px solid var(--g4);border-radius:5px;font-family:var(--sans)"
+            onchange="saveFeeStatus('${key}',this.value);renderFees()">
+            ${['Unconfirmed','In Progress','Confirmed','Waived'].map(s=>`<option${s===status?' selected':''}>${s}</option>`).join('')}
+          </select>
+          <button class="btn btn-sm btn-ghost" style="font-size:11px" onclick="openFeeDetail('${month}','${safeEx}','${safeFmt}')">Detail →</button>
+        </div>
+      </div>`;
+    }).join('');
 
-    const fc=g.format==='ScreenX'?'p-sx':'p-4dx';
-    const dc={Unconfirmed:'d-gray','In Progress':'d-amber',Confirmed:'d-green',Waived:'d-blue'}[status]||'d-gray';
-    const titleList=g.titles.map(t=>t.title).join(', ');
+    return`<div class="fee-card ${cardCls}">
+      <div class="fee-card-head">
+        <div>
+          <span class="fee-card-name">${ex}</span>
+          <span class="fee-card-country">${info.country||''}</span>
+        </div>
+        ${canConfirm?`<button class="fee-confirm-all-btn" onclick="confirmAll('${month}','${safeEx}')">Confirm all</button>`:''}
+      </div>
+      <div class="fee-formats-grid">${fmtBlocks}</div>
+    </div>`;
+  }
 
-    return`<tr>
-      <td class="fw">${g.exhibitor}</td>
-      <td><span class="pill ${fc}">${g.format}</span></td>
-      <td style="font-size:12px;color:var(--g1)">${titleList}<br><span class="dim" style="font-size:11px">${g.titles.length} title${g.titles.length>1?'s':''}</span></td>
-      <td class="fw">${expectedFee}</td>
-      <td><input type="text" value="${actualFee.replace(/"/g,'&quot;')}" placeholder="Enter actual…"
-          style="font-size:12px;width:120px;padding:4px 8px"
-          onchange="saveFeeActual('${key}',this.value)"></td>
-      <td>${capHtml}</td>
-      <td><div style="display:flex;align-items:center;gap:6px">
-        <span class="dot ${dc}"></span>
-        <select style="font-size:12px;padding:4px 7px" onchange="saveFeeStatus('${key}',this.value);renderFees()">
-          ${['Unconfirmed','In Progress','Confirmed','Waived'].map(s=>`<option${s===status?' selected':''}>${s}</option>`).join('')}
-        </select>
-      </div></td>
-      <td><button class="btn btn-sm btn-ghost" onclick="openFeeDetail('${month}','${g.exhibitor.replace(/'/g,"\'")}','${g.format}')">Detail →</button></td>
-    </tr>`;
-  }).join('');
+  let html='';
+  if(needsAttn.length){
+    html+=`<div class="fee-zone-label">⚠ Needs attention — ${needsAttn.length}</div>`;
+    html+=`<div class="fee-card-grid">${needsAttn.map(([ex,g])=>buildCard(ex,g)).join('')}</div>`;
+  }
+  if(confList.length){
+    html+=`<div class="fee-zone-label">✓ Confirmed — ${confList.length}</div>`;
+    html+=`<div class="fee-card-grid">${confList.map(([ex,g])=>buildCard(ex,g)).join('')}</div>`;
+  }
+  if(cardsEl)cardsEl.innerHTML=html;
+}
+
+function confirmAll(month,exhibitor){
+  const groups=getFeeGroups(month).filter(g=>g.exhibitor===exhibitor);
+  groups.forEach(g=>{
+    const key=feeExhibKey(month,g.exhibitor,g.format);
+    const st=S.feeStatus[key]||'Unconfirmed';
+    if(st!=='Confirmed'&&st!=='Waived')saveFeeStatus(key,'Confirmed');
+  });
+  renderFees();
 }
 
 function openFeeDetail(month,exhibitor,format){
   document.getElementById('fees-overview-view').style.display='none';
   document.getElementById('fees-detail-view').style.display='block';
-  document.getElementById('fees-detail-title').textContent=`${exhibitor} · ${format} · ${document.getElementById('fee-month').selectedOptions[0].text}`;
+  const sel=document.getElementById('fee-month');
+  const monthLabel=sel?Array.from(sel.options||[]).find(o=>o.value===month)?.text||month:month;
+  document.getElementById('fees-detail-title').textContent=`${exhibitor} · ${format} · ${monthLabel}`;
   const tbody=document.getElementById('fees-detail-tbody');
-  // Get all site-title combos for this exhibitor+format in this month
   const[yr,mo]=month.split('-').map(Number);
   const rows=S.booking.filter(b=>{
     if(!b.confirmed)return false;
     const rd=new Date(b.releaseDate);
     return rd.getFullYear()===yr&&rd.getMonth()+1===mo&&b.exhibitor===exhibitor&&b.format===format;
   });
-  if(!rows.length){tbody.innerHTML='<tr><td colspan="4" class="empty">No site-level data found</td></tr>';return}
+  if(!rows.length){tbody.innerHTML='<tr><td colspan="4" class="empty">No site-level data</td></tr>';return;}
   tbody.innerHTML=rows.map(r=>{
     const key=feeSiteKey(month,r.exhibitor,r.site,r.format,r.title);
     const notes=S.feeNotes[key]||'';
     return`<tr>
-      <td class="fw">${r.site}</td>
-      <td>${r.title}</td>
+      <td class="fw">${r.site}</td><td>${r.title}</td>
       <td class="mono dim">${r.releaseDate}</td>
       <td><input type="text" value="${notes.replace(/"/g,'&quot;')}" placeholder="Notes…"
-          style="font-size:12px;width:200px;padding:4px 8px"
-          onchange="saveFeeNote('${key}',this.value)"></td>
+        style="font-size:12px;width:220px;padding:4px 8px" onchange="saveFeeNote('${key}',this.value)"></td>
     </tr>`;
   }).join('');
 }
@@ -902,7 +1166,7 @@ function saveFeeStatus(key,val){
     });
   }
 }
-function saveFeeNote(key,val){S.feeNotes[key]=val;localStorage.setItem('feeNotes',JSON.stringify(S.feeNotes))}
+function saveFeeNote(key,val){S.feeNotes[key]=val;localStorage.setItem('feeNotes',JSON.stringify(S.feeNotes));}
 function saveFeeActual(key,val){
   if(!S.feeActual)S.feeActual={};
   S.feeActual[key]=val;
@@ -912,14 +1176,14 @@ function saveFeeActual(key,val){
 function exportFees(){
   const month=document.getElementById('fee-month').value;
   const groups=getFeeGroups(month);
-  if(!groups.length){alert('No data to export');return}
+  if(!groups.length){alert('No data to export');return;}
   const hdr='Exhibitor\tFormat\tTitles\tExpected Fee\tActual Fee\tStatus';
   const body=groups.map(g=>{
     const key=feeExhibKey(month,g.exhibitor,g.format);
     const c=S.contracts.find(ct=>ct.format===g.format&&ct.exhibitor===g.exhibitor)||null;
     const perTitle=c?Number(c.standard_fee_amount)||0:0;
-    const expected=perTitle?`${c.currency||'USD'} ${(perTitle*g.titles.length).toLocaleString()}`:'—';
-    return[g.exhibitor,g.format,g.titles.map(t=>t.title).join('; '),expected,S.feeActual?.[key]||'',S.feeStatus[key]||'Unconfirmed'].join('\t');
+    const exp=perTitle?`${c.currency||'USD'} ${(perTitle*g.titles.length).toLocaleString()}`:'—';
+    return[g.exhibitor,g.format,g.titles.map(t=>t.title).join('; '),exp,S.feeActual?.[key]||'',S.feeStatus[key]||'Unconfirmed'].join('\t');
   }).join('\n');
   const blob=new Blob([hdr+'\n'+body],{type:'text/tab-separated-values'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`code-fees-${month}.tsv`;a.click();
