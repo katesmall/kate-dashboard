@@ -266,25 +266,46 @@ tbody tr:hover td{background:var(--lilac-l)}
 
     <!-- CODE FEES -->
     <div id="pane-codefees" class="pane">
-      <div class="sec-head">
-        <span class="sec-title">Code fee tracker</span>
-        <div class="sec-controls">
-          <select id="fee-month" onchange="renderFees()">
-            <option value="2026-03">March 2026</option>
-            <option value="2026-02">February 2026</option>
-            <option value="2026-01">January 2026</option>
-            <option value="2025-12">December 2025</option>
-            <option value="2025-11">November 2025</option>
-          </select>
-          <button class="btn btn-sm" onclick="exportFees()">Export TSV</button>
+      <!-- OVERVIEW LEVEL -->
+      <div id="fees-overview-view">
+        <div class="sec-head">
+          <span class="sec-title">Code fee tracker</span>
+          <div class="sec-controls">
+            <select id="fee-month" onchange="renderFees()">
+              <option value="2026-03">March 2026</option>
+              <option value="2026-02">February 2026</option>
+              <option value="2026-01">January 2026</option>
+              <option value="2025-12">December 2025</option>
+              <option value="2025-11">November 2025</option>
+            </select>
+            <button class="btn btn-sm" onclick="exportFees()">Export TSV</button>
+          </div>
         </div>
+        <div id="fee-alerts"></div>
+        <div class="panel"><div class="tbl-wrap"><table>
+          <thead><tr>
+            <th>Exhibitor</th><th>Format</th><th>New titles</th>
+            <th>Expected fee</th><th>Actual fee</th><th>Cap status</th>
+            <th>Status</th><th>Detail</th>
+          </tr></thead>
+          <tbody id="fees-tbody"></tbody>
+        </table></div></div>
+        <div style="font-size:11px;color:var(--g3);margin-top:6px">Status and actual fee saved in your browser. Expected fee from code_fee sheet. New releases only (first screening that month, confirmed bookings).</div>
       </div>
-      <div id="fee-alerts"></div>
-      <div class="panel"><div class="tbl-wrap"><table>
-        <thead><tr><th>Exhibitor</th><th>Site</th><th>Format</th><th>Title</th><th>Release date</th><th>Fee</th><th>Cap status</th><th>Status</th><th>Notes</th></tr></thead>
-        <tbody id="fees-tbody"></tbody>
-      </table></div></div>
-      <div style="font-size:11px;color:var(--g3);margin-top:6px">Status and notes saved in your browser. Fee amounts from code_fee sheet. Only confirmed bookings (CT022010) appear here.</div>
+
+      <!-- DETAIL LEVEL (drill-in) -->
+      <div id="fees-detail-view" style="display:none">
+        <div class="sec-head" style="margin-bottom:14px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <button class="btn btn-sm btn-ghost" onclick="closeFeeDetail()">← Back</button>
+            <span class="sec-title" id="fees-detail-title">Exhibitor detail</span>
+          </div>
+        </div>
+        <div class="panel"><div class="tbl-wrap"><table>
+          <thead><tr><th>Site</th><th>Title</th><th>Release date</th><th>Notes</th></tr></thead>
+          <tbody id="fees-detail-tbody"></tbody>
+        </table></div></div>
+      </div>
     </div>
 
     <!-- BOOKING GAPS -->
@@ -411,7 +432,7 @@ tbody tr:hover td{background:var(--lilac-l)}
 </div>
 
 <script>
-const S={booking:[],bo:[],catalogue:[],contracts:[],sheetId:localStorage.getItem('sheetId')||'',feeStatus:JSON.parse(localStorage.getItem('feeStatus')||'{}'),feeNotes:JSON.parse(localStorage.getItem('feeNotes')||'{}')};
+const S={booking:[],bo:[],catalogue:[],contracts:[],sheetId:localStorage.getItem('sheetId')||'',feeStatus:JSON.parse(localStorage.getItem('feeStatus')||'{}'),feeNotes:JSON.parse(localStorage.getItem('feeNotes')||'{}'),feeActual:JSON.parse(localStorage.getItem('feeActual')||'{}')};
 
 const EXHIBITORS=[
   {name:'Cinescape',country:'Kuwait',formats:['4DX','ScreenX'],contact:'Renice Jacobs',region:'MENA'},
@@ -547,8 +568,8 @@ function renderOverview(){
   document.getElementById('st-occ').textContent=occs.length?Math.round(occs.reduce((a,b)=>a+b,0)/occs.length)+'%':'—';
 
   const feeMonth=`${thisY}-${String(thisM+1).padStart(2,'0')}`;
-  const fRows=getFeeRows(feeMonth);
-  const pending=fRows.filter(r=>(S.feeStatus[feeKey(feeMonth,r)]||'Pending')==='Pending').length;
+  const fGroups=getFeeGroups(feeMonth);
+  const pending=fGroups.filter(g=>(S.feeStatus[feeExhibKey(feeMonth,g.exhibitor,g.format)]||'Unconfirmed')==='Unconfirmed').length;
   document.getElementById('st-fees').textContent=pending||'0';
 
   const day=today.getDate();
@@ -573,8 +594,8 @@ function renderOverview(){
     const exBO=S.bo.filter(b=>b.exhibitor===ex);
     const exOccs=exBO.map(b=>b.occupancy).filter(o=>o!=null);
     const avgOcc=exOccs.length?Math.round(exOccs.reduce((a,b)=>a+b,0)/exOccs.length):null;
-    const exFees=fRows.filter(r=>r.exhibitor===ex);
-    const exPend=exFees.filter(r=>(S.feeStatus[feeKey(feeMonth,r)]||'Pending')==='Pending').length;
+    const exFees=fGroups.filter(g=>g.exhibitor===ex);
+    const exPend=exFees.filter(g=>(S.feeStatus[feeExhibKey(feeMonth,g.exhibitor,g.format)]||'Unconfirmed')==='Unconfirmed').length;
     return{ex,country,exFmts,current,next,avgOcc,exPend};
   }).filter(Boolean);
 
@@ -716,72 +737,189 @@ function renderAnomalies(){
   }).join('');
 }
 
-function feeKey(month,row){return`${month}|${row.exhibitor}|${row.site}|${row.format}|${row.title}`}
-function getFeeRows(month){
+// ── Fee key helpers ──────────────────────────────────────────
+// Exhibitor-level key (for status + actual fee)
+function feeExhibKey(month,exhibitor,format){return`${month}|${exhibitor}|${format}`}
+// Site-level key (for notes only)
+function feeSiteKey(month,exhibitor,site,format,title){return`SITE|${month}|${exhibitor}|${site}|${format}|${title}`}
+
+// Get new titles for a month — deduplicated at exhibitor+format level
+// "new" = first release date falls in that month, confirmed booking
+function getNewTitlesForMonth(month){
   const[yr,mo]=month.split('-').map(Number);
   return S.booking.filter(b=>{
     if(!b.confirmed)return false;
     const rd=new Date(b.releaseDate);
     return rd.getFullYear()===yr&&rd.getMonth()+1===mo;
-  }).map(b=>({exhibitor:b.exhibitor,site:b.site,format:b.format,title:b.title,releaseDate:b.releaseDate}));
+  });
 }
 
-function getYearlyUsage(exhibitor,site,format,month){
+// Get unique exhibitor+format combos for a month with their titles and sites
+function getFeeGroups(month){
+  const rows=getNewTitlesForMonth(month);
+  const groups={};
+  rows.forEach(b=>{
+    const k=b.exhibitor+'|'+b.format;
+    if(!groups[k])groups[k]={exhibitor:b.exhibitor,format:b.format,titles:[],sites:[]};
+    // dedupe titles
+    if(!groups[k].titles.find(t=>t.title===b.title))
+      groups[k].titles.push({title:b.title,releaseDate:b.releaseDate});
+    // keep all site combos for drill-in
+    groups[k].sites.push({site:b.site,title:b.title,releaseDate:b.releaseDate});
+  });
+  return Object.values(groups);
+}
+
+function getYearlyUsage(exhibitor,format,month){
   const yr=month.split('-')[0];
-  return Object.keys(S.feeStatus).filter(k=>{
+  // count distinct confirmed titles at exhibitor+format level for the year
+  const keys=Object.keys(S.feeStatus).filter(k=>{
     const p=k.split('|');
-    return p[0].startsWith(yr)&&p[1]===exhibitor&&p[2]===site&&p[3]===format&&S.feeStatus[k]!=='Waived';
-  }).length;
+    // exhib-level key format: month|exhibitor|format
+    return p.length===3&&p[0].startsWith(yr)&&p[1]===exhibitor&&p[2]===format&&S.feeStatus[k]!=='Waived';
+  });
+  // count titles from booking data for this exhibitor/format/year
+  const yr2=parseInt(yr);
+  const titlesThisYear=[...new Set(S.booking.filter(b=>{
+    if(!b.confirmed)return false;
+    const rd=new Date(b.releaseDate);
+    return rd.getFullYear()===yr2&&b.exhibitor===exhibitor&&b.format===format;
+  }).map(b=>b.title))];
+  return titlesThisYear.length;
 }
 
 function renderFees(){
   const month=document.getElementById('fee-month').value;
   const tbody=document.getElementById('fees-tbody');
-  const rows=getFeeRows(month);
-  const today=new Date(),day=today.getDate();
-  const pending=rows.filter(r=>(S.feeStatus[feeKey(month,r)]||'Pending')==='Pending').length;
   const fa=document.getElementById('fee-alerts');
-  if(!S.booking.length){fa.innerHTML='';tbody.innerHTML='<tr><td colspan="9" class="empty">Load booking data to generate fee tracker</td></tr>';return}
-  if(pending>0&&day<=7)fa.innerHTML=`<div class="alert-bar warn">⚠ ${pending} fee${pending>1?'s':''} pending — confirm before end of first week</div>`;
-  else if(pending>0)fa.innerHTML=`<div class="alert-bar danger">⚠ ${pending} fee${pending>1?'s':''} overdue</div>`;
-  else fa.innerHTML=`<div class="alert-bar ok">✓ All fees confirmed for this month</div>`;
-  if(!rows.length){tbody.innerHTML='<tr><td colspan="9" class="empty">No confirmed bookings for this month</td></tr>';return}
-  tbody.innerHTML=rows.map(r=>{
-    const key=feeKey(month,r);
-    const status=S.feeStatus[key]||'Pending';
-    const notes=S.feeNotes[key]||'';
-    const c=getContract(r.exhibitor,r.site,r.format);
-    let feeAmt='—',capHtml='';
+  if(!S.booking.length){fa.innerHTML='';tbody.innerHTML='<tr><td colspan="8" class="empty">Sync booking data to generate fee tracker</td></tr>';return}
+
+  const groups=getFeeGroups(month);
+  const today=new Date(),day=today.getDate();
+
+  // Alert bar
+  const unconfirmed=groups.filter(g=>{
+    const st=S.feeStatus[feeExhibKey(month,g.exhibitor,g.format)]||'Unconfirmed';
+    return st==='Unconfirmed';
+  }).length;
+  if(unconfirmed>0&&day<=7)fa.innerHTML=`<div class="alert-bar warn">⚠ ${unconfirmed} exhibitor/format${unconfirmed>1?'s':''} unconfirmed — confirm before end of first week</div>`;
+  else if(unconfirmed>0)fa.innerHTML=`<div class="alert-bar danger">⚠ ${unconfirmed} exhibitor/format${unconfirmed>1?'s':''} unconfirmed — overdue</div>`;
+  else if(groups.length)fa.innerHTML=`<div class="alert-bar ok">✓ All fees confirmed for this month</div>`;
+  else fa.innerHTML='';
+
+  if(!groups.length){tbody.innerHTML='<tr><td colspan="8" class="empty">No confirmed new releases found for this month</td></tr>';return}
+
+  tbody.innerHTML=groups.map(g=>{
+    const key=feeExhibKey(month,g.exhibitor,g.format);
+    const status=S.feeStatus[key]||'Unconfirmed';
+    const actualFee=S.feeActual[key]||'';
+    const c=getContract(g.exhibitor,'',g.format)||
+             S.contracts.find(ct=>ct.format===g.format&&ct.exhibitor===g.exhibitor)||null;
+
+    // Expected fee calculation
+    let expectedFee='—',capHtml='';
     if(c){
-      if(c.fee_type==='flat_monthly'){feeAmt=c.flat_monthly_amount?`${c.currency||'USD'} ${Number(c.flat_monthly_amount).toLocaleString()}`:'—';capHtml='<span class="pill p-blue">Flat monthly</span>';}
-      else{
-        feeAmt=c.standard_fee_amount?`${c.currency||'USD'} ${Number(c.standard_fee_amount).toLocaleString()}`:'—';
-        if(c.cap_per_site==='TRUE'&&c.yearly_cap_amount){
-          const used=getYearlyUsage(r.exhibitor,r.site,r.format,month);
-          const cap=Number(c.yearly_cap_amount),stdFee=Number(c.standard_fee_amount)||0;
-          const maxT=stdFee?Math.round(cap/stdFee):0;
-          capHtml=used>=maxT?`<span class="flag flag-warn">Cap reached (${used}/${maxT})</span>`:`<span class="dim" style="font-size:11px">${used}/${maxT} titles</span>`;
+      if(c.fee_type==='flat_monthly'){
+        expectedFee=c.flat_monthly_amount?`${c.currency||'USD'} ${Number(c.flat_monthly_amount).toLocaleString()}`:'—';
+        capHtml='<span class="pill p-blue">Flat monthly</span>';
+      } else if(c.standard_fee_amount){
+        const perTitle=Number(c.standard_fee_amount)||0;
+        const titleCount=g.titles.length;
+        const total=perTitle*titleCount;
+        expectedFee=`${c.currency||'USD'} ${total.toLocaleString()}`;
+        // Cap check
+        if((c.cap_per_site==='TRUE'||c.cap_per_exhibitor==='TRUE')&&c.yearly_cap_amount){
+          const used=getYearlyUsage(g.exhibitor,g.format,month);
+          const cap=Number(c.yearly_cap_amount),maxT=perTitle?Math.round(cap/perTitle):0;
+          capHtml=used>=maxT?`<span class="flag flag-warn">Cap reached (${used}/${maxT})</span>`:`<span class="dim" style="font-size:11px">${used}/${maxT} yr</span>`;
         }
       }
     }
-    const dc={Pending:'d-gray',Confirmed:'d-green',Waived:'d-blue',Invoiced:'d-amber'}[status]||'d-gray';
-    const fc=r.format==='ScreenX'?'p-sx':'p-4dx';
-    return`<tr><td class="fw">${r.exhibitor}</td><td class="dim">${r.site}</td><td><span class="pill ${fc}">${r.format}</span></td><td>${r.title}</td><td class="mono dim">${r.releaseDate}</td><td class="fw">${feeAmt}</td><td>${capHtml}</td><td><div style="display:flex;align-items:center;gap:6px"><span class="dot ${dc}"></span><select style="font-size:11px;padding:3px 6px" onchange="saveFeeStatus('${key}',this.value);renderFees()">${['Pending','Confirmed','Waived','Invoiced'].map(s=>`<option${s===status?' selected':''}>${s}</option>`).join('')}</select></div></td><td><input type="text" value="${notes.replace(/"/g,'&quot;')}" placeholder="Notes…" style="font-size:11px;width:140px;padding:3px 7px" onchange="saveFeeNote('${key}',this.value)"></td></tr>`;
+
+    const fc=g.format==='ScreenX'?'p-sx':'p-4dx';
+    const dc={Unconfirmed:'d-gray','In Progress':'d-amber',Confirmed:'d-green',Waived:'d-blue'}[status]||'d-gray';
+    const titleList=g.titles.map(t=>t.title).join(', ');
+
+    return`<tr>
+      <td class="fw">${g.exhibitor}</td>
+      <td><span class="pill ${fc}">${g.format}</span></td>
+      <td style="font-size:12px;color:var(--g1)">${titleList}<br><span class="dim" style="font-size:11px">${g.titles.length} title${g.titles.length>1?'s':''}</span></td>
+      <td class="fw">${expectedFee}</td>
+      <td><input type="text" value="${actualFee.replace(/"/g,'&quot;')}" placeholder="Enter actual…"
+          style="font-size:12px;width:120px;padding:4px 8px"
+          onchange="saveFeeActual('${key}',this.value)"></td>
+      <td>${capHtml}</td>
+      <td><div style="display:flex;align-items:center;gap:6px">
+        <span class="dot ${dc}"></span>
+        <select style="font-size:12px;padding:4px 7px" onchange="saveFeeStatus('${key}',this.value);renderFees()">
+          ${['Unconfirmed','In Progress','Confirmed','Waived'].map(s=>`<option${s===status?' selected':''}>${s}</option>`).join('')}
+        </select>
+      </div></td>
+      <td><button class="btn btn-sm btn-ghost" onclick="openFeeDetail('${month}','${g.exhibitor.replace(/'/g,"\'")}','${g.format}')">Detail →</button></td>
+    </tr>`;
   }).join('');
 }
 
-function saveFeeStatus(key,val){S.feeStatus[key]=val;localStorage.setItem('feeStatus',JSON.stringify(S.feeStatus))}
+function openFeeDetail(month,exhibitor,format){
+  document.getElementById('fees-overview-view').style.display='none';
+  document.getElementById('fees-detail-view').style.display='block';
+  document.getElementById('fees-detail-title').textContent=`${exhibitor} · ${format} · ${document.getElementById('fee-month').selectedOptions[0].text}`;
+  const tbody=document.getElementById('fees-detail-tbody');
+  // Get all site-title combos for this exhibitor+format in this month
+  const[yr,mo]=month.split('-').map(Number);
+  const rows=S.booking.filter(b=>{
+    if(!b.confirmed)return false;
+    const rd=new Date(b.releaseDate);
+    return rd.getFullYear()===yr&&rd.getMonth()+1===mo&&b.exhibitor===exhibitor&&b.format===format;
+  });
+  if(!rows.length){tbody.innerHTML='<tr><td colspan="4" class="empty">No site-level data found</td></tr>';return}
+  tbody.innerHTML=rows.map(r=>{
+    const key=feeSiteKey(month,r.exhibitor,r.site,r.format,r.title);
+    const notes=S.feeNotes[key]||'';
+    return`<tr>
+      <td class="fw">${r.site}</td>
+      <td>${r.title}</td>
+      <td class="mono dim">${r.releaseDate}</td>
+      <td><input type="text" value="${notes.replace(/"/g,'&quot;')}" placeholder="Notes…"
+          style="font-size:12px;width:200px;padding:4px 8px"
+          onchange="saveFeeNote('${key}',this.value)"></td>
+    </tr>`;
+  }).join('');
+}
+
+function closeFeeDetail(){
+  document.getElementById('fees-detail-view').style.display='none';
+  document.getElementById('fees-overview-view').style.display='block';
+}
+
+function saveFeeStatus(key,val){
+  S.feeStatus[key]=val;
+  localStorage.setItem('feeStatus',JSON.stringify(S.feeStatus));
+  if(gAuthToken&&Date.now()<gTokenExpiry){
+    const month=key.split('|')[0];
+    writeFeesToSheet(month).then(ok=>{
+      if(ok){const t=document.getElementById('topbar-sync-status');if(t){t.textContent='✓ fee saved to sheet';setTimeout(()=>{if(t.textContent.includes('fee saved'))t.textContent=''},3000);}}
+    });
+  }
+}
 function saveFeeNote(key,val){S.feeNotes[key]=val;localStorage.setItem('feeNotes',JSON.stringify(S.feeNotes))}
+function saveFeeActual(key,val){
+  if(!S.feeActual)S.feeActual={};
+  S.feeActual[key]=val;
+  localStorage.setItem('feeActual',JSON.stringify(S.feeActual));
+}
 
 function exportFees(){
   const month=document.getElementById('fee-month').value;
-  const rows=getFeeRows(month);
-  if(!rows.length){alert('No data to export');return}
-  const hdr='Exhibitor\tSite\tFormat\tTitle\tRelease Date\tFee\tStatus\tNotes';
-  const body=rows.map(r=>{
-    const key=feeKey(month,r),c=getContract(r.exhibitor,r.site,r.format);
-    const fee=c?`${c.currency||'USD'} ${c.standard_fee_amount||'—'}`:'—';
-    return[r.exhibitor,r.site,r.format,r.title,r.releaseDate,fee,S.feeStatus[key]||'Pending',S.feeNotes[key]||''].join('\t');
+  const groups=getFeeGroups(month);
+  if(!groups.length){alert('No data to export');return}
+  const hdr='Exhibitor\tFormat\tTitles\tExpected Fee\tActual Fee\tStatus';
+  const body=groups.map(g=>{
+    const key=feeExhibKey(month,g.exhibitor,g.format);
+    const c=S.contracts.find(ct=>ct.format===g.format&&ct.exhibitor===g.exhibitor)||null;
+    const perTitle=c?Number(c.standard_fee_amount)||0:0;
+    const expected=perTitle?`${c.currency||'USD'} ${(perTitle*g.titles.length).toLocaleString()}`:'—';
+    return[g.exhibitor,g.format,g.titles.map(t=>t.title).join('; '),expected,S.feeActual?.[key]||'',S.feeStatus[key]||'Unconfirmed'].join('\t');
   }).join('\n');
   const blob=new Blob([hdr+'\n'+body],{type:'text/tab-separated-values'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`code-fees-${month}.tsv`;a.click();
@@ -986,20 +1124,22 @@ async function writeFeesToSheet(month) {
   }
   if (!S.sheetId) return false;
 
-  const rows = getFeeRows(month);
-  if (!rows.length) return false;
+  const groups = getFeeGroups(month);
+  if (!groups.length) return false;
 
   // Build rows to write: header + data
-  const header = ['Month','Exhibitor','Site','Format','Title','Release Date','Fee Amount','Currency','Status','Notes','Last Updated'];
-  const data = rows.map(r => {
-    const key = feeKey(month, r);
-    const c = getContract(r.exhibitor, r.site, r.format);
+  const header = ['Month','Exhibitor','Format','Titles','Expected Fee','Actual Fee','Status','Last Updated'];
+  const data = groups.map(g => {
+    const key = feeExhibKey(month, g.exhibitor, g.format);
+    const c = S.contracts.find(ct=>ct.format===g.format&&ct.exhibitor===g.exhibitor)||null;
+    const perTitle = c ? Number(c.standard_fee_amount)||0 : 0;
+    const expected = perTitle ? `${c.currency||'USD'} ${(perTitle*g.titles.length).toLocaleString()}` : '';
     return [
-      month, r.exhibitor, r.site, r.format, r.title, r.releaseDate,
-      c ? (c.standard_fee_amount || c.flat_monthly_amount || '') : '',
-      c ? (c.currency || 'USD') : 'USD',
-      S.feeStatus[key] || 'Pending',
-      S.feeNotes[key] || '',
+      month, g.exhibitor, g.format,
+      g.titles.map(t=>t.title).join('; '),
+      expected,
+      S.feeActual?.[key] || '',
+      S.feeStatus[key] || 'Unconfirmed',
       new Date().toISOString().split('T')[0]
     ];
   });
@@ -1046,21 +1186,7 @@ async function writeRange(range, values) {
   });
 }
 
-// Override saveFeeStatus to also write to sheet when auth available
-const _origSaveFeeStatus = saveFeeStatus;
-function saveFeeStatus(key, val) {
-  _origSaveFeeStatus(key, val);
-  // Extract month from key (format: "2026-03|Exhibitor|Site|Format|Title")
-  const month = key.split('|')[0];
-  if (gAuthToken && Date.now() < gTokenExpiry) {
-    writeFeesToSheet(month).then(ok => {
-      if (ok) {
-        const topStatus = document.getElementById('topbar-sync-status');
-        if (topStatus) { topStatus.textContent = '✓ fee saved to sheet'; setTimeout(() => { if(topStatus.textContent.includes('fee saved')) topStatus.textContent = ''; }, 3000); }
-      }
-    });
-  }
-}
+
 
 (function init(){
   renderOverview();renderDirectory();
