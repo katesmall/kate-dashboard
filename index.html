@@ -430,29 +430,46 @@ function parseBooking(){
   const raw=document.getElementById('t-booking').value.trim();
   if(!raw){console.warn('parseBooking: no raw data');return}
   const lines=raw.split('\n').filter(l=>l.trim());
-  console.log('parseBooking: lines=',lines.length,'first=',lines[0]?.substring(0,60));
-  // skip header row
-  const dataLines=lines[0].toLowerCase().includes('format')||lines[0].toLowerCase().includes('title')?lines.slice(1):lines;
-  console.log('parseBooking: dataLines=',dataLines.length);
-  S.booking=dataLines.filter(l=>l.trim()).map(l=>{
+  if(!lines.length)return;
+  // Always treat first line as header and map by column name
+  const hdr=lines[0].split('\t').map(h=>h.toLowerCase().replace(/[^a-z0-9_]/g,'').trim());
+  console.log('parseBooking headers:',hdr);
+  const col=name=>hdr.indexOf(name);
+  // column indices by name
+  const iFormat=col('format')>=0?col('format'):0;
+  const iCountry=col('country')>=0?col('country'):1;
+  const iTitle=col('title')>=0?col('title'):2;
+  const iExhibitor=col('exhibitor')>=0?col('exhibitor'):3;
+  const iSite=col('site')>=0?col('site'):4;
+  const iScreen=col('screen')>=0?col('screen'):5;
+  const iScreenFmt=col('screen_format')>=0?col('screen_format'):col('screenformat')>=0?col('screenformat'):6;
+  const iConfirmed=col('confirmed')>=0?col('confirmed'):7;
+  const iPreview=col('preview_date')>=0?col('preview_date'):col('previewdate')>=0?col('previewdate'):8;
+  const iStart=col('start_date')>=0?col('start_date'):col('startdate')>=0?col('startdate'):9;
+  const iEnteredBy=col('entered_by')>=0?col('entered_by'):col('enteredby')>=0?col('enteredby'):12;
+  const iDateEntered=col('date_entered')>=0?col('date_entered'):col('dateentered')>=0?col('dateentered'):13;
+  console.log('parseBooking col map: exhibitor='+iExhibitor+' confirmed='+iConfirmed+' start='+iStart);
+  S.booking=lines.slice(1).filter(l=>l.trim()).map(l=>{
     const c=l.split('\t');
-    const so=(c[6]||'').trim(),ct=(c[7]||'').trim();
+    const so=(c[iScreenFmt]||'').trim();
+    const ct=(c[iConfirmed]||'').trim();
     return{
-      formatCode:(c[0]||'').trim(),
-      country:(c[1]||'').trim(),
-      title:(c[2]||'').trim(),
-      exhibitor:normEx((c[3]||'').trim()),
-      site:(c[4]||'').trim(),
-      screenId:(c[5]||'').trim(),
+      formatCode:(c[iFormat]||'').trim(),
+      country:(c[iCountry]||'').trim(),
+      title:(c[iTitle]||'').trim(),
+      exhibitor:normEx((c[iExhibitor]||'').trim()),
+      site:(c[iSite]||'').trim(),
+      screenId:(c[iScreen]||'').trim(),
       so,ct,
       format:fmtFromSO(so),
       confirmed:ct===CT_CONFIRMED,
-      previewDate:(c[8]||'').trim(),
-      releaseDate:(c[9]||'').trim(),  // start_date is the release date
-      enteredBy:(c[12]||'').trim(),
-      dateEntered:(c[13]||'').trim()
+      previewDate:(c[iPreview]||'').trim(),
+      releaseDate:(c[iStart]||'').trim(),
+      enteredBy:(c[iEnteredBy]||'').trim(),
+      dateEntered:(c[iDateEntered]||'').trim()
     };
   });
+  console.log('parseBooking: loaded',S.booking.length,'rows, sample exhibitor:',S.booking[0]?.exhibitor);
   renderOverview();updateDataSummary();
 }
 
