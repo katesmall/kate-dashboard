@@ -171,8 +171,8 @@ tbody tr:hover td{background:var(--lilac-l)}
 @media(max-width:900px){.sidebar{display:none}.stat-row{grid-template-columns:1fr 1fr}.two-col,.three-col{grid-template-columns:1fr}}
 
 /* ── Fee cards ── */
-.fee-month-nav{display:flex;gap:6px;margin-bottom:22px;width:100%}
-.fee-month-btn{flex:1;min-width:0;padding:14px 2px;border-radius:8px;font-size:14px;font-weight:600;border:1.5px solid var(--g4);background:var(--white);color:var(--g2);cursor:pointer;transition:all .15s;font-family:var(--sans);text-align:center;line-height:1.2}
+.fee-month-nav{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;margin-bottom:22px;width:100%}
+.fee-month-btn{width:100%;padding:14px 0;border-radius:8px;font-size:14px;font-weight:600;border:1.5px solid var(--g4);background:var(--white);color:var(--g2);cursor:pointer;transition:all .15s;font-family:var(--sans);text-align:center;line-height:1.2}
 .fee-month-btn:hover{border-color:var(--lilac-m);color:var(--lilac-d);background:var(--lilac-l)}
 .fee-month-btn.active{font-weight:800;font-size:15px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
 .fee-month-btn.m-future{background:var(--g5);color:var(--g3);border-color:var(--g4)}
@@ -594,9 +594,25 @@ function nav(id,el){
 }
 
 function normEx(e){
-  const n=(e||'').toLowerCase();
-  if(n.includes('birch')||n.includes('greater union')||n.includes('event cinema'))return'Event';
-  return e;
+  const s=(e||'').trim();
+  const lower=s.toLowerCase();
+  // Canonical names from code_fee sheet
+  if(lower.includes('birch')||lower.includes('greater union'))return'Event Cinemas';
+  if(lower==='event'||lower==='event cinema'||lower==='event cinemas')return'Event Cinemas';
+  if(lower==='pathe'||lower==='pathé'||lower==='pathe cinemas'||lower==='pathé cinemas')return'Pathé';
+  if(lower==='nu metro'||lower==='nu metro cinemas'||lower==='numetro')return'Nu Metro';
+  if(lower==='galaxy cinemas'||lower==='galaxy')return'Galaxy Cinemas';
+  if(lower==='hoyts'||lower==='hoyts cinema'||lower==='hoyts cinemas')return'Hoyts Cinemas';
+  if(lower==='muvi'||lower==='muvi cinema'||lower==='muvi cinemas')return'Muvi Cinemas';
+  if(lower==='novo'||lower==='novo cinema'||lower==='novo cinemas')return'Novo Cinemas';
+  if(lower==='vox'||lower==='vox cinema'||lower==='vox cinemas')return'Vox Cinemas';
+  if(lower==='village'||lower==='village cinema'||lower==='village cinemas')return'Village Cinemas';
+  if(lower==='scene'||lower==='scene cinema'||lower==='scene cinemas')return'Scene Cinemas';
+  if(lower==='reel'||lower==='reel cinema'||lower==='reel cinemas')return'Reel Cinemas';
+  if(lower==='empire'||lower==='empire cinema'||lower==='empire cinemas')return'Empire Cinemas';
+  if(lower==='cinemax')return'Cinemax';
+  if(lower==='kncc')return'KNCC';
+  return s;
 }
 function fmtFromSO(so){return SO_FMT[so]||''}
 function isAlt(ft){const f=(ft||'').toLowerCase();return f.includes('alternative')||f.includes('event')||f.includes('concert')}
@@ -672,7 +688,12 @@ function parseCatalogue(rows){
 function parseContracts(rows){
   if(!rows.length)return;
   const hdr=rows[0].map(h=>h.toLowerCase().trim());
-  S.contracts=rows.slice(1).map(r=>{const o={};hdr.forEach((h,i)=>o[h]=(r[i]||'').trim());return o});
+  S.contracts=rows.slice(1).map(r=>{
+    const o={};
+    hdr.forEach((h,i)=>o[h]=(r[i]||'').trim());
+    if(o.exhibitor)o.exhibitor=normEx(o.exhibitor);
+    return o;
+  });
 }
 function getContract(exhibitor,site,format){
   // Try exhibitor+format exact match first (most reliable)
