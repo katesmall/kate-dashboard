@@ -160,8 +160,7 @@ tbody tr:hover td{background:var(--lilac-l)}
 .fee-btn-confirm:hover:not(:disabled){background:var(--lilac);color:#fff}
 .fee-btn-confirm:disabled{border-color:var(--g4);color:var(--g3);cursor:not-allowed}
 .fee-btn-confirm.done{border-color:var(--green);color:var(--green);cursor:default}
-.fee-btn-edit-confirm{width:100%;padding:7px 0;font-size:11px;font-weight:600;border:1px solid var(--g4);border-radius:7px;background:var(--white);color:var(--g2);cursor:pointer;font-family:var(--sans);text-align:center;margin-top:4px}
-.fee-btn-edit-confirm:hover{border-color:var(--amber);color:var(--amber)}
+
 .fee-btn-confirm.done:hover{background:var(--white);color:var(--green)}
 .fee-progress-wrap{display:flex;gap:24px;padding:14px 18px;background:var(--g5);border-radius:8px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
 .fee-progress-fmt{display:flex;align-items:center;gap:10px;font-size:13px}
@@ -590,7 +589,12 @@ function parseBooking(){
   });
   S.booking=[];
   rawRows.forEach(r=>{
-    if(r.format==='Ultra'){S.booking.push({...r,format:'4DX',isUltra:true});S.booking.push({...r,format:'ScreenX',isUltra:true});}
+    if(r.format==='Ultra'&&r.so==='SO201300'){
+      S.booking.push({...r,format:'4DX',isUltra:true});
+      S.booking.push({...r,format:'ScreenX',isUltra:true});
+    } else if(r.format==='Ultra'){
+      S.booking.push({...r,format:'ScreenX',isUltra:true});
+    }
     else S.booking.push(r);
   });
   console.log('parseBooking: loaded',S.booking.length,'rows, sample exhibitor:',S.booking[0]?.exhibitor);
@@ -871,8 +875,10 @@ function getSiteAmounts(month,exhibitor,country,format){
   // dedupe to unique site+title combos
   const seen=new Set();
   return rows.filter(r=>{
+    // Try exact site match first, then exhibitor-level match as fallback
     const siteRow=S.contracts.find(c=>c.exhibitor===r.exhibitor&&c.site===r.site);
-    const rowCountry=siteRow?.country||'—';
+    const exhibRow=S.contracts.find(c=>c.exhibitor===r.exhibitor);
+    const rowCountry=siteRow?.country||exhibRow?.country||r.country||'—';
     if(country&&rowCountry!==country)return false;
     const k=r.site+'|'+r.title;
     if(seen.has(k))return false;
@@ -1181,8 +1187,9 @@ function renderFees(){
   const needsAttn=[],confList=[];
   Object.entries(byExhib).forEach(([exKey,fg])=>{
     const [ex,country]=exKey.split('|');
-    const allDone=fg.every(g=>{const st=S.feeStatus[feeExhibKey(month,ex,g.format,country)];return st==='Confirmed'||st==='Waived';});
-    if(allDone)confList.push([exKey,fg,ex,country]);
+    const cardKey=`CARD|${month}|${ex}|${country}`;
+    const cardDone=S.feeStatus[cardKey]==='Confirmed';
+    if(cardDone)confList.push([exKey,fg,ex,country]);
     else needsAttn.push([exKey,fg,ex,country]);
   });
 
@@ -1238,8 +1245,13 @@ function renderFees(){
     const canConfirm=allFmtConfirmed&&!cardConfirmed;
     let confirmBtn;
     if(cardConfirmed){
-      confirmBtn=`<button class="fee-btn-confirm done" disabled>✓ Confirmed</button>
-        <button class="fee-btn-edit-confirm" onclick="resetCardConfirm('${month}','${safeEx}','${safeCtry}')">Edit &amp; re-confirm</button>`;
+      confirmBtn=`<div style="display:flex;align-items:center;gap:8px">
+        <button class="fee-btn-confirm done" style="flex:1" disabled>✓ Confirmed</button>
+        <button onclick="resetCardConfirm('${month}','${safeEx}','${safeCtry}')" title="Edit &amp; re-confirm"
+          style="padding:9px 12px;border:1.5px solid var(--g4);border-radius:7px;background:var(--white);cursor:pointer;font-size:14px;color:var(--g2);line-height:1;flex-shrink:0;transition:all .12s"
+          onmouseover="this.style.borderColor='var(--amber)';this.style.color='var(--amber)'"
+          onmouseout="this.style.borderColor='var(--g4)';this.style.color='var(--g2)'">✏</button>
+      </div>`;
     } else if(!isAuthed){
       confirmBtn=`<button class="fee-btn-confirm" disabled title="Sign in via Settings to enable sheet sync" style="opacity:.4;cursor:not-allowed">Confirm (sign in first)</button>`;
     } else if(canConfirm){
@@ -1372,9 +1384,7 @@ function renderDetailPage(month,exhibitor,country){
       <td style="padding:9px 14px">
         ${fmtConfirmed
           ?`<span style="color:var(--green);font-size:12px;font-weight:700">✓ Locked</span>`
-          :allSitesConfirmed
-            ?`<button class="fee-btn-confirm" style="padding:5px 14px;font-size:12px;width:auto" onclick="confirmFormat('${month}','${safeEx2}','${safeCtry2}','${fmt}')">Confirm ${fmt}</button>`
-            :`<span style="color:var(--g3);font-size:11px">Confirm all sites first</span>`
+          :`<button class="fee-btn-confirm" style="padding:5px 14px;font-size:12px;width:auto" onclick="confirmFormat('${month}','${safeEx2}','${safeCtry2}','${fmt}')">Confirm ${fmt}</button>`
         }
       </td>
     </tr>`;
