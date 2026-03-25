@@ -330,6 +330,7 @@ tbody tr:hover td{background:var(--lilac-l)}
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
           <button class="btn btn-sm btn-ghost" onclick="closeFeeDetail()">← Back</button>
           <span class="sec-title" id="fees-detail-title"></span>
+          <div id="fees-detail-caps"></div>
         </div>
         <div class="panel"><div class="tbl-wrap"><table>
           <thead><tr><th>Site</th><th>Title</th><th>Release</th><th>Amount</th><th></th></tr></thead>
@@ -1311,6 +1312,37 @@ function openFeeDetail(month,exhibitor,country){
 function renderDetailPage(month,exhibitor,country){
   const tbody=document.getElementById('fees-detail-tbody');
   const tfoot=document.getElementById('fees-detail-tfoot');
+
+  // ── Cap summary strip ──
+  const capRows=S.contracts.filter(c=>c.exhibitor===exhibitor&&(
+    (c.cap_per_site&&c.cap_per_site.toUpperCase()!=='FALSE'&&c.cap_per_site!=='')||
+    (c.cap_per_exhibitor&&c.cap_per_exhibitor.toUpperCase()!=='FALSE'&&c.cap_per_exhibitor!=='')||
+    (c.monthly_cap_amount&&c.monthly_cap_amount!=='')||
+    (c.yearly_cap_amount&&c.yearly_cap_amount!=='')
+  ));
+  const capSummaryEl=document.getElementById('fees-detail-caps');
+  if(capSummaryEl){
+    if(capRows.length){
+      const seen=new Set();
+      const lines=capRows.map(c=>{
+        const parts=[];
+        if(c.monthly_cap_amount)parts.push(`monthly cap ${c.currency||'USD'} ${Number(c.monthly_cap_amount).toLocaleString()}`);
+        if(c.yearly_cap_amount)parts.push(`yearly cap ${c.currency||'USD'} ${Number(c.yearly_cap_amount).toLocaleString()}`);
+        if(c.cap_per_site&&c.cap_per_site.toUpperCase()!=='FALSE')parts.push(`per-site cap applies`);
+        if(!parts.length)return null;
+        const key=c.site+'|'+parts.join();
+        if(seen.has(key))return null;
+        seen.add(key);
+        return`<span style="background:var(--amber-l);color:var(--amber);border-radius:6px;padding:3px 10px;font-size:12px;font-weight:600">${c.site} — ${parts.join(', ')}</span>`;
+      }).filter(Boolean);
+      capSummaryEl.innerHTML=lines.length
+        ?`<div style="display:flex;gap:8px;flex-wrap:wrap;padding:10px 0 14px;border-bottom:1px solid var(--g4);margin-bottom:4px">${lines.join('')}</div>`
+        :'';
+    } else {
+      capSummaryEl.innerHTML='';
+    }
+  }
+
   // Get all formats for this exhibitor
   const exInfo=EXHIBITORS.find(e=>e.name===exhibitor)||{};
   const formats=exInfo.formats||['4DX','ScreenX'];
@@ -1350,14 +1382,19 @@ function renderDetailPage(month,exhibitor,country){
           <td style="padding:9px 14px"><button class="btn btn-sm btn-ghost" onclick="unconfirmSite('${siteKey}','${month}','${exhibitor}','${country||''}','${fmt}')">Edit</button></td>
         </tr>`;
       } else {
-        allHtml+=`<tr>
+        const waiverKey=siteKey+'_waiver';
+        const currentWaiver=S.feeNotes[waiverKey]||'';
+        const isCap=currentWaiver==='cap';
+        const isEvent=currentWaiver==='event';
+        const safeKey=siteKey.replace(/[|]/g,'-');
+        allHtml+=`<tr id="row-${safeKey}">
           <td class="fw" style="padding:9px 14px">${r.site}</td>
           <td style="padding:9px 14px">${r.title}</td>
           <td class="mono dim" style="padding:9px 14px">${r.releaseDate}</td>
           <td style="padding:9px 14px">
-            <div style="display:flex;align-items:center">
-              <input id="amt-${siteKey.replace(/[|]/g,'-')}" type="text" value="${amt}" placeholder="${suggestion}"
-                style="font-size:13px;border:1px solid var(--g4);border-radius:6px 0 0 6px;padding:5px 9px;width:100px;font-family:var(--sans);outline:none;text-align:right;border-right:none"
+            <div style="display:flex;align-items:center;gap:6px">
+              <input id="amt-${safeKey}" type="text" value="${amt}" placeholder="${suggestion}"
+                style="font-size:13px;border:1px solid var(--g4);border-radius:6px 0 0 6px;padding:5px 9px;width:90px;font-family:var(--sans);outline:none;text-align:right;border-right:none"
                 onfocus="this.style.borderColor='var(--lilac-m)'"
                 onblur="this.style.borderColor='var(--g4)'"
                 onkeydown="if(event.key==='Enter')confirmSite('${siteKey}','${month}','${exhibitor}','${country||''}','${fmt}')">
@@ -1365,6 +1402,16 @@ function renderDetailPage(month,exhibitor,country){
                 onmouseover="this.style.background='var(--green-l)';this.style.color='var(--green)'"
                 onmouseout="this.style.background='var(--g5)';this.style.color='var(--g2)'"
                 onclick="confirmSite('${siteKey}','${month}','${exhibitor}','${country||''}','${fmt}')">✓</button>
+            </div>
+            <div style="display:flex;gap:12px;margin-top:6px">
+              <label style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--g2);cursor:pointer;user-select:none">
+                <input type="checkbox" ${isCap?'checked':''} onchange="applyWaiver('${safeKey}','${siteKey}','cap',this.checked,'${month}','${exhibitor}','${country||''}','${fmt}')">
+                Cap waiver
+              </label>
+              <label style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--g2);cursor:pointer;user-select:none">
+                <input type="checkbox" ${isEvent?'checked':''} onchange="applyWaiver('${safeKey}','${siteKey}','event',this.checked,'${month}','${exhibitor}','${country||''}','${fmt}')">
+                Event screening
+              </label>
             </div>
           </td>
           <td style="padding:9px 14px;font-size:11px;color:var(--g3)">${suggestion?'ref: '+cur+' '+suggestion:''}</td>
@@ -1394,6 +1441,28 @@ function renderDetailPage(month,exhibitor,country){
   if(tfoot)tfoot.innerHTML='';
 }
 
+function applyWaiver(safeKey,siteKey,type,checked,month,exhibitor,country,format){
+  const waiverKey=siteKey+'_waiver';
+  const amtInput=document.getElementById('amt-'+safeKey);
+  if(checked){
+    // Uncheck the other box
+    const otherType=type==='cap'?'event':'cap';
+    // Find sibling checkbox — both are in same row
+    const row=document.getElementById('row-'+safeKey);
+    if(row){
+      row.querySelectorAll('input[type=checkbox]').forEach(cb=>{
+        if(cb!==event.target)cb.checked=false;
+      });
+    }
+    S.feeNotes[waiverKey]=type;
+    if(amtInput){amtInput.value='0';amtInput.style.color='var(--g3)';}
+  } else {
+    delete S.feeNotes[waiverKey];
+    if(amtInput){amtInput.value='';amtInput.style.color='';}
+  }
+  localStorage.setItem('feeNotes',JSON.stringify(S.feeNotes));
+}
+
 function confirmFormat(month,exhibitor,country,format){
   const key=feeExhibKey(month,exhibitor,format,country);
   S.feeStatus[key]='Confirmed';
@@ -1404,10 +1473,11 @@ function confirmFormat(month,exhibitor,country,format){
 
 
 function confirmSite(siteKey,month,exhibitor,country,format){
-  const inpId='amt-'+siteKey.replace(/[|]/g,'-');
-  const inp=document.getElementById(inpId);
+  const safeKey=siteKey.replace(/[|]/g,'-');
+  const inp=document.getElementById('amt-'+safeKey);
   const val=inp?inp.value.trim():'';
   S.feeNotes[siteKey+'_amount']=val;
+  // waiver type already saved by applyWaiver if applicable
   localStorage.setItem('feeNotes',JSON.stringify(S.feeNotes));
   S.feeStatus[siteKey]='Confirmed';
   localStorage.setItem('feeStatus',JSON.stringify(S.feeStatus));
@@ -1690,8 +1760,8 @@ async function writeFeesToSheet(month,filterExhibitor,filterCountry) {
   if (!S.sheetId) return false;
 
   const TAB = 'fee_confirmations';
-  const HEADER = ['month','exhibitor','country','site','format','title','release_date','amount','status','last_updated'];
-  const COLS = 'A:J';
+  const HEADER = ['month','exhibitor','country','site','format','title','release_date','amount','status','waiver_cap','waiver_event','last_updated'];
+  const COLS = 'A:L';
 
   // Build site-title level rows
   let groups = getFeeGroups(month);
@@ -1708,6 +1778,8 @@ async function writeFeesToSheet(month,filterExhibitor,filterCountry) {
         month, g.exhibitor, g.country||'—', r.site, g.format, r.title, r.releaseDate,
         S.feeNotes[siteKey+'_amount']||'',
         S.feeStatus[siteKey]==='Confirmed'?'Confirmed':'Pending',
+        S.feeNotes[siteKey+'_waiver']==='cap'?'TRUE':'',
+        S.feeNotes[siteKey+'_waiver']==='event'?'TRUE':'',
         new Date().toISOString().split('T')[0]
       ];
     });
@@ -1744,6 +1816,7 @@ async function writeFeesToSheet(month,filterExhibitor,filterCountry) {
     const hdr = existingRows[0];
     const iM=hdr.indexOf('month'), iE=hdr.indexOf('exhibitor'), iC=hdr.indexOf('country'),
           iSi=hdr.indexOf('site'), iF=hdr.indexOf('format'), iT=hdr.indexOf('title');
+    // waiver_cap=col9, waiver_event=col10 — used for matching, not needed for key
 
     const rowMap = {};
     existingRows.slice(1).forEach((row,i) => {
@@ -1768,7 +1841,7 @@ async function writeFeesToSheet(month,filterExhibitor,filterCountry) {
     }
     if(appends.length){
       await fetch(
-        `https://sheets.googleapis.com/v4/spreadsheets/${S.sheetId}/values/${encodeURIComponent(TAB+'!A:J')}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
+        `https://sheets.googleapis.com/v4/spreadsheets/${S.sheetId}/values/${encodeURIComponent(TAB+'!A:L')}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
         { method:'POST', headers:authHdr, body:JSON.stringify({ values:appends }) }
       );
     }
