@@ -105,19 +105,19 @@ tbody tr:hover td{background:var(--lilac-l)}
 .tl-outer::-webkit-scrollbar-thumb{background:#bbb;border-radius:4px}
 .tl-outer::-webkit-scrollbar-thumb:hover{background:#999}
 /* Two-row header: month row + week row */
-.tl-head{position:sticky;top:0;z-index:10;background:var(--white)}
+.tl-head{position:sticky;top:0;z-index:30;background:var(--white)}
 .tl-month-row{display:flex;border-bottom:1px solid #ddd}
-.tl-week-row{display:flex;border-bottom:2px solid #222}
-.tl-label-spacer{flex-shrink:0;border-right:2px solid #222}
+.tl-week-row{display:flex;border-bottom:1.5px solid #bbb}
+.tl-label-spacer{flex-shrink:0;border-right:1.5px solid #bbb}
 .tl-month-cell{flex-shrink:0;font-size:13px;font-weight:700;color:var(--black);padding:8px 12px;border-right:1px solid #ddd;letter-spacing:.03em;text-transform:uppercase;border-bottom:none}
 .tl-week-cell{flex-shrink:0;font-size:11px;font-weight:600;color:var(--g2);padding:5px 6px;border-right:1px solid #ebebeb;letter-spacing:.02em;text-align:left}
 .tl-week-cell.wk-major{border-right-color:#ddd}
-.tl-exhib-group{border-bottom:2px solid #222}
+.tl-exhib-group{border-bottom:1.5px solid #bbb}
 .tl-exhib-group:last-child{border-bottom:none}
 .tl-lane-group{border-bottom:1px solid #ddd}
 .tl-lane{display:flex;border-bottom:1px solid #f0f0f0}
 .tl-lane:last-child{border-bottom:none}
-.tl-label{border-right:2px solid #222;background:var(--white);position:sticky;left:0;z-index:2;flex-shrink:0;display:flex;align-items:flex-start;padding:14px 16px}
+.tl-label{border-right:1.5px solid #bbb;background:var(--white);position:sticky;left:0;z-index:20;flex-shrink:0;display:flex;align-items:flex-start;padding:14px 16px}
 .tl-label.label-main{align-items:center}
 .tl-label-inner{display:flex;flex-direction:column}
 .tl-name{font-weight:700;font-size:16px;color:var(--black);line-height:1.2}
@@ -126,8 +126,8 @@ tbody tr:hover td{background:var(--lilac-l)}
 .tl-fmt-badge.fmt-4dx{background:#ede9fa;color:#5e52a8}
 .tl-fmt-badge.fmt-sx{background:#e0f2ea;color:#1a6b50}
 .tl-track{position:relative;flex:1;flex-shrink:0}
-.tl-today-line{position:absolute;top:0;bottom:0;width:2.5px;background:#8878d0;z-index:4;pointer-events:none}
-.tl-week-line{position:absolute;top:0;bottom:0;width:1px;background:#ebebeb;pointer-events:none}
+.tl-today-line{position:absolute;top:0;bottom:0;width:2.5px;background:#8878d0;z-index:6;pointer-events:none}
+.tl-week-line{position:absolute;top:0;bottom:0;width:1px;background:#e0e0e0;pointer-events:none;z-index:0}
 .tl-week-line.wk-major{background:#ddd;width:1px}
 .tl-block{position:absolute;display:flex;align-items:center;padding:0 10px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;font-weight:700;border-radius:2px;transition:filter .12s;box-sizing:border-box}
 .tl-block:hover{filter:brightness(.85);z-index:10}
@@ -822,7 +822,7 @@ function renderTimeline(){
   const start=new Date(today.getFullYear(),today.getMonth()-1,1);
   const end=new Date(today.getFullYear(),today.getMonth()+7,1);
 
-  const PX=14;
+  const PX=48;
   const BLOCK_DAYS=14;
   const BLOCK_W=BLOCK_DAYS*PX;
   const LANE_H=62;
@@ -944,41 +944,96 @@ function renderTimeline(){
 
     const fmtSections=fmts.map((fmt,fi)=>{
       const books=[...new Map(
-        exBooks.filter(b=>b.format===fmt).map(b=>[b.title,b])
-      ).values()];
-      const{result,laneCount}=assignLanes(books);
-      const sH=laneCount*LANE_H;
-      const isSX=fmt==='ScreenX';
+        exBooks.filter(b=>b.format===fmt&&!b.isUltra).map(b=>[b.title,b])
+      ).values()].sort((a,b)=>new Date(a.releaseDate)-new Date(b.releaseDate));
 
-      const blocks=result.map(b=>{
-        const rd=new Date(b.releaseDate);if(isNaN(rd))return'';
-        const off=Math.round((rd-start)/86400000*PX);
-        if(off>=totalW||off+BLOCK_W<=0)return'';
-        const clampedOff=Math.max(0,off);
-        const clampedW=Math.min(BLOCK_W-(clampedOff-off),totalW-clampedOff);
-        if(clampedW<=2)return'';
-        const top=b.lane*LANE_H+BLOCK_TOP;
-        const missing=getMissingSites(ex,fmt,b.title);
-        const safeTitle=b.title.replace(/'/g,"\'").replace(/"/g,'&quot;');
-        const safeMissing=missing.join('||').replace(/'/g,"\'");
-        const prevOff=b.previewDate?Math.round((new Date(b.previewDate)-start)/86400000*PX):-1;
-        const prevHtml=(prevOff>=0&&prevOff<totalW)
-          ?`<div class="tl-preview-marker" style="left:${prevOff}px;top:${top+6}px;height:${BLOCK_H-12}px"></div>`:'';
-        return`${prevHtml}<div class="tl-block ${isSX?'bsx':'b4dx'}"
-          style="left:${clampedOff+1}px;width:${clampedW-2}px;top:${top}px;height:${BLOCK_H}px"
-          onmouseenter="showTLTooltip(event,'${safeTitle}','${fmt}','${b.releaseDate}','${safeMissing}')"
-          onmouseleave="hideTLTooltip()"><span>${b.title}</span></div>`;
+      const isSX=fmt==='ScreenX';
+      const solidCol=isSX?'#2d8a65':'#6c5fc7';
+      const fadeCol=isSX?'rgba(45,138,101,0.28)':'rgba(108,95,199,0.28)';
+      const greyCol='#d0d0d0';
+
+      // Layout
+      const BAR_H=24;           // thick bar
+      const TITLE_H=22;         // height per title bullet
+      const MAX_TITLES=5;
+      const TITLE_AREA=TITLE_H*MAX_TITLES;
+      const sH=BAR_H+TITLE_AREA+12; // total row height
+      const TITLE_TOP=BAR_H+6;  // where titles start below bar
+
+      // ── Build the continuous bar as colour segments ───────────────
+      // For each week position determine colour based on releases
+      // 1. Collect release offsets
+      const releases=books.map(b=>({
+        title:b.title,
+        off:Math.round((new Date(b.releaseDate)-start)/86400000*PX)
+      })).filter(r=>!isNaN(r.off));
+
+      // 2. Build segments left to right
+      // Start grey, paint solid for 2 weeks at each release,
+      // then faded for 2 weeks after, back to grey
+      // Collect all breakpoints
+      const events=[];
+      releases.forEach(r=>{
+        events.push({off:r.off,         type:'solid'});
+        events.push({off:r.off+BLOCK_W, type:'fade'});
+        events.push({off:r.off+BLOCK_W*2,type:'grey'});
+      });
+      events.sort((a,b)=>a.off-b.off);
+
+      // Walk timeline building segments
+      const barSegs=[];
+      let curCol=greyCol;
+      let cur=0;
+      // Merge events at same position — solid beats fade beats grey
+      const priority={solid:3,fade:2,grey:1};
+      const eventMap={};
+      events.forEach(e=>{
+        const k=e.off;
+        if(!eventMap[k]||priority[e.type]>priority[eventMap[k]])eventMap[k]=e.type;
+      });
+      const sortedEvents=Object.entries(eventMap)
+        .map(([off,type])=>({off:parseInt(off),type}))
+        .sort((a,b)=>a.off-b.off);
+
+      sortedEvents.forEach(ev=>{
+        const evOff=Math.max(0,Math.min(totalW,ev.off));
+        if(evOff>cur){
+          barSegs.push({s:cur,e:evOff,col:curCol});
+        }
+        curCol=ev.type==='solid'?solidCol:ev.type==='fade'?fadeCol:greyCol;
+        cur=evOff;
+      });
+      if(cur<totalW)barSegs.push({s:cur,e:totalW,col:curCol});
+
+      const barHtml=barSegs.map(seg=>{
+        const w=seg.e-seg.s;if(w<=0)return'';
+        return`<div style="position:absolute;left:${seg.s}px;top:0;width:${w}px;height:${BAR_H}px;background:${seg.col}"></div>`;
       }).join('');
 
-      const isFirstFmt=fi===0;
-      const labelContent=isFirstFmt
+      // ── Title bullets — positioned at release x, stacked vertically ─
+      // Group titles by release week (same x-offset) then list them
+      const byOff={};
+      releases.forEach(r=>{
+        const clampedOff=Math.max(0,Math.min(totalW-2,r.off));
+        if(!byOff[clampedOff])byOff[clampedOff]=[];
+        if(byOff[clampedOff].length<MAX_TITLES)byOff[clampedOff].push(r.title);
+      });
+      const titlesHtml=Object.entries(byOff).map(([off,titles])=>{
+        const bulletHtml=titles.map((t,i)=>
+          `<div style="position:absolute;top:${i*TITLE_H}px;left:0;white-space:nowrap;font-size:13px;color:#111;line-height:${TITLE_H}px">• ${t}</div>`
+        ).join('');
+        return`<div style="position:absolute;left:${parseInt(off)+4}px;top:${TITLE_TOP}px;min-width:200px">${bulletHtml}</div>`;
+      }).join('');
+
+      // ── Label ──────────────────────────────────────────────────────
+      const labelContent=fi===0
         ?`<div class="tl-label-inner"><div class="tl-name">${ex}</div><div class="tl-sub">${country}</div></div>`
         :`<div class="tl-label-inner"></div>`;
 
       return`<div class="tl-lane-group">
         <div class="tl-lane" style="height:${sH}px">
           <div class="tl-label" style="width:${LABEL_W}px;min-width:${LABEL_W}px;height:${sH}px">${labelContent}</div>
-          <div class="tl-track" style="width:${totalW}px;height:${sH}px">${gridHtml}${blocks}</div>
+          <div class="tl-track" style="position:relative;width:${totalW}px;height:${sH}px;background:#fff;overflow:visible">${gridHtml}${barHtml}${titlesHtml}</div>
         </div>
       </div>`;
     }).join('');
@@ -987,6 +1042,52 @@ function renderTimeline(){
   }).join('');
 
   // Everything inside one scrollable container so header + rows scroll together
+  // ── Lineup header row ─────────────────────────────────────────────
+  // All confirmed titles in the current format, positioned at release week
+  // Sourced from booking data (confirmed) — unique titles
+  const lineupTitles=[...new Map(
+    S.booking.filter(b=>b.confirmed&&(fmtF==='all'||b.format===fmtF))
+      .map(b=>[b.title,{title:b.title,format:b.format,releaseDate:b.releaseDate}])
+  ).values()].sort((a,b)=>new Date(a.releaseDate)-new Date(b.releaseDate));
+
+  // Group by release week offset
+  const lineupByOff={};
+  lineupTitles.forEach(t=>{
+    const off=Math.round((new Date(t.releaseDate)-start)/86400000*PX);
+    const clamped=Math.max(0,Math.min(totalW-2,off));
+    if(!lineupByOff[clamped])lineupByOff[clamped]=[];
+    if(lineupByOff[clamped].length<5)lineupByOff[clamped].push(t);
+  });
+
+  const PILL_H=22;
+  const PILL_PAD=6;
+  const maxPillsInAnyWeek=Math.max(1,...Object.values(lineupByOff).map(a=>a.length));
+  const lineupRowH=maxPillsInAnyWeek*PILL_H+PILL_PAD*2;
+
+  const lineupPillsHtml=Object.entries(lineupByOff).map(([off,titles])=>{
+    const pillStack=titles.map((t,i)=>{
+      const isSX=t.format==='ScreenX';
+      const bg=isSX?'#e0f2ea':'#ede9fa';
+      const col=isSX?'#1a6b50':'#5e52a8';
+      return`<div style="position:absolute;top:${PILL_PAD+i*PILL_H}px;left:0;
+        background:${bg};color:${col};border-radius:4px;padding:3px 9px;
+        font-size:12px;font-weight:700;white-space:nowrap;line-height:16px">${t.title}</div>`;
+    }).join('');
+    return`<div style="position:absolute;left:${parseInt(off)}px;top:0;min-width:200px">${pillStack}</div>`;
+  }).join('');
+
+  const lineupRowHtml=`
+    <div style="display:flex;border-bottom:2px solid #bbb">
+      <div style="width:${LABEL_W}px;min-width:${LABEL_W}px;flex-shrink:0;border-right:1.5px solid #bbb;
+        background:#fff;position:sticky;left:0;z-index:20;padding:${PILL_PAD}px 16px;
+        display:flex;align-items:flex-start">
+        <span style="font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#999">Lineup</span>
+      </div>
+      <div style="position:relative;width:${totalW}px;height:${lineupRowH}px;flex-shrink:0;overflow:visible">
+        ${gridHtml}${lineupPillsHtml}
+      </div>
+    </div>`;
+
   container.innerHTML=`<div class="tl-outer" style="width:100%">
     <div style="min-width:${LABEL_W+totalW}px">
       <div class="tl-head" style="display:flex;flex-direction:column">
@@ -998,6 +1099,7 @@ function renderTimeline(){
           <div class="tl-label-spacer" style="width:${LABEL_W}px;min-width:${LABEL_W}px;flex-shrink:0"></div>
           <div style="display:flex">${weekRowHtml}</div>
         </div>
+        ${lineupRowHtml}
       </div>
       ${groupsHtml}
     </div>
