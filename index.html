@@ -647,48 +647,34 @@ function parseBO(){
 
 function parseCatalogue(rows){
   if(!rows.length)return;
-  console.log('parseCatalogue: total rows=',rows.length,'first row=',rows[0]);
-
-  // Find header row — look for a row where col A contains 'title' (case insensitive)
-  let hdrIdx=rows.findIndex(r=>(r[0]||'').toLowerCase().trim()==='title');
-  if(hdrIdx===-1)hdrIdx=rows.findIndex(r=>(r[0]||'').toLowerCase().includes('title'));
-  console.log('parseCatalogue: header row index=',hdrIdx);
-
-  // If no header found, assume row 1 is header (index 0)
-  if(hdrIdx===-1)hdrIdx=0;
-
-  const hdr=rows[hdrIdx].map(h=>(h||'').toLowerCase().trim());
-  console.log('parseCatalogue: headers=',hdr.slice(0,10));
-
-  // Find column indices by header name
-  const iTitle=hdr.findIndex(h=>h==='title'||h.includes('title'));
-  // 4DX col — look for '4dx', 'scope', '4dx confirmation' etc
-  const i4dx=hdr.findIndex(h=>h.includes('4dx')||h.includes('4d'));
-  // SX col — look for 'sx', 'screenx' etc
-  const iSX=hdr.findIndex(h=>h==='sx'||h.includes('screenx')||h.includes('screen x'));
-  // Release date col — look for 'first release', 'release', '4dx qc' etc
-  const iDate=hdr.findIndex(h=>h.includes('first release')||h.includes('release date')||(h.includes('release')&&!h.includes('4dx')&&!h.includes('sx')));
-
-  console.log('parseCatalogue: col indices — title=',iTitle,'4dx=',i4dx,'sx=',iSX,'date=',iDate);
-
-  // Fallback to known positions if header detection fails
-  const tCol=iTitle>=0?iTitle:0;
-  const dxCol=i4dx>=0?i4dx:5;
-  const sxCol=iSX>=0?iSX:6;
-  const dtCol=iDate>=0?iDate:7;
-
-  S.catalogue=rows.slice(hdrIdx+1).filter(r=>r.some(c=>c&&c.trim())).map(r=>{
-    const title=(r[tCol]||'').trim();
-    if(!title)return null;
-    const has4dx=!!(r[dxCol]||'').trim();
-    const hasSX=!!(r[sxCol]||'').trim();
-    const releaseDate=(r[dtCol]||'').trim();
+  // lineup tab exact column layout (confirmed by user):
+  // Col A (0) = title
+  // Col F (5) = 4DX confirmed
+  // Col G (6) = SX confirmed
+  // Col H (7) = release date
+  // Row 1 = blank, Row 2 = headers — skip both, data starts row 3 (index 2)
+  // But rows may start from 0 depending on how Sheets API returns them
+  // Find first data row: skip any row where col A is empty or looks like a header
+  let dataStart=0;
+  for(let i=0;i<Math.min(rows.length,5);i++){
+    const a=(rows[i][0]||'').trim();
+    // Skip blank rows or header rows
+    if(!a||a.toLowerCase()==='title'||a.toLowerCase().includes('film title')||a.toLowerCase().includes('movie')){
+      dataStart=i+1;
+    } else {
+      break;
+    }
+  }
+  S.catalogue=rows.slice(dataStart).filter(r=>(r[0]||'').trim()).map(r=>{
+    const title=(r[0]||'').trim();
+    const has4dx=!!(r[5]||'').trim();
+    const hasSX=!!(r[6]||'').trim();
+    const releaseDate=(r[7]||'').trim();
+    if(!title||!releaseDate)return null;
     return{title,imdb_official_title:title,has4dx,hasSX,
-      first_available_date:releaseDate,first_screening_date:releaseDate,
-      format_4dx:has4dx?'YES':'',format_sx:hasSX?'YES':''};
-  }).filter(r=>r&&r.title&&r.first_available_date);
-
-  console.log('parseCatalogue: parsed',S.catalogue.length,'titles, sample=',S.catalogue[0]);
+      first_available_date:releaseDate,first_screening_date:releaseDate};
+  }).filter(Boolean);
+  console.log('parseCatalogue:',S.catalogue.length,'titles, dataStart=',dataStart,'sample=',S.catalogue[0]);
 }
 function parseContracts(rows){
   if(!rows.length)return;
@@ -1015,17 +1001,13 @@ function renderTimeline(){
       let segStart=0;
 
       for(let pos=0;pos<=totalW;pos+=STEP){
-        // Determine colour at this position
         let col=greyCol;
-        // Check all releases — find highest priority
         for(const r of releases){
           const solidS=r.off;
           const solidE=r.off+BLOCK_W;
           const fadeE=solidE+BLOCK_W;
-          if(pos>=solidS&&pos<solidE){col=solidCol;break;} // solid wins
-          if(pos>=solidE&&pos<fadeE){
-            if(col===greyCol)col=fadeCol; // fade only if not already solid
-          }
+          if(pos>=solidS&&pos<solidE){col=solidCol;break;}
+          if(pos>=solidE&&pos<fadeE&&col===greyCol){col=fadeCol;}
         }
         if(col!==lastCol){
           if(lastCol!==null)barSegs.push({s:segStart,e:pos,col:lastCol});
@@ -1040,20 +1022,20 @@ function renderTimeline(){
       }).join('');
 
       // ── Title bullets — positioned at release x, stacked vertically ─
-      // Group titles by release offset — skip if before timeline start
+      // Group titles by release offset — only show those in visible range
       const byOff={};
       releases.forEach(r=>{
-        if(r.off<0||r.off>totalW)return; // skip out of range
-        const weekOff=Math.round(r.off/WEEK_W)*WEEK_W; // snap to week
+        if(r.off<0||r.off>totalW)return;
+        const weekOff=Math.floor(r.off/WEEK_W)*WEEK_W; // floor to week start
         if(!byOff[weekOff])byOff[weekOff]=[];
-        if(byOff[weekOff].length<MAX_TITLES)byOff[weekOff].push(r.title);
+        if(byOff[weekOff].length<MAX_TITLES)byOff[weekOff].push({title:r.title,date:r.releaseDate});
       });
       const titlesHtml=Object.entries(byOff).map(([off,titles])=>{
-        const bulletHtml=titles.map((t,i)=>{
-          // Find release date for this title from bookings
-          const bk=S.booking.find(b=>b.title===t&&b.exhibitor===ex&&b.format===fmt);
-          const dateStr=bk?.releaseDate?`<span style="font-size:11px;color:#999;margin-left:4px">${bk.releaseDate}</span>`:'';
-          return`<div style="position:absolute;top:${i*TITLE_H}px;left:0;white-space:nowrap;font-size:13px;color:#111;line-height:${TITLE_H}px">• ${t}${dateStr}</div>`;
+        const bulletHtml=titles.map((item,i)=>{
+          const t=item.title||item;
+          const d=item.date||'';
+          const dateStr=d?`<span style="font-size:11px;color:#999;margin-left:4px">${d}</span>`:'';
+          return`<div style="position:absolute;top:${i*TITLE_H}px;left:0;width:${WEEK_W-8}px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;color:#111;line-height:${TITLE_H}px">• ${t}${dateStr}</div>`;
         }).join('');
         return`<div style="position:absolute;left:${parseInt(off)+4}px;top:${TITLE_TOP}px;width:${WEEK_W-8}px;overflow:hidden">${bulletHtml}</div>`;
       }).join('');
@@ -1078,17 +1060,27 @@ function renderTimeline(){
   // ── Lineup header row ─────────────────────────────────────────────
   // All confirmed titles in the current format, positioned at release week
   // Sourced from booking data (confirmed) — unique titles
-  // Use catalogue (lineup tab) as source — filter by format confirmation
-  const lineupTitles=(S.catalogue.length?S.catalogue:[]).filter(t=>{
-    if(fmtF==='4DX')return t.has4dx;
-    if(fmtF==='ScreenX')return t.hasSX;
-    return t.has4dx||t.hasSX; // all
-  }).map(t=>({
-    title:t.title,
-    format:t.has4dx&&t.hasSX?'both':t.has4dx?'4DX':'ScreenX',
-    releaseDate:t.first_available_date
-  })).filter(t=>t.releaseDate)
-  .sort((a,b)=>new Date(a.releaseDate)-new Date(b.releaseDate));
+  // Lineup titles — from catalogue if available, fallback to booking data
+  let lineupTitles=[];
+  if(S.catalogue.length){
+    lineupTitles=S.catalogue.filter(t=>{
+      if(fmtF==='4DX')return t.has4dx;
+      if(fmtF==='ScreenX')return t.hasSX;
+      return t.has4dx||t.hasSX;
+    }).map(t=>({
+      title:t.title,
+      format:t.has4dx&&t.hasSX?'both':t.has4dx?'4DX':'ScreenX',
+      releaseDate:t.first_available_date
+    })).filter(t=>t.releaseDate&&new Date(t.releaseDate)>=start);
+  }
+  if(!lineupTitles.length){
+    // Fallback: unique titles from booking data within visible range
+    lineupTitles=[...new Map(
+      S.booking.filter(b=>b.confirmed&&(fmtF==='all'||b.format===fmtF))
+        .map(b=>[b.title,{title:b.title,format:b.format,releaseDate:b.releaseDate}])
+    ).values()].filter(t=>new Date(t.releaseDate)>=start);
+  }
+  lineupTitles.sort((a,b)=>new Date(a.releaseDate)-new Date(b.releaseDate));
 
   // Group by release week offset
   const lineupByOff={};
