@@ -99,22 +99,49 @@ tbody tr:hover td{background:var(--lilac-l)}
 .alert-bar.info{background:var(--blue-l);color:var(--blue)}
 .alert-bar.danger{background:var(--red-l);color:var(--red)}
 .alert-bar.ok{background:var(--green-l);color:var(--green)}
-.tl-outer{overflow-x:auto;border:1px solid var(--g4);border-radius:8px}
-.tl-head-row{display:flex;border-bottom:1px solid var(--g4)}
-.tl-label-spacer{min-width:200px;width:200px;border-right:1px solid var(--g4);flex-shrink:0}
-.tl-months{display:flex}
-.tl-month{flex-shrink:0;font-size:10px;color:var(--g2);text-align:center;padding:6px 0;border-right:1px solid var(--g4);font-family:var(--mono)}
-.tl-row{display:flex;border-bottom:1px solid var(--g4)}
-.tl-row:last-child{border-bottom:none}
-.tl-label{min-width:200px;width:200px;padding:10px 14px;border-right:1px solid var(--g4);background:var(--white);position:sticky;left:0;z-index:2;flex-shrink:0}
-.tl-name{font-weight:500;font-size:12px}.tl-sub{font-size:10px;color:var(--g2);margin-top:1px}
-.tl-track{position:relative;height:46px;flex-shrink:0}
-.tl-today-line{position:absolute;top:0;bottom:0;width:1.5px;background:var(--lilac);opacity:.5;z-index:1;pointer-events:none}
-.tl-grid-line{position:absolute;top:0;bottom:0;width:1px;background:var(--g4);pointer-events:none}
-.tl-block{position:absolute;top:9px;height:28px;border-radius:4px;display:flex;align-items:center;padding:0 7px;font-size:10px;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:default;transition:opacity .12s;font-weight:500}
-.tl-block:hover{opacity:.8;z-index:5}
-.b4dx{background:var(--lilac)}.bsx{background:#3a9470}.past{opacity:.3}
-.tl-preview{position:absolute;top:9px;height:28px;width:3px;background:var(--amber);border-radius:2px;opacity:.8}
+.tl-outer{overflow-x:auto;overflow-y:visible}
+.tl-outer::-webkit-scrollbar{height:8px}
+.tl-outer::-webkit-scrollbar-track{background:#f0f0f0}
+.tl-outer::-webkit-scrollbar-thumb{background:#bbb;border-radius:4px}
+.tl-outer::-webkit-scrollbar-thumb:hover{background:#999}
+/* Two-row header: month row + week row */
+.tl-head{position:sticky;top:0;z-index:10;background:var(--white)}
+.tl-month-row{display:flex;border-bottom:1px solid #ddd}
+.tl-week-row{display:flex;border-bottom:2px solid #222}
+.tl-label-spacer{flex-shrink:0;border-right:2px solid #222}
+.tl-month-cell{flex-shrink:0;font-size:13px;font-weight:700;color:var(--black);padding:8px 12px;border-right:1px solid #ddd;letter-spacing:.03em;text-transform:uppercase;border-bottom:none}
+.tl-week-cell{flex-shrink:0;font-size:11px;font-weight:600;color:var(--g2);padding:5px 6px;border-right:1px solid #ebebeb;letter-spacing:.02em;text-align:left}
+.tl-week-cell.wk-major{border-right-color:#ddd}
+.tl-exhib-group{border-bottom:2px solid #222}
+.tl-exhib-group:last-child{border-bottom:none}
+.tl-lane-group{border-bottom:1px solid #ddd}
+.tl-lane{display:flex;border-bottom:1px solid #f0f0f0}
+.tl-lane:last-child{border-bottom:none}
+.tl-label{border-right:2px solid #222;background:var(--white);position:sticky;left:0;z-index:2;flex-shrink:0;display:flex;align-items:flex-start;padding:14px 16px}
+.tl-label.label-main{align-items:center}
+.tl-label-inner{display:flex;flex-direction:column}
+.tl-name{font-weight:700;font-size:16px;color:var(--black);line-height:1.2}
+.tl-sub{font-size:12px;color:var(--g2);margin-top:4px}
+.tl-fmt-badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:3px;font-size:11px;font-weight:700;letter-spacing:.04em;margin-top:8px}
+.tl-fmt-badge.fmt-4dx{background:#ede9fa;color:#5e52a8}
+.tl-fmt-badge.fmt-sx{background:#e0f2ea;color:#1a6b50}
+.tl-track{position:relative;flex:1;flex-shrink:0}
+.tl-today-line{position:absolute;top:0;bottom:0;width:2.5px;background:#8878d0;z-index:4;pointer-events:none}
+.tl-week-line{position:absolute;top:0;bottom:0;width:1px;background:#ebebeb;pointer-events:none}
+.tl-week-line.wk-major{background:#ddd;width:1px}
+.tl-block{position:absolute;display:flex;align-items:center;padding:0 10px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;font-weight:700;border-radius:2px;transition:filter .12s;box-sizing:border-box}
+.tl-block:hover{filter:brightness(.85);z-index:10}
+.tl-block span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}
+.b4dx{background:#6c5fc7}.bsx{background:#2d8a65}
+.tl-preview-marker{position:absolute;width:3px;background:var(--amber);border-radius:1px;z-index:5}
+.tl-tooltip{position:fixed;background:#111;color:#fff;font-size:12px;line-height:1.6;padding:10px 14px;border-radius:5px;pointer-events:none;z-index:1000;max-width:300px;box-shadow:0 4px 20px rgba(0,0,0,.3);display:none}
+.tl-tooltip strong{font-weight:700;font-size:14px;display:block;margin-bottom:2px}
+.tl-tooltip .tt-meta{color:#aaa;font-size:11px}
+.tl-tooltip .tt-missing{color:#f4a261;margin-top:6px;font-size:11px;border-top:1px solid #333;padding-top:6px}
+.tl-seg-ctrl{display:flex;border:1.5px solid var(--g4);border-radius:7px;overflow:hidden}
+.tl-seg-btn{padding:7px 18px;font-size:13px;font-weight:600;border:none;background:var(--white);color:var(--g2);cursor:pointer;font-family:var(--sans);transition:all .12s;border-right:1px solid var(--g4)}
+.tl-seg-btn:last-child{border-right:none}
+.tl-seg-btn.active{background:#6c5fc7;color:#fff}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
 .upload-zone{border:1.5px dashed var(--g3);border-radius:8px;padding:18px 16px;text-align:center;cursor:pointer;color:var(--g2);font-size:12px;margin-bottom:8px;transition:border-color .15s,background .15s}
@@ -270,13 +297,17 @@ tbody tr:hover td{background:var(--lilac-l)}
 
     <!-- TIMELINE -->
     <div id="pane-timeline" class="pane">
-      <div class="sec-head" style="margin-bottom:14px">
+      <div class="sec-head" style="margin-bottom:16px">
         <span class="sec-title">Booking timeline</span>
         <div class="sec-controls">
-          <select id="tl-window" onchange="renderTimeline()"><option value="3">3 months</option><option value="6" selected>6 months</option><option value="12">12 months</option></select>
-          <select id="tl-fmt" onchange="renderTimeline()"><option value="all">All formats</option><option value="4DX">4DX only</option><option value="ScreenX">ScreenX only</option></select>
+          <div class="tl-seg-ctrl">
+            <button class="tl-seg-btn" onclick="setTLFmt('all',this)">Full lineup</button>
+            <button class="tl-seg-btn active" onclick="setTLFmt('4DX',this)">4DX</button>
+            <button class="tl-seg-btn" onclick="setTLFmt('ScreenX',this)">ScreenX</button>
+          </div>
         </div>
       </div>
+      <div id="tl-tooltip" class="tl-tooltip"></div>
       <div id="tl-container"><div class="empty">Load booking data to see the timeline</div></div>
     </div>
 
@@ -468,27 +499,22 @@ const S={booking:[],bo:[],catalogue:[],contracts:[],sheetId:localStorage.getItem
 
 
 const EXHIBITOR_BRANDS = {
-  'Cinemax':        {color:'#1a3a5c', initials:'CX', dark:false},
-  'Empire Cinemas': {color:'#c1121f', initials:'EM', dark:false},
-  'Event Cinemas':  {color:'#2d6a4f', initials:'EV', dark:false},
-  'Hoyts Cinemas':  {color:'#e76f51', initials:'HY', dark:false},
-  'KNCC':           {color:'#457b9d', initials:'KN', dark:false},
-  'Muvi Cinemas':   {color:'#7b2d8b', initials:'MV', dark:false},
-  'Novo Cinemas':   {color:'#264653', initials:'NV', dark:false},
-  'Nu Metro':       {color:'#023e8a', initials:'NM', dark:false},
-  'Pathé':          {color:'#e9c46a', initials:'PT', dark:true},
-  'Reel Cinemas':   {color:'#f4a261', initials:'RC', dark:true},
-  'Scene Cinemas':  {color:'#48cae4', initials:'SC', dark:true},
-  'Village Cinemas':{color:'#e63965', initials:'VG', dark:false},
-  'Vox Cinemas':    {color:'#d62828', initials:'VX', dark:false},
-  // Legacy/alternate names
-  'Event':          {color:'#2d6a4f', initials:'EV', dark:false},
-  'Hoyts Cinema':   {color:'#e76f51', initials:'HY', dark:false},
-  'Novo Cinemas':   {color:'#264653', initials:'NV', dark:false},
-  'Nu Metro':       {color:'#023e8a', initials:'NM', dark:false},
-  'NU Metro':       {color:'#023e8a', initials:'NM', dark:false},
-  'VOX Cinemas':    {color:'#d62828', initials:'VX', dark:false},
-  'Scene Cinema':   {color:'#48cae4', initials:'SC', dark:true},
+  // System canonical names (source of truth: screens table / internal system)
+  'Cinemax':                                      {color:'#1a3a5c', initials:'CX', dark:false},
+  'Empire Cinemas':                               {color:'#c1121f', initials:'EM', dark:false},
+  'Event_Birch Caroll & Coyle Limited':           {color:'#2d6a4f', initials:'EV', dark:false},
+  'Event_The Greater Union Organisation Pty Ltd': {color:'#2d6a4f', initials:'EV', dark:false},
+  'Event Cinemas':                                {color:'#2d6a4f', initials:'EV', dark:false},
+  'Hoyts Cinema':                                 {color:'#e76f51', initials:'HY', dark:false},
+  'KNCC':                                         {color:'#457b9d', initials:'KN', dark:false},
+  'Muvi Cinema':                                  {color:'#7b2d8b', initials:'MV', dark:false},
+  'NOVO Cinemas':                                 {color:'#264653', initials:'NV', dark:false},
+  'NU Metro':                                     {color:'#023e8a', initials:'NM', dark:false},
+  'Pathe':                                        {color:'#e9c46a', initials:'PT', dark:true},
+  'Reel Cinemas':                                 {color:'#f4a261', initials:'RC', dark:true},
+  'Galaxy Cinemas':                               {color:'#48cae4', initials:'GX', dark:true},
+  'Village':                                      {color:'#e63965', initials:'VG', dark:false},
+  'VOX':                                          {color:'#d62828', initials:'VX', dark:false},
 };
 function exhibitorAvatar(name){
   const b=EXHIBITOR_BRANDS[name]||{color:'#8878d0',initials:(name||'?').replace(/[^A-Z]/g,'').substring(0,2)||name.substring(0,2).toUpperCase(),dark:false};
@@ -496,19 +522,20 @@ function exhibitorAvatar(name){
 }
 
 const EXHIBITORS=[
-  {name:'Cinemax',        country:'Angola',       formats:['4DX','ScreenX'],contact:'—',              region:'MENA'},
-  {name:'Empire Cinemas', country:'Saudi Arabia',  formats:['4DX','ScreenX'],contact:'—',              region:'MENA'},
-  {name:'Event Cinemas',  country:'Australia',     formats:['4DX','ScreenX'],contact:'—',              region:'AUS'},
-  {name:'Hoyts Cinemas',  country:'Australia',     formats:['4DX','ScreenX'],contact:'—',              region:'AUS'},
-  {name:'KNCC',           country:'Kuwait',        formats:['4DX','ScreenX'],contact:'—',              region:'MENA'},
-  {name:'Muvi Cinemas',   country:'Saudi Arabia',  formats:['4DX','ScreenX'],contact:'Homer',          region:'MENA'},
-  {name:'Novo Cinemas',   country:'Qatar',         formats:['4DX','ScreenX'],contact:'Mahesh Simpson', region:'MENA'},
-  {name:'Nu Metro',       country:'South Africa',  formats:['4DX','ScreenX'],contact:'—',              region:'MENA'},
-  {name:'Pathé',          country:'France',        formats:['4DX','ScreenX'],contact:'—',              region:'MENA'},
-  {name:'Reel Cinemas',   country:'UAE',           formats:['4DX','ScreenX'],contact:'Suhas',          region:'MENA'},
-  {name:'Scene Cinemas',  country:'Egypt',         formats:['4DX','ScreenX'],contact:'Rowan',          region:'MENA'},
-  {name:'Village Cinemas',country:'Australia',     formats:['4DX','ScreenX'],contact:'—',              region:'AUS'},
-  {name:'Vox Cinemas',    country:'UAE',           formats:['4DX','ScreenX'],contact:'Kifah',          region:'MENA'},
+  {name:'Cinemax',                                      country:'Angola',       formats:['4DX','ScreenX'],region:'MEA'},
+  {name:'Empire Cinemas',                               country:'Saudi Arabia', formats:['4DX','ScreenX'],region:'MEA'},
+  {name:'Event_Birch Caroll & Coyle Limited',           country:'Australia',    formats:['4DX','ScreenX'],region:'Oceania'},
+  {name:'Event_The Greater Union Organisation Pty Ltd', country:'Australia',    formats:['4DX','ScreenX'],region:'Oceania'},
+  {name:'Hoyts Cinema',                                 country:'Australia',    formats:['ScreenX'],      region:'Oceania'},
+  {name:'KNCC',                                         country:'Kuwait',       formats:['4DX','ScreenX'],region:'MEA'},
+  {name:'Muvi Cinema',                                  country:'Saudi Arabia', formats:['4DX','ScreenX'],region:'MEA'},
+  {name:'NOVO Cinemas',                                 country:'Qatar',        formats:['4DX'],          region:'MEA'},
+  {name:'NU Metro',                                     country:'South Africa', formats:['4DX','ScreenX'],region:'MEA'},
+  {name:'Pathe',                                        country:'Morocco',      formats:['4DX'],          region:'MEA'},
+  {name:'Reel Cinemas',                                 country:'UAE',          formats:['ScreenX'],      region:'MEA'},
+  {name:'Galaxy Cinemas',                               country:'Egypt',        formats:['ScreenX'],      region:'MEA'},
+  {name:'Village',                                      country:'Australia',    formats:['4DX'],          region:'Oceania'},
+  {name:'VOX',                                          country:'UAE',          formats:['4DX'],          region:'MEA'},
 ];
 
 const SO_FMT={'SO201100':'4DX','SO201200':'ScreenX','SO201300':'Ultra','SO201150':'4DX','SO201250':'ScreenX'};
@@ -531,23 +558,22 @@ function nav(id,el){
 function normEx(e){
   const s=(e||'').trim();
   const lower=s.toLowerCase();
-  // Canonical names from code_fee sheet
-  if(lower.includes('birch')||lower.includes('greater union'))return'Event Cinemas';
-  if(lower==='event'||lower==='event cinema'||lower==='event cinemas')return'Event Cinemas';
-  if(lower==='pathe'||lower==='pathé'||lower==='pathe cinemas'||lower==='pathé cinemas')return'Pathé';
-  if(lower==='nu metro'||lower==='nu metro cinemas'||lower==='numetro')return'Nu Metro';
-  if(lower==='galaxy cinemas'||lower==='galaxy')return'Scene Cinemas';
-  if(lower==='hoyts'||lower==='hoyts cinema'||lower==='hoyts cinemas')return'Hoyts Cinemas';
-  if(lower==='muvi'||lower==='muvi cinema'||lower==='muvi cinemas')return'Muvi Cinemas';
-  if(lower==='novo'||lower==='novo cinema'||lower==='novo cinemas')return'Novo Cinemas';
-  if(lower==='vox'||lower==='vox cinema'||lower==='vox cinemas')return'Vox Cinemas';
-  if(lower==='village'||lower==='village cinema'||lower==='village cinemas')return'Village Cinemas';
-  if(lower==='scene'||lower==='scene cinema'||lower==='scene cinemas')return'Scene Cinemas';
+  // Map all variants to internal system names (source of truth = screens table)
+  if(lower.includes('birch')||lower.includes('greater union')||lower.includes('event_birch')||lower.includes('event_the greater'))return s; // keep full system name
+  if(lower==='event'||lower==='event cinema'||lower==='event cinemas')return'Event Cinemas'; // generic fallback
+  if(lower==='pathe'||lower==='pathé'||lower==='pathe cinemas'||lower==='pathé cinemas'||lower==='pathe mar')return'Pathe';
+  if(lower==='nu metro'||lower==='nu metro cinemas'||lower==='numetro')return'NU Metro';
+  if(lower==='galaxy cinemas'||lower==='galaxy'||lower==='scene cinemas'||lower==='scene cinema'||lower==='scene')return'Galaxy Cinemas';
+  if(lower==='hoyts'||lower==='hoyts cinema'||lower==='hoyts cinemas')return'Hoyts Cinema';
+  if(lower==='muvi'||lower==='muvi cinema'||lower==='muvi cinemas')return'Muvi Cinema';
+  if(lower==='novo'||lower==='novo cinema'||lower==='novo cinemas')return'NOVO Cinemas';
+  if(lower==='vox'||lower==='vox cinema'||lower==='vox cinemas')return'VOX';
+  if(lower==='village'||lower==='village cinema'||lower==='village cinemas')return'Village';
   if(lower==='reel'||lower==='reel cinema'||lower==='reel cinemas')return'Reel Cinemas';
   if(lower==='empire'||lower==='empire cinema'||lower==='empire cinemas')return'Empire Cinemas';
   if(lower==='cinemax')return'Cinemax';
   if(lower==='kncc')return'KNCC';
-  // Format normalisation (called on format strings too)
+  // Format normalisation
   if(s==='SX')return'ScreenX';
   if(s==='sx')return'ScreenX';
   return s;
@@ -761,47 +787,243 @@ function renderGapsOverview(){
   tbody.innerHTML=rows.map(r=>`<tr><td class="fw">${r.title}</td><td><span class="pill p-4dx">${r.fmt}</span></td><td class="mono dim">${r.avail}</td><td>${r.missing.map(e=>`<span class="flag flag-warn" style="margin-right:3px">${e}</span>`).join('')}</td><td><span class="pill ${isAlt(r.ft)?'p-gray':'p-blue'}">${r.ft}</span></td></tr>`).join('');
 }
 
+let TL_FMT='4DX';
+function setTLFmt(fmt,btn){
+  TL_FMT=fmt;
+  document.querySelectorAll('.tl-seg-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTimeline();
+}
+
+// Get active sites for exhibitor+format from contracts
+function getActiveSites(exhibitor,format){
+  return S.contracts
+    .filter(c=>c.exhibitor===exhibitor&&c.format===format&&!c.closing_date&&c.closing_date!=='')
+    .map(c=>c.site).filter(Boolean);
+}
+
+// Get missing sites for a title+exhibitor+format
+function getMissingSites(exhibitor,format,title){
+  const activeSites=getActiveSites(exhibitor,format);
+  if(!activeSites.length)return[];
+  const bookedSites=new Set(
+    S.booking.filter(b=>b.exhibitor===exhibitor&&b.format===format&&b.title===title&&b.confirmed)
+      .map(b=>b.site)
+  );
+  return activeSites.filter(s=>!bookedSites.has(s));
+}
+
 function renderTimeline(){
   const container=document.getElementById('tl-container');
   if(!S.booking.length){container.innerHTML='<div class="empty">Load booking data to see the timeline</div>';return}
-  const months=parseInt(document.getElementById('tl-window').value);
-  const fmtF=document.getElementById('tl-fmt').value;
+
+  const fmtF=TL_FMT;
   const today=new Date();
   const start=new Date(today.getFullYear(),today.getMonth()-1,1);
-  const end=new Date(start);end.setMonth(end.getMonth()+months+1);
-  const PX=4.2;
+  const end=new Date(today.getFullYear(),today.getMonth()+7,1);
+
+  const PX=14;
+  const BLOCK_DAYS=14;
+  const BLOCK_W=BLOCK_DAYS*PX;
+  const LANE_H=62;
+  const BLOCK_H=56;
+  const BLOCK_TOP=3;
+  const LABEL_W=220;
   const totalW=Math.round((end-start)/86400000*PX);
   const todayOff=Math.round((today-start)/86400000*PX);
 
-  let mHtml='<div class="tl-head-row"><div class="tl-label-spacer"></div><div class="tl-months">';
-  const gridOff=[];
-  const md=new Date(start);
-  while(md<end){
-    const days=new Date(md.getFullYear(),md.getMonth()+1,0).getDate();
-    const w=Math.round(days*PX);
-    gridOff.push(Math.round((md-start)/86400000*PX));
-    mHtml+=`<div class="tl-month" style="width:${w}px;min-width:${w}px">${md.toLocaleString('en',{month:'short'})} ${md.getFullYear()}</div>`;
-    md.setMonth(md.getMonth()+1);
-  }
-  mHtml+='</div></div>';
-  const gridHtml=gridOff.map(o=>`<div class="tl-grid-line" style="left:${o}px"></div>`).join('');
+  // ── Build unified header structure ────────────────────────────────
+  // Iterate day by day to build weeks that stay within month boundaries
+  // This ensures weeks align perfectly under months
+  const months=[];   // {label, startOff, width}
+  const weeks=[];    // {label, startOff, width, isMonthStart}
 
-  const exhibs=[...new Set(S.booking.map(d=>d.exhibitor))].filter(Boolean);
-  const rowsHtml=exhibs.map(ex=>{
-    const books=S.booking.filter(b=>b.exhibitor===ex&&(fmtF==='all'||b.format===fmtF));
-    const country=books[0]?.country||'';
-    const blocks=books.map(b=>{
-      const rd=new Date(b.releaseDate);if(isNaN(rd))return'';
-      const off=Math.round((rd-start)/86400000*PX);
-      if(off>totalW||off+14*PX<0)return'';
-      const past=rd<today,isSX=b.format==='ScreenX';
-      const prevHtml=b.previewDate?`<div class="tl-preview" style="left:${Math.round((new Date(b.previewDate)-start)/86400000*PX)}px" title="Preview: ${b.previewDate}"></div>`:'';
-      return`${prevHtml}<div class="tl-block ${isSX?'bsx':'b4dx'} ${past?'past':''}" style="left:${off}px;width:${Math.round(14*PX)}px" title="${b.title} · ${b.format} · ${b.releaseDate}${b.confirmed?'':' (unconfirmed)'}">${b.title}</div>`;
+  let d=new Date(start);
+  let curMonth=-1;
+  let curMonthStart=0;
+  let weekStart=new Date(d);
+  let weekOff=0;
+  let weekNum=1; // sequential counter across the whole timeline
+
+  // Build month spans
+  const mc=new Date(start);
+  while(mc<end){
+    const mStart=new Date(mc);
+    const mEnd=new Date(mc.getFullYear(),mc.getMonth()+1,0);
+    const mEndClamped=mEnd<end?mEnd:new Date(end.getTime()-86400000);
+    const mOff=Math.round((mStart-start)/86400000*PX);
+    const mW=Math.round((mEndClamped-mStart)/86400000*PX)+PX; // include last day
+    months.push({
+      label:mc.toLocaleString('en',{month:'short'})+' '+mc.getFullYear(),
+      off:mOff,
+      width:Math.min(mW,totalW-mOff)
+    });
+    mc.setMonth(mc.getMonth()+1);
+  }
+
+  // Build weeks — Wednesday-anchored (CJ release day), labelled Wk N
+  // Weeks run Wed→Tue, Wk 1 starts Wed 7 Jan each year
+  function getWedBefore(d){
+    const c=new Date(d);const dow=c.getDay(); // 0=Sun,3=Wed
+    c.setDate(c.getDate()-((dow-3+7)%7));c.setHours(0,0,0,0);return c;
+  }
+  function progWeekNum(d){
+    // Wk 1 anchor = Wed 7 Jan of the relevant year
+    const yr=d.getFullYear();
+    const jan7=new Date(yr,0,7);
+    const wk1=getWedBefore(jan7); // Wed on or before Jan 7
+    const dw=getWedBefore(d);
+    const wk=Math.round((dw-wk1)/86400000/7)+1;
+    return wk<1?null:wk;
+  }
+  const wkCursor=getWedBefore(start);
+  while(wkCursor<end){
+    const wkWed=new Date(wkCursor);
+    const nextWed=new Date(wkCursor);nextWed.setDate(nextWed.getDate()+7);
+    const off=Math.round((wkWed-start)/86400000*PX);
+    const offNext=Math.round((nextWed-start)/86400000*PX);
+    const visStart=Math.max(0,off);
+    const visEnd=Math.min(totalW,offNext);
+    const w=visEnd-visStart;
+    if(w>0){
+      const wkNum=progWeekNum(wkWed);
+      const isMonthStart=wkWed.getDate()<=7;
+      weeks.push({label:wkNum?`Wk ${wkNum}`:'',off:visStart,width:w,isMonthStart});
+    }
+    wkCursor.setDate(wkCursor.getDate()+7);
+  }
+
+  // Grid lines at week boundaries
+  const gridHtml=weeks.map(w=>
+    `<div class="tl-week-line${w.isMonthStart?' wk-major':''}" style="left:${w.off}px"></div>`
+  ).join('')+`<div class="tl-today-line" style="left:${todayOff}px"></div>`;
+
+  // Header HTML — inside the scroll container
+  const monthRowHtml=months.map(m=>
+    `<div class="tl-month-cell" style="width:${m.width}px;min-width:${m.width}px">${m.label}</div>`
+  ).join('');
+  const weekRowHtml=weeks.map(w=>
+    `<div class="tl-week-cell${w.isMonthStart?' wk-major':''}" style="width:${w.width}px;min-width:${w.width}px">${w.label}</div>`
+  ).join('');
+
+  // ── Lane collision detection ───────────────────────────────────────
+  function assignLanes(books){
+    const sorted=[...books].sort((a,b)=>new Date(a.releaseDate)-new Date(b.releaseDate));
+    const lanes=[];
+    const result=[];
+    sorted.forEach(b=>{
+      const rd=new Date(b.releaseDate);
+      const bS=Math.round((rd-start)/86400000*PX);
+      const bE=bS+BLOCK_W;
+      let placed=false;
+      for(let i=0;i<lanes.length;i++){
+        if(!lanes[i].some(r=>bS<r.e+4&&bE>r.s-4)){
+          lanes[i].push({s:bS,e:bE});
+          result.push({...b,lane:i});
+          placed=true;break;
+        }
+      }
+      if(!placed){lanes.push([{s:bS,e:bE}]);result.push({...b,lane:lanes.length-1});}
+    });
+    return{result,laneCount:Math.max(1,lanes.length)};
+  }
+
+  // ── Render exhibitor groups ───────────────────────────────────────
+  const allExhibs=EXHIBITORS.length
+    ?EXHIBITORS.map(e=>e.name)
+    :[...new Set(S.booking.map(d=>d.exhibitor))].filter(Boolean);
+
+  const groupsHtml=allExhibs.map(ex=>{
+    const exBooks=S.booking.filter(b=>b.exhibitor===ex&&b.confirmed);
+    if(!exBooks.length)return'';
+    const country=exBooks[0]?.country||EXHIBITORS.find(e=>e.name===ex)?.country||'';
+    const fmts=fmtF==='all'
+      ?[...new Set(exBooks.map(b=>b.format))].filter(Boolean).sort()
+      :[fmtF].filter(f=>exBooks.some(b=>b.format===f));
+    if(!fmts.length)return'';
+
+    const fmtSections=fmts.map((fmt,fi)=>{
+      const books=[...new Map(
+        exBooks.filter(b=>b.format===fmt).map(b=>[b.title,b])
+      ).values()];
+      const{result,laneCount}=assignLanes(books);
+      const sH=laneCount*LANE_H;
+      const isSX=fmt==='ScreenX';
+
+      const blocks=result.map(b=>{
+        const rd=new Date(b.releaseDate);if(isNaN(rd))return'';
+        const off=Math.round((rd-start)/86400000*PX);
+        if(off>=totalW||off+BLOCK_W<=0)return'';
+        const clampedOff=Math.max(0,off);
+        const clampedW=Math.min(BLOCK_W-(clampedOff-off),totalW-clampedOff);
+        if(clampedW<=2)return'';
+        const top=b.lane*LANE_H+BLOCK_TOP;
+        const missing=getMissingSites(ex,fmt,b.title);
+        const safeTitle=b.title.replace(/'/g,"\'").replace(/"/g,'&quot;');
+        const safeMissing=missing.join('||').replace(/'/g,"\'");
+        const prevOff=b.previewDate?Math.round((new Date(b.previewDate)-start)/86400000*PX):-1;
+        const prevHtml=(prevOff>=0&&prevOff<totalW)
+          ?`<div class="tl-preview-marker" style="left:${prevOff}px;top:${top+6}px;height:${BLOCK_H-12}px"></div>`:'';
+        return`${prevHtml}<div class="tl-block ${isSX?'bsx':'b4dx'}"
+          style="left:${clampedOff+1}px;width:${clampedW-2}px;top:${top}px;height:${BLOCK_H}px"
+          onmouseenter="showTLTooltip(event,'${safeTitle}','${fmt}','${b.releaseDate}','${safeMissing}')"
+          onmouseleave="hideTLTooltip()"><span>${b.title}</span></div>`;
+      }).join('');
+
+      const isFirstFmt=fi===0;
+      const labelContent=isFirstFmt
+        ?`<div class="tl-label-inner"><div class="tl-name">${ex}</div><div class="tl-sub">${country}</div></div>`
+        :`<div class="tl-label-inner"></div>`;
+
+      return`<div class="tl-lane-group">
+        <div class="tl-lane" style="height:${sH}px">
+          <div class="tl-label" style="width:${LABEL_W}px;min-width:${LABEL_W}px;height:${sH}px">${labelContent}</div>
+          <div class="tl-track" style="width:${totalW}px;height:${sH}px">${gridHtml}${blocks}</div>
+        </div>
+      </div>`;
     }).join('');
-    return`<div class="tl-row"><div class="tl-label"><div class="tl-name">${ex}</div><div class="tl-sub">${country}</div></div><div class="tl-track" style="width:${totalW}px">${gridHtml}<div class="tl-today-line" style="left:${todayOff}px"></div>${blocks}</div></div>`;
+
+    return`<div class="tl-exhib-group">${fmtSections}</div>`;
   }).join('');
-  container.innerHTML=`<div class="tl-outer">${mHtml}${rowsHtml}</div>`;
+
+  // Everything inside one scrollable container so header + rows scroll together
+  container.innerHTML=`<div class="tl-outer" style="width:100%">
+    <div style="min-width:${LABEL_W+totalW}px">
+      <div class="tl-head" style="display:flex;flex-direction:column">
+        <div class="tl-month-row" style="display:flex">
+          <div class="tl-label-spacer" style="width:${LABEL_W}px;min-width:${LABEL_W}px;flex-shrink:0"></div>
+          <div style="display:flex">${monthRowHtml}</div>
+        </div>
+        <div class="tl-week-row" style="display:flex">
+          <div class="tl-label-spacer" style="width:${LABEL_W}px;min-width:${LABEL_W}px;flex-shrink:0"></div>
+          <div style="display:flex">${weekRowHtml}</div>
+        </div>
+      </div>
+      ${groupsHtml}
+    </div>
+  </div>`;
 }
+
+function showTLTooltip(e,title,fmt,date,missingStr){
+  const tt=document.getElementById('tl-tooltip');
+  if(!tt)return;
+  const missing=missingStr?missingStr.split('|').filter(Boolean):[];
+  tt.innerHTML=`<strong>${title}</strong><div class="tt-meta">${fmt} · ${date}</div>${missing.length?`<div class="tt-missing">Not booked at:<br>${missing.join('<br>')}</div>`:''}`;
+  tt.style.display='block';
+  moveTLTooltip(e);
+}
+function moveTLTooltip(e){
+  const tt=document.getElementById('tl-tooltip');
+  if(!tt||tt.style.display==='none')return;
+  const x=e.clientX+16,y=e.clientY-12;
+  tt.style.left=Math.min(x,window.innerWidth-310)+'px';
+  tt.style.top=Math.max(y,8)+'px';
+}
+function hideTLTooltip(){
+  const tt=document.getElementById('tl-tooltip');
+  if(tt)tt.style.display='none';
+}
+document.addEventListener('mousemove',moveTLTooltip);
 
 function renderPerformance(){
   const t1=document.getElementById('perf-tbody'),t2=document.getElementById('title-tbody');
