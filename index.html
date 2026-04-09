@@ -863,6 +863,7 @@ function renderTimeline(){
   const PX=48;
   const BLOCK_DAYS=14;
   const BLOCK_W=BLOCK_DAYS*PX;
+  const WEEK_W=PX*7;
   const LANE_H=62;
   const BLOCK_H=56;
   const BLOCK_TOP=3;
@@ -998,50 +999,40 @@ function renderTimeline(){
       const sH=BAR_H+TITLE_AREA+12; // total row height
       const TITLE_TOP=BAR_H+6;  // where titles start below bar
 
-      // ── Build the continuous bar as colour segments ───────────────
-      // For each week position determine colour based on releases
-      // 1. Collect release offsets
+      // ── Build continuous bar — scan pixel by pixel approach ────────
+      // For each position, determine the highest priority colour:
+      // solid (release window) > fade (2wks after) > grey
       const releases=books.map(b=>({
         title:b.title,
+        releaseDate:b.releaseDate,
         off:Math.round((new Date(b.releaseDate)-start)/86400000*PX)
       })).filter(r=>!isNaN(r.off));
 
-      // 2. Build segments left to right
-      // Start grey, paint solid for 2 weeks at each release,
-      // then faded for 2 weeks after, back to grey
-      // Collect all breakpoints
-      const events=[];
-      releases.forEach(r=>{
-        events.push({off:r.off,         type:'solid'});
-        events.push({off:r.off+BLOCK_W, type:'fade'});
-        events.push({off:r.off+BLOCK_W*2,type:'grey'});
-      });
-      events.sort((a,b)=>a.off-b.off);
-
-      // Walk timeline building segments
+      // For efficiency, scan week by week (not pixel by pixel)
+      const STEP=Math.round(PX); // 1 day steps
       const barSegs=[];
-      let curCol=greyCol;
-      let cur=0;
-      // Merge events at same position — solid beats fade beats grey
-      const priority={solid:3,fade:2,grey:1};
-      const eventMap={};
-      events.forEach(e=>{
-        const k=e.off;
-        if(!eventMap[k]||priority[e.type]>priority[eventMap[k]])eventMap[k]=e.type;
-      });
-      const sortedEvents=Object.entries(eventMap)
-        .map(([off,type])=>({off:parseInt(off),type}))
-        .sort((a,b)=>a.off-b.off);
+      let lastCol=null;
+      let segStart=0;
 
-      sortedEvents.forEach(ev=>{
-        const evOff=Math.max(0,Math.min(totalW,ev.off));
-        if(evOff>cur){
-          barSegs.push({s:cur,e:evOff,col:curCol});
+      for(let pos=0;pos<=totalW;pos+=STEP){
+        // Determine colour at this position
+        let col=greyCol;
+        // Check all releases — find highest priority
+        for(const r of releases){
+          const solidS=r.off;
+          const solidE=r.off+BLOCK_W;
+          const fadeE=solidE+BLOCK_W;
+          if(pos>=solidS&&pos<solidE){col=solidCol;break;} // solid wins
+          if(pos>=solidE&&pos<fadeE){
+            if(col===greyCol)col=fadeCol; // fade only if not already solid
+          }
         }
-        curCol=ev.type==='solid'?solidCol:ev.type==='fade'?fadeCol:greyCol;
-        cur=evOff;
-      });
-      if(cur<totalW)barSegs.push({s:cur,e:totalW,col:curCol});
+        if(col!==lastCol){
+          if(lastCol!==null)barSegs.push({s:segStart,e:pos,col:lastCol});
+          segStart=pos;lastCol=col;
+        }
+      }
+      if(lastCol!==null)barSegs.push({s:segStart,e:totalW,col:lastCol});
 
       const barHtml=barSegs.map(seg=>{
         const w=seg.e-seg.s;if(w<=0)return'';
@@ -1049,12 +1040,13 @@ function renderTimeline(){
       }).join('');
 
       // ── Title bullets — positioned at release x, stacked vertically ─
-      // Group titles by release week (same x-offset) then list them
+      // Group titles by release offset — skip if before timeline start
       const byOff={};
       releases.forEach(r=>{
-        const clampedOff=Math.max(0,Math.min(totalW-2,r.off));
-        if(!byOff[clampedOff])byOff[clampedOff]=[];
-        if(byOff[clampedOff].length<MAX_TITLES)byOff[clampedOff].push(r.title);
+        if(r.off<0||r.off>totalW)return; // skip out of range
+        const weekOff=Math.round(r.off/WEEK_W)*WEEK_W; // snap to week
+        if(!byOff[weekOff])byOff[weekOff]=[];
+        if(byOff[weekOff].length<MAX_TITLES)byOff[weekOff].push(r.title);
       });
       const titlesHtml=Object.entries(byOff).map(([off,titles])=>{
         const bulletHtml=titles.map((t,i)=>{
@@ -1063,7 +1055,7 @@ function renderTimeline(){
           const dateStr=bk?.releaseDate?`<span style="font-size:11px;color:#999;margin-left:4px">${bk.releaseDate}</span>`:'';
           return`<div style="position:absolute;top:${i*TITLE_H}px;left:0;white-space:nowrap;font-size:13px;color:#111;line-height:${TITLE_H}px">• ${t}${dateStr}</div>`;
         }).join('');
-        return`<div style="position:absolute;left:${parseInt(off)+4}px;top:${TITLE_TOP}px;min-width:200px">${bulletHtml}</div>`;
+        return`<div style="position:absolute;left:${parseInt(off)+4}px;top:${TITLE_TOP}px;width:${WEEK_W-8}px;overflow:hidden">${bulletHtml}</div>`;
       }).join('');
 
       // ── Label ──────────────────────────────────────────────────────
@@ -1074,7 +1066,7 @@ function renderTimeline(){
       return`<div class="tl-lane-group">
         <div class="tl-lane" style="height:${sH}px">
           <div class="tl-label" style="width:${LABEL_W}px;min-width:${LABEL_W}px;height:${sH}px">${labelContent}</div>
-          <div class="tl-track" style="position:relative;width:${totalW}px;height:${sH}px;background:#fff;overflow:visible">${gridHtml}${barHtml}${titlesHtml}</div>
+          <div class="tl-track" style="position:relative;width:${totalW}px;height:${sH}px;background:#fff;overflow:hidden">${gridHtml}${barHtml}${titlesHtml}</div>
         </div>
       </div>`;
     }).join('');
@@ -1102,9 +1094,10 @@ function renderTimeline(){
   const lineupByOff={};
   lineupTitles.forEach(t=>{
     const off=Math.round((new Date(t.releaseDate)-start)/86400000*PX);
-    const clamped=Math.max(0,Math.min(totalW-2,off));
-    if(!lineupByOff[clamped])lineupByOff[clamped]=[];
-    if(lineupByOff[clamped].length<5)lineupByOff[clamped].push(t);
+    if(off<0||off>totalW)return; // skip titles outside visible range
+    const weekOff=Math.round(off/(PX*7))*(PX*7); // snap to week boundary
+    if(!lineupByOff[weekOff])lineupByOff[weekOff]=[];
+    if(lineupByOff[weekOff].length<5)lineupByOff[weekOff].push(t);
   });
 
   const PILL_H=22;
@@ -1112,20 +1105,20 @@ function renderTimeline(){
   const maxPillsInAnyWeek=Math.max(1,...Object.values(lineupByOff).map(a=>a.length));
   const lineupRowH=maxPillsInAnyWeek*PILL_H+PILL_PAD*2;
 
+  const WEEK_PX=WEEK_W; // same as WEEK_W
   const lineupPillsHtml=Object.entries(lineupByOff).map(([off,titles])=>{
     const pillStack=titles.map((t,i)=>{
       const isSX=t.format==='ScreenX';
-      const both=t.format==='both';
-      const bg=isSX?'#e0f2ea':both?'#f0ecff':'#ede9fa';
-      const col=isSX?'#1a6b50':both?'#5e52a8':'#5e52a8';
-      // Clip title to avoid overflow — max 32 chars
-      const label=t.title.length>32?t.title.substring(0,30)+'…':t.title;
-      return`<div style="top:${PILL_PAD+i*PILL_H}px;position:relative;display:inline-block;
-        background:${bg};color:${col};border-radius:4px;padding:3px 10px;margin-bottom:2px;
-        font-size:12px;font-weight:700;white-space:nowrap;line-height:16px;max-width:280px;
-        overflow:hidden;text-overflow:ellipsis">${label}</div>`;
+      const bg=isSX?'#e0f2ea':'#ede9fa';
+      const col=isSX?'#1a6b50':'#5e52a8';
+      const label=t.title.length>28?t.title.substring(0,26)+'…':t.title;
+      return`<div style="background:${bg};color:${col};border-radius:4px;padding:3px 8px;
+        margin-bottom:3px;font-size:12px;font-weight:700;white-space:nowrap;
+        max-width:${WEEK_PX-12}px;overflow:hidden;text-overflow:ellipsis;display:block">${label}</div>`;
     }).join('');
-    return`<div style="position:absolute;left:${parseInt(off)+2}px;top:0;width:${BLOCK_W}px;display:flex;flex-direction:column;align-items:flex-start">${pillStack}</div>`;
+    return`<div style="position:absolute;left:${parseInt(off)+2}px;top:${PILL_PAD}px;
+      width:${WEEK_PX-4}px;overflow:hidden;display:flex;flex-direction:column;align-items:flex-start;
+      pointer-events:none">${pillStack}</div>`;
   }).join('');
 
   const lineupRowHtml=`
@@ -1136,7 +1129,7 @@ function renderTimeline(){
         <span style="font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#999">Lineup</span>
       </div>
       <div style="position:relative;width:${totalW}px;height:${lineupRowH}px;flex-shrink:0;overflow:visible">
-        ${gridHtml}${lineupPillsHtml}
+        ${gridHtml}<div class="tl-today-line" style="left:${todayOff}px"></div>${lineupPillsHtml}
       </div>
     </div>`;
 
